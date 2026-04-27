@@ -239,6 +239,113 @@ export const Landing = () => {
         </div>
       </section>
 
+      {/* ── DIRECT HIRING ─────────────────────────────────────────── */}
+      <section className="relative py-24 overflow-hidden">
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-orange-500/[0.03] to-transparent" />
+        <div className="mx-auto max-w-7xl px-6">
+          <motion.div {...fadeUp()} className="text-center mb-16">
+            <p className="font-display text-xs uppercase tracking-[0.4em] text-neon-orange mb-3">Career Bridge</p>
+            <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-black uppercase leading-[0.95]">
+              Skip the application.{" "}
+              <span
+                style={{
+                  background: "linear-gradient(90deg,#ff8a3d,#ff3da0)",
+                  WebkitBackgroundClip: "text",
+                  backgroundClip: "text",
+                  color: "transparent",
+                }}
+              >
+                Get drafted.
+              </span>
+            </h2>
+            <p className="mt-4 text-text-dim text-base sm:text-lg max-w-lg mx-auto">
+              CoLab's hiring network connects verified builders directly with companies — no cold emails, no ghosting.
+            </p>
+          </motion.div>
+
+          {/* How hiring works */}
+          <div className="grid gap-5 sm:grid-cols-3 mb-10">
+            {[
+              {
+                step: "01",
+                icon: "🔐",
+                title: "Earn Your Verified Badge",
+                desc: "Complete a season, get mentor sign-off, and receive a cryptographically-verified builder profile.",
+                accent: "from-pink-500 to-orange-400",
+              },
+              {
+                step: "02",
+                icon: "📡",
+                title: "Get Surfaced to Companies",
+                desc: "Verified builders are shared with our hiring network after Demo Day. Companies browse, filter, and reach out.",
+                accent: "from-orange-400 to-amber-400",
+              },
+              {
+                step: "03",
+                icon: "🤝",
+                title: "Direct Offer, No Resume Needed",
+                desc: "Your work is the pitch. Your badge is the proof. Companies make direct offers — no ATS, no filtering.",
+                accent: "from-violet-500 to-blue-500",
+              },
+            ].map((item, i) => (
+              <motion.div
+                key={item.step}
+                {...fadeUp(i * 0.1)}
+                whileHover={{ y: -6 }}
+                className="neon-border group relative overflow-hidden rounded-2xl p-7 hover:shadow-[0_8px_40px_-8px_rgba(255,138,61,0.25)] transition-shadow duration-300"
+              >
+                <div className={`pointer-events-none absolute -top-12 -right-12 size-40 rounded-full bg-gradient-to-br ${item.accent} opacity-10 blur-2xl group-hover:opacity-25 transition-opacity duration-500`} />
+                <div className="flex items-start justify-between mb-5">
+                  <span className="text-3xl">{item.icon}</span>
+                  <span className={`font-display text-5xl font-black text-transparent bg-gradient-to-br ${item.accent} bg-clip-text opacity-20 select-none`}>{item.step}</span>
+                </div>
+                <h3 className="font-display text-sm font-black uppercase tracking-wider mb-2">{item.title}</h3>
+                <p className="text-text-dim text-sm leading-relaxed">{item.desc}</p>
+              </motion.div>
+            ))}
+          </div>
+
+          {/* Hiring partner slots */}
+          <motion.div
+            {...fadeUp(0.2)}
+            className="neon-border relative overflow-hidden rounded-3xl p-8 sm:p-10 bg-white/[0.02]"
+          >
+            <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-orange-500/[0.05] via-transparent to-violet-500/[0.05]" />
+            <div className="relative flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+              <div>
+                <p className="font-display text-xs uppercase tracking-[0.3em] text-neon-orange mb-2">Hiring Network</p>
+                <h3 className="font-display text-xl sm:text-2xl font-black uppercase mb-2">
+                  Companies joining <span className="gradient-text">Season 1</span>
+                </h3>
+                <p className="text-text-dim text-sm leading-relaxed max-w-md">
+                  Partner slots are opening for companies that want first access to verified CoLab builders at Demo Day.
+                  Startups, scale-ups, and product studios welcome.
+                </p>
+              </div>
+              <div className="flex flex-col gap-3 shrink-0">
+                <Link to="/join">
+                  <Button rightIcon={TiLocationArrow} className="whitespace-nowrap">
+                    Join as a Builder
+                  </Button>
+                </Link>
+                <a href="mailto:team@colabnation.com">
+                  <Button variant="outline" className="whitespace-nowrap text-xs px-5 py-2.5">
+                    Partner with CoLab →
+                  </Button>
+                </a>
+              </div>
+            </div>
+            <div className="mt-8 flex flex-wrap gap-3">
+              {["Startups", "Scale-ups", "Tech Labs", "Product Studios", "Venture-backed Teams", "+ You?"].map((co) => (
+                <span key={co} className="font-display text-[10px] sm:text-xs font-bold uppercase tracking-widest text-white/30 border border-white/10 rounded-full px-4 py-2 hover:text-white/60 hover:border-white/25 transition-colors cursor-default">
+                  {co}
+                </span>
+              ))}
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
       <StoryFlow />
       <CharacterShowcase />
       <CtaBanner />

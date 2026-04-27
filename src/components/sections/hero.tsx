@@ -25,7 +25,6 @@ export const Hero = () => {
     offset: ["start start", "end start"],
   });
   const yBg = useTransform(scrollYProgress, [0, 1], ["0%", "18%"]);
-  const yContent = useTransform(scrollYProgress, [0, 1], ["0%", "25%"]);
   const opacity = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
 
   useEffect(() => {
@@ -85,27 +84,20 @@ export const Hero = () => {
         style={{ animationDelay: "6s" }}
       />
 
-      {/* Massive backdrop text */}
-      <motion.span
-        aria-hidden
-        initial={{ x: -100, opacity: 0 }}
-        animate={{ x: 0, opacity: 1 }}
-        transition={{ duration: 1.6, ease: [0.22, 1, 0.36, 1], delay: 0.4 }}
-        style={{ y: yContent }}
-        className="pointer-events-none absolute left-0 top-[12%] z-0 select-none font-display text-[18vw] sm:text-[13vw] lg:text-[12rem] font-black uppercase leading-[0.85] text-transparent text-stroke-white/15"
-      >
-        BUILD.
-      </motion.span>
-      <motion.span
-        aria-hidden
-        initial={{ x: 100, opacity: 0 }}
-        animate={{ x: 0, opacity: 1 }}
-        transition={{ duration: 1.6, ease: [0.22, 1, 0.36, 1], delay: 0.5 }}
-        style={{ y: yContent }}
-        className="pointer-events-none absolute right-0 bottom-[14%] z-0 select-none font-display text-[18vw] sm:text-[13vw] lg:text-[12rem] font-black uppercase leading-[0.85] text-transparent text-stroke-pink"
-      >
-        HIRE.
-      </motion.span>
+      {/* Animated radial rings */}
+      {[0, 1, 2].map((i) => (
+        <motion.div
+          key={i}
+          aria-hidden
+          initial={{ scale: 0.6, opacity: 0 }}
+          animate={{ scale: [0.6 + i * 0.3, 1.4 + i * 0.4], opacity: [0.18, 0] }}
+          transition={{ duration: 4 + i * 1.5, delay: i * 1.2, repeat: Infinity, ease: "easeOut" }}
+          className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border border-pink-500/20"
+          style={{ width: 400 + i * 200, height: 400 + i * 200 }}
+        />
+      ))}
+      {/* Soft centre bloom */}
+      <div className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-[500px] w-[800px] rounded-full bg-gradient-to-r from-pink-500/10 via-violet-500/10 to-blue-500/10 blur-3xl" />
 
       {/* ── MAIN CONTENT ── */}
       <motion.div

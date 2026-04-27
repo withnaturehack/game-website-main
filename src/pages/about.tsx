@@ -1,109 +1,233 @@
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
+import { TiLocationArrow } from "react-icons/ti";
 import { SectionHeading } from "@/components/ui/section-heading";
+import { Button } from "@/components/ui/button";
 import { TIMELINE } from "@/constants";
 import builder from "@/assets/characters/builder.png";
 import mentor from "@/assets/characters/mentor.png";
 import squad from "@/assets/characters/squad.png";
 import spaceBg from "@/assets/scenes/space-bg.png";
+import logo from "@assets/45375_1777311860118.png";
 import { StarField } from "@/components/ui/particles";
 import { CtaBanner } from "@/components/sections/cta-banner";
+
+const fade = (delay = 0) => ({
+  initial: { opacity: 0, y: 28 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true, margin: "-60px" },
+  transition: { duration: 0.75, delay, ease: [0.22, 1, 0.36, 1] as const },
+});
+
+const VALUES = [
+  { icon: "🔐", title: "Proof Over Promises", desc: "Every skill claim is mentor-verified. Cryptographically signed. Impossible to fake." },
+  { icon: "🌍", title: "Build in Public", desc: "All work is visible. All missions are real. No closed-door projects, no fake portfolios." },
+  { icon: "🛡️", title: "Squad Over Solo", desc: "Cross-functional teams of designers, devs and researchers — because real products aren't solo." },
+  { icon: "⚡", title: "Ship, Don't Study", desc: "We believe in learning by launching. Every season ends with a real product in the world." },
+  { icon: "🚀", title: "Ambition is Default", desc: "We don't cap dreams here. Founders, engineers, designers — all aiming at something big." },
+  { icon: "🤝", title: "Mentors With Stakes", desc: "Our mentors vouch for builders with their reputation — so they only sign off on real excellence." },
+];
 
 export const About = () => {
   return (
     <>
-      <section className="relative overflow-hidden py-24">
-        <div
-          className="absolute inset-0 -z-20 opacity-50"
-          style={{
-            backgroundImage: `url(${spaceBg})`,
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-          }}
-        />
-        <div className="absolute inset-0 -z-10 bg-gradient-to-b from-bg via-bg/70 to-bg" />
+      {/* ─── HERO ─────────────────────────────────────────────────── */}
+      <section className="relative overflow-hidden min-h-[60vh] flex items-center py-32">
+        <div className="absolute inset-0 -z-20 opacity-40">
+          <img src={spaceBg} alt="" className="h-full w-full object-cover object-center" />
+        </div>
+        <div className="absolute inset-0 -z-10 bg-gradient-to-b from-bg/90 via-bg/60 to-bg" />
+        <div className="absolute inset-0 -z-10 grid-bg opacity-20" />
         <StarField count={70} />
+        <div className="pointer-events-none absolute top-0 left-1/2 -translate-x-1/2 h-[400px] w-[700px] bg-gradient-to-b from-pink-500/15 via-violet-500/10 to-transparent blur-3xl" />
 
-        <div className="relative mx-auto max-w-5xl px-6">
-          <SectionHeading
-            eyebrow="Story Mode"
-            title="We started this because |the resume game is broken.|"
-            subtitle="CoLab Nation isn't a job board. It's a movement of students, builders, and mentors building proof together — out loud, in public, on real missions."
-          />
+        <div className="relative mx-auto max-w-5xl px-6 text-center">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+            className="relative inline-block mb-8"
+          >
+            <div className="absolute inset-0 rounded-3xl bg-gradient-to-tr from-pink-500 via-orange-400 to-violet-500 blur-2xl opacity-80 scale-110" />
+            <img src={logo} alt="CoLab Nation" className="relative h-20 w-20 sm:h-24 sm:w-24 rounded-3xl border border-white/20 object-cover" />
+          </motion.div>
+
+          <motion.p
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.2 }}
+            className="font-display text-xs uppercase tracking-[0.4em] text-neon-pink mb-4"
+          >
+            Our Story
+          </motion.p>
+          <motion.h1
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
+            className="font-display text-4xl sm:text-5xl lg:text-6xl font-black uppercase leading-[0.92]"
+          >
+            We started this because{" "}
+            <span
+              style={{
+                background: "linear-gradient(90deg,#ff3da0,#8b5cf6,#4fb7ff)",
+                WebkitBackgroundClip: "text",
+                backgroundClip: "text",
+                color: "transparent",
+              }}
+            >
+              the resume game is broken.
+            </span>
+          </motion.h1>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.45 }}
+            className="mt-6 text-text-dim text-base sm:text-lg leading-relaxed max-w-2xl mx-auto"
+          >
+            CoLab Nation isn't a job board. It's a movement where students, builders, and mentors prove their skills
+            together — out loud, in public, on real missions that matter.
+          </motion.p>
         </div>
       </section>
 
-      {/* Founders */}
-      <section className="relative py-12">
-        <div className="mx-auto max-w-7xl px-6 grid gap-10 lg:grid-cols-2 items-center">
+      {/* ─── FOUNDERS STORY ──────────────────────────────────────── */}
+      <section className="relative py-20">
+        <div className="mx-auto max-w-7xl px-6 grid gap-12 lg:grid-cols-2 items-center">
           <motion.div
-            initial={{ opacity: 0, x: -40 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="relative h-[420px] grid place-items-center"
+            {...fade()}
+            className="relative h-[440px] grid place-items-center"
           >
             <div className="absolute inset-0 grid grid-cols-2 gap-4">
-              <div className="relative neon-border overflow-hidden rounded-3xl">
-                <img src={builder} alt="" className="h-full w-full object-cover float-y" />
+              <div className="neon-border overflow-hidden rounded-3xl">
+                <img src={builder} alt="Builder" className="h-full w-full object-cover float-y" />
               </div>
-              <div className="relative neon-border overflow-hidden rounded-3xl mt-12">
-                <img src={mentor} alt="" className="h-full w-full object-cover float-slow" />
+              <div className="neon-border overflow-hidden rounded-3xl mt-14">
+                <img src={mentor} alt="Mentor" className="h-full w-full object-cover float-slow" />
               </div>
             </div>
           </motion.div>
 
-          <motion.div
-            initial={{ opacity: 0, x: 40 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-          >
-            <p className="font-display text-xs uppercase tracking-[0.4em] text-neon-pink">
-              The Founders
+          <motion.div {...fade(0.1)}>
+            <p className="font-display text-xs uppercase tracking-[0.4em] text-neon-pink mb-4">The Founders</p>
+            <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-black uppercase leading-[0.92]">
+              Builders who refused{" "}
+              <span
+                style={{
+                  background: "linear-gradient(90deg,#ff3da0,#ff8a3d)",
+                  WebkitBackgroundClip: "text",
+                  backgroundClip: "text",
+                  color: "transparent",
+                }}
+              >
+                to ask permission.
+              </span>
+            </h2>
+            <p className="mt-5 text-text-dim text-base sm:text-lg leading-relaxed">
+              We were the students sending 200 cold emails. The interns who were smarter than the system.
+              The ones who learned 3 stacks on weekends and still got told "we need more experience."
             </p>
-            <h3 className="mt-3 font-display text-4xl sm:text-5xl font-black uppercase">
-              Builders who refused <span className="gradient-text">to ask for permission.</span>
-            </h3>
-            <p className="mt-5 text-text-dim text-lg leading-relaxed">
-              We were the students sending 200 cold emails. The interns who were
-              smarter than the system. The ones who learned 3 stacks on weekends
-              and still got told "we need more experience."
-            </p>
-            <p className="mt-4 text-text-dim text-lg leading-relaxed">
+            <p className="mt-4 text-text-dim text-base sm:text-lg leading-relaxed">
               So we stopped asking. We built a place where{" "}
-              <span className="text-white">work speaks for itself</span>, mentors
-              vouch with their reputation, and every commit is a ticket to the
-              next mission.
+              <span className="text-white font-medium">work speaks for itself</span>, mentors vouch with their
+              reputation, and every commit is a ticket to the next mission.
             </p>
+            <div className="mt-8 flex flex-wrap gap-3">
+              <Link to="/join">
+                <Button rightIcon={TiLocationArrow}>Join the Movement</Button>
+              </Link>
+              <Link to="/programs">
+                <Button variant="ghost">See Programs</Button>
+              </Link>
+            </div>
           </motion.div>
         </div>
       </section>
 
-      {/* Timeline */}
-      <section className="relative py-24">
+      {/* ─── MISSION STATEMENT ───────────────────────────────────── */}
+      <section className="relative py-20 overflow-hidden">
+        <div className="pointer-events-none absolute inset-0 grid-bg opacity-15" />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-pink-500/[0.05] via-transparent to-violet-500/[0.05]" />
+        <div className="mx-auto max-w-5xl px-6 text-center">
+          <motion.div {...fade()}>
+            <p className="font-display text-xs uppercase tracking-[0.4em] text-neon-violet mb-6">Mission</p>
+            <blockquote className="font-display text-2xl sm:text-3xl lg:text-4xl font-black uppercase leading-[1.1]">
+              "To make <span
+                style={{
+                  background: "linear-gradient(90deg,#ff3da0,#8b5cf6)",
+                  WebkitBackgroundClip: "text",
+                  backgroundClip: "text",
+                  color: "transparent",
+                }}
+              >verified skills</span> the only currency that matters —{" "}
+              <span
+                style={{
+                  background: "linear-gradient(90deg,#8b5cf6,#4fb7ff)",
+                  WebkitBackgroundClip: "text",
+                  backgroundClip: "text",
+                  color: "transparent",
+                }}
+              >not pedigree, not connections, not luck."</span>
+            </blockquote>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ─── VALUES GRID ─────────────────────────────────────────── */}
+      <section className="relative py-20 overflow-hidden">
+        <div className="mx-auto max-w-7xl px-6">
+          <motion.div {...fade()} className="text-center mb-14">
+            <p className="font-display text-xs uppercase tracking-[0.4em] text-neon-cyan mb-3">What We Stand For</p>
+            <h2 className="font-display text-3xl sm:text-4xl font-black uppercase leading-[0.95]">
+              Six rules we{" "}
+              <span
+                style={{
+                  background: "linear-gradient(90deg,#38f0ff,#8b5cf6)",
+                  WebkitBackgroundClip: "text",
+                  backgroundClip: "text",
+                  color: "transparent",
+                }}
+              >
+                don't break.
+              </span>
+            </h2>
+          </motion.div>
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {VALUES.map((v, i) => (
+              <motion.div
+                key={v.title}
+                {...fade(i * 0.07)}
+                whileHover={{ y: -5 }}
+                className="neon-border group relative overflow-hidden rounded-2xl p-7 hover:shadow-[0_6px_40px_-8px_rgba(139,92,246,0.3)] transition-shadow duration-300"
+              >
+                <div className="pointer-events-none absolute -top-10 -right-10 size-32 rounded-full bg-gradient-to-br from-violet-500/10 to-transparent blur-2xl group-hover:from-violet-500/25 transition-all duration-500" />
+                <span className="text-3xl mb-5 block">{v.icon}</span>
+                <h3 className="font-display text-sm font-black uppercase tracking-wider mb-2 text-white">{v.title}</h3>
+                <p className="text-text-dim text-sm leading-relaxed">{v.desc}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ─── TIMELINE ────────────────────────────────────────────── */}
+      <section className="relative py-24 overflow-hidden">
+        <div className="pointer-events-none absolute inset-0 grid-bg opacity-10" />
         <SectionHeading eyebrow="The Journey" title="A four-year |takeoff.|" />
         <div className="relative mx-auto mt-16 max-w-4xl px-6">
           <div className="absolute left-8 top-0 h-full w-px bg-gradient-to-b from-pink-500 via-violet-500 to-cyan-400 sm:left-1/2 sm:-translate-x-1/2" />
-          <div className="space-y-12">
+          <div className="space-y-14">
             {TIMELINE.map((t, i) => (
               <motion.div
                 key={t.year}
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-60px" }}
-                transition={{ duration: 0.6, delay: i * 0.1 }}
-                className={`relative grid items-start gap-4 sm:grid-cols-2 ${
-                  i % 2 === 1 ? "sm:[direction:rtl]" : ""
-                }`}
+                {...fade(i * 0.1)}
+                className={`relative grid items-start gap-4 sm:grid-cols-2 ${i % 2 === 1 ? "sm:[direction:rtl]" : ""}`}
               >
                 <span className="absolute left-8 top-2 sm:left-1/2 sm:-translate-x-1/2 z-10 grid size-12 place-items-center rounded-full gradient-bg font-display text-xs font-black text-white pulse-glow">
                   {t.year}
                 </span>
                 <div className="pl-20 sm:px-10 [direction:ltr]">
-                  <h4 className="font-display text-2xl font-black uppercase">
-                    {t.title}
-                  </h4>
-                  <p className="mt-2 text-text-dim">{t.text}</p>
+                  <h4 className="font-display text-2xl font-black uppercase">{t.title}</h4>
+                  <p className="mt-2 text-text-dim leading-relaxed">{t.text}</p>
                 </div>
                 <div className="hidden sm:block" />
               </motion.div>
@@ -113,14 +237,115 @@ export const About = () => {
 
         <motion.img
           src={squad}
-          alt="Squad"
-          initial={{ opacity: 0, y: 60 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 1 }}
-          className="float-y mx-auto mt-20 w-full max-w-3xl drop-shadow-[0_0_60px_rgba(255,61,160,0.35)]"
+          alt="The Squad"
+          {...fade(0.2)}
+          className="float-y mx-auto mt-20 w-full max-w-2xl drop-shadow-[0_0_60px_rgba(255,61,160,0.35)]"
           draggable={false}
         />
+      </section>
+
+      {/* ─── DIRECT HIRING ───────────────────────────────────────── */}
+      <section className="relative py-20 overflow-hidden">
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-violet-500/[0.04] to-transparent" />
+        <div className="mx-auto max-w-7xl px-6">
+          <motion.div {...fade()} className="text-center mb-14">
+            <p className="font-display text-xs uppercase tracking-[0.4em] text-neon-orange mb-3">Career Path</p>
+            <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-black uppercase leading-[0.95]">
+              CoLab builders get{" "}
+              <span
+                style={{
+                  background: "linear-gradient(90deg,#ff8a3d,#ff3da0)",
+                  WebkitBackgroundClip: "text",
+                  backgroundClip: "text",
+                  color: "transparent",
+                }}
+              >
+                drafted directly.
+              </span>
+            </h2>
+            <p className="mt-4 text-text-dim text-base sm:text-lg max-w-xl mx-auto">
+              Companies in our network don't wait for applications — they come to us. When you're verified, you're visible.
+            </p>
+          </motion.div>
+
+          <div className="grid gap-5 sm:grid-cols-3 mb-10">
+            {[
+              { icon: "🎯", title: "Direct Outreach", desc: "Recruiters message verified builders directly. No applications. No ghosting." },
+              { icon: "✅", title: "Verified = Trusted", desc: "Your mentor-signed profile speaks louder than any resume ever could." },
+              { icon: "🌐", title: "Global Network", desc: "Startups, scale-ups, and companies across the globe — all looking for proof-based talent." },
+            ].map((item, i) => (
+              <motion.div
+                key={item.title}
+                {...fade(i * 0.1)}
+                whileHover={{ y: -5 }}
+                className="neon-border group relative overflow-hidden rounded-2xl p-7 text-center hover:shadow-[0_6px_40px_-8px_rgba(255,138,61,0.25)] transition-shadow duration-300"
+              >
+                <div className="pointer-events-none absolute -top-10 left-1/2 -translate-x-1/2 size-32 rounded-full bg-gradient-to-b from-orange-400/10 to-transparent blur-2xl group-hover:from-orange-400/25 transition-all duration-500" />
+                <span className="text-4xl mb-5 block">{item.icon}</span>
+                <h3 className="font-display text-sm font-black uppercase tracking-wider mb-2">{item.title}</h3>
+                <p className="text-text-dim text-sm leading-relaxed">{item.desc}</p>
+              </motion.div>
+            ))}
+          </div>
+
+          {/* Company logos placeholder */}
+          <motion.div {...fade(0.2)} className="neon-border rounded-3xl p-8 sm:p-10 bg-white/[0.02] text-center">
+            <p className="font-display text-xs uppercase tracking-[0.3em] text-text-dim mb-6">Companies joining our hiring network · More announced soon</p>
+            <div className="flex flex-wrap items-center justify-center gap-6 sm:gap-10">
+              {["Startups", "Scale-ups", "Tech Labs", "Product Studios", "Venture-backed Teams"].map((co) => (
+                <span key={co} className="font-display text-xs sm:text-sm font-bold uppercase tracking-widest text-white/30 border border-white/10 rounded-full px-5 py-2.5">
+                  {co}
+                </span>
+              ))}
+            </div>
+            <p className="mt-6 text-text-dim text-xs">
+              Partner company slots opening with Season 1 · <Link to="/join" className="text-neon-pink hover:underline">Apply to be a hiring partner →</Link>
+            </p>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ─── CULTURE ─────────────────────────────────────────────── */}
+      <section className="relative py-20 overflow-hidden">
+        <div className="pointer-events-none absolute inset-0 grid-bg opacity-12" />
+        <div className="mx-auto max-w-7xl px-6">
+          <motion.div {...fade()} className="text-center mb-14">
+            <p className="font-display text-xs uppercase tracking-[0.4em] text-neon-pink mb-3">Culture</p>
+            <h2 className="font-display text-3xl sm:text-4xl font-black uppercase leading-[0.95]">
+              What it actually{" "}
+              <span
+                style={{
+                  background: "linear-gradient(90deg,#ff3da0,#8b5cf6)",
+                  WebkitBackgroundClip: "text",
+                  backgroundClip: "text",
+                  color: "transparent",
+                }}
+              >
+                feels like.
+              </span>
+            </h2>
+          </motion.div>
+
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {[
+              { stat: "Day 1", label: "You get squad-matched", icon: "🤝" },
+              { stat: "Week 2", label: "You ship your first PR", icon: "💻" },
+              { stat: "Week 8", label: "A mentor signs your badge", icon: "🏆" },
+              { stat: "Week 12", label: "Demo Day. Recruiters. Offers.", icon: "🚀" },
+            ].map((item, i) => (
+              <motion.div
+                key={item.label}
+                {...fade(i * 0.1)}
+                className="neon-border relative overflow-hidden rounded-2xl p-6 text-center group hover:bg-white/[0.02] transition-colors duration-300"
+              >
+                <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-white/[0.02] to-transparent" />
+                <span className="text-3xl mb-4 block">{item.icon}</span>
+                <p className="font-display text-xl sm:text-2xl font-black gradient-text mb-2">{item.stat}</p>
+                <p className="font-display text-xs uppercase tracking-wider text-white/80">{item.label}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
       </section>
 
       <CtaBanner />

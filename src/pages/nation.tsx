@@ -2,10 +2,10 @@ import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { TiLocationArrow } from "react-icons/ti";
 import { HiSparkles } from "react-icons/hi";
+import { Button } from "@/components/ui/button";
 
 import { BADGES } from "@/constants";
 import { SectionHeading } from "@/components/ui/section-heading";
-import { Button } from "@/components/ui/button";
 import squad from "@/assets/characters/squad.png";
 import logo from "@assets/45375_1777311860118.png";
 import { CtaBanner } from "@/components/sections/cta-banner";
@@ -113,19 +113,23 @@ export const Nation = () => {
         </div>
       </section>
 
-      {/* ─── LIVE MISSIONS ────────────────────────────────────────── */}
+      {/* ─── LIVE MISSIONS — COMING SOON ──────────────────────────── */}
       <section className="relative py-16">
         <div className="mx-auto max-w-7xl px-6">
           <div className="flex items-end justify-between flex-wrap gap-4 mb-10">
-            <h3 className="font-display text-2xl sm:text-3xl font-black uppercase">
-              Live Missions
-            </h3>
-            <p className="text-text-dim text-sm font-display uppercase tracking-widest">
-              <span className="text-emerald-400">●</span>{" "}
-              <span className="text-white font-bold">84</span> missions across{" "}
-              <span className="text-white font-bold">27</span> timezones
-            </p>
+            <div>
+              <h3 className="font-display text-2xl sm:text-3xl font-black uppercase">
+                Live Missions
+              </h3>
+              <p className="text-text-dim text-sm mt-1">Opening with Season of Creation 2026</p>
+            </div>
+            <div className="inline-flex items-center gap-2 rounded-full border border-violet-400/30 bg-violet-500/10 px-4 py-2 text-xs font-display uppercase tracking-[0.3em] text-violet-300">
+              <span className="size-1.5 rounded-full bg-violet-400 animate-pulse" />
+              Coming Soon · Aug 2026
+            </div>
           </div>
+
+          {/* Coming Soon overlay grid */}
           <div className="grid gap-5 sm:grid-cols-2">
             {MISSIONS.map((m, i) => (
               <motion.div
@@ -134,51 +138,63 @@ export const Nation = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: i * 0.08, ease: [0.22, 1, 0.36, 1] }}
-                whileHover={{ y: -6 }}
-                className="group neon-border relative overflow-hidden rounded-2xl p-6 transition-shadow duration-300 hover:shadow-[0_8px_40px_-8px_rgba(255,61,160,0.25)]"
+                className="group neon-border relative overflow-hidden rounded-2xl p-6 opacity-60"
               >
+                {/* Coming soon overlay */}
+                <div className="absolute inset-0 z-10 flex items-center justify-center rounded-2xl bg-bg/60 backdrop-blur-[2px]">
+                  <div className="text-center">
+                    <span className="inline-flex items-center gap-2 rounded-full border border-violet-400/40 bg-violet-500/15 px-4 py-2 text-xs font-display uppercase tracking-[0.3em] text-violet-300">
+                      <span className="size-1.5 rounded-full bg-violet-400 animate-pulse" />
+                      Opening Aug 2026
+                    </span>
+                  </div>
+                </div>
+
                 <div
-                  className={`pointer-events-none absolute -top-16 -right-16 size-48 rounded-full bg-gradient-to-br ${m.accent} opacity-15 blur-3xl group-hover:opacity-40 transition-opacity duration-500`}
+                  className={`pointer-events-none absolute -top-16 -right-16 size-48 rounded-full bg-gradient-to-br ${m.accent} opacity-10 blur-3xl`}
                 />
                 <div className="flex items-start justify-between gap-4 mb-5">
                   <div>
-                    <p className="font-display text-[10px] uppercase tracking-[0.35em] text-neon-pink mb-1">
-                      {m.type}
-                    </p>
+                    <p className="font-display text-[10px] uppercase tracking-[0.35em] text-neon-pink mb-1">{m.type}</p>
                     <h4 className="font-display text-xl font-black leading-tight">{m.title}</h4>
                     <p className="mt-2 text-sm text-text-dim">{m.squad}</p>
                   </div>
-                  <span
-                    className={`shrink-0 rounded-full border border-white/15 bg-white/5 px-3 py-1 text-xs font-display uppercase tracking-widest ${
-                      m.status === "Active"
-                        ? "text-emerald-400 border-emerald-400/30 bg-emerald-400/5"
-                        : m.status === "Recruiting"
-                        ? "text-violet-300 border-violet-400/30 bg-violet-400/5"
-                        : "text-orange-400 border-orange-400/30 bg-orange-400/5"
-                    }`}
-                  >
+                  <span className="shrink-0 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-display uppercase tracking-widest text-white/40">
                     {m.status}
                   </span>
                 </div>
-
                 <div className="flex items-center justify-between">
                   <div className="flex -space-x-2">
                     {Array.from({ length: 5 }).map((_, idx) => (
-                      <span
-                        key={idx}
-                        className={`grid size-9 place-items-center rounded-full border-2 border-bg bg-gradient-to-br ${m.accent} text-[11px] font-display font-black text-white`}
-                      >
+                      <span key={idx} className={`grid size-9 place-items-center rounded-full border-2 border-bg bg-gradient-to-br ${m.accent} text-[11px] font-display font-black text-white`}>
                         {String.fromCharCode(65 + idx)}
                       </span>
                     ))}
                   </div>
-                  <button className="text-sm font-display uppercase tracking-widest text-white/70 hover:text-neon-pink transition-colors duration-200">
-                    Enlist →
-                  </button>
+                  <span className="text-sm font-display uppercase tracking-widest text-white/30">Enlist →</span>
                 </div>
               </motion.div>
             ))}
           </div>
+
+          {/* CTA below */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7 }}
+            className="mt-8 neon-border rounded-2xl p-6 sm:p-8 text-center bg-white/[0.02]"
+          >
+            <p className="font-display text-lg sm:text-xl font-black uppercase mb-2">
+              Be first to <span className="gradient-text">enlist in a mission</span>
+            </p>
+            <p className="text-text-dim text-sm mb-5">
+              Join the waitlist — founding builders get priority placement in Season 1 missions launching August 2026.
+            </p>
+            <Link to="/join">
+              <Button rightIcon={TiLocationArrow}>Reserve My Spot</Button>
+            </Link>
+          </motion.div>
         </div>
       </section>
 
