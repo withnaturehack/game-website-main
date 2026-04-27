@@ -19,10 +19,10 @@ export const SOCIAL_LINKS = [
 ] as const;
 
 export const STATS = [
-  { value: 12500, suffix: "+", label: "Active Builders" },
-  { value: 480, suffix: "+", label: "Verified Mentors" },
-  { value: 2300, suffix: "+", label: "Projects Launched" },
-  { value: 96, suffix: "%", label: "Hire Match Rate" },
+  { value: 0, suffix: " spots", label: "Founding Members (Fill Yours)" },
+  { value: 500, suffix: "", label: "Builder Seats · Season 1" },
+  { value: 12, suffix: " wks", label: "Program Duration" },
+  { value: 1, suffix: " launch", label: "Global Demo Day · Aug 2026" },
 ] as const;
 
 export const STORY_BEATS = [
