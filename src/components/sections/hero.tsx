@@ -13,7 +13,13 @@ import logo from "@assets/45375_1777311860118.png";
 
 const HERO_VIDEOS = ["/videos/hero-1.mp4", "/videos/hero-2.mp4", "/videos/hero-3.mp4", "/videos/hero-4.mp4"];
 
-const TAGLINES = ["Build In Public.", "Get Verified.", "Get Hired."];
+const TAGLINES = [
+  "Proof beats pedigree. Every time.",
+  "One verified badge. Infinite doors.",
+  "Your commits are your credentials.",
+  "Ship loud. Get seen. Get recruited.",
+  "The arena where skills speak for themselves.",
+];
 
 export const Hero = () => {
   const [current, setCurrent] = useState(0);
@@ -137,17 +143,24 @@ export const Hero = () => {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.9, delay: 0.65, ease: [0.22, 1, 0.36, 1] }}
-          className="font-display text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black uppercase leading-[0.92]"
+          className="font-impact text-[clamp(3.2rem,10vw,8rem)] uppercase leading-[0.9] tracking-tight"
         >
-          Build.{" "}
+          Build In Public.{" "}
+          <br className="hidden sm:block" />
           <span
-            className="gradient-text text-glow"
-            style={{ display: "inline-block" }}
+            style={{
+              background: "linear-gradient(90deg,#ff3da0 0%,#ff8a3d 40%,#8b5cf6 75%,#4fb7ff 100%)",
+              WebkitBackgroundClip: "text",
+              backgroundClip: "text",
+              color: "transparent",
+              filter: "drop-shadow(0 0 24px rgba(255,61,160,0.5))",
+              display: "inline-block",
+            }}
           >
-            Be Verified.
+            Get Verified.
           </span>
           <br />
-          Be Hired.
+          Get Recruited.
         </motion.h1>
 
         {/* Rotating tagline */}
@@ -155,18 +168,18 @@ export const Hero = () => {
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.85 }}
-          className="mt-5 h-7 overflow-hidden"
+          className="mt-6 h-8 overflow-hidden"
         >
           <AnimatePresence mode="wait">
             <motion.p
               key={tagline}
-              initial={{ y: 20, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              exit={{ y: -20, opacity: 0 }}
-              transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-              className="font-display text-sm sm:text-base uppercase tracking-[0.3em] text-text-dim"
+              initial={{ y: 24, opacity: 0, filter: "blur(4px)" }}
+              animate={{ y: 0, opacity: 1, filter: "blur(0px)" }}
+              exit={{ y: -24, opacity: 0, filter: "blur(4px)" }}
+              transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+              className="font-syne text-sm sm:text-base uppercase tracking-[0.22em] text-text-dim"
             >
-              {TAGLINES[tagline]}
+              — {TAGLINES[tagline]}
             </motion.p>
           </AnimatePresence>
         </motion.div>
@@ -176,11 +189,11 @@ export const Hero = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 1.0 }}
-          className="mt-6 max-w-xl text-base sm:text-lg text-text-dim leading-relaxed"
+          className="mt-6 max-w-xl text-base sm:text-lg text-text-dim leading-relaxed font-body"
         >
-          A builder community where students do real missions, get{" "}
-          <span className="text-white font-medium">mentor-verified,</span> and get{" "}
-          <span className="text-white font-medium">drafted by recruiters</span> — no fake resume needed.
+          The gaming-inspired builder community where students ship real missions,
+          earn <span className="text-white font-semibold">mentor-verified badges,</span> and get{" "}
+          <span className="text-white font-semibold">drafted by companies directly</span> — no résumé required.
         </motion.p>
 
         {/* CTAs */}
@@ -262,18 +275,26 @@ export const Hero = () => {
       </motion.div>
 
       {/* ── MARQUEE STRIP ── */}
-      <div className="absolute bottom-0 left-0 right-0 border-t border-white/[0.07] bg-bg/50 backdrop-blur-sm py-3 overflow-hidden">
-        <div className="marquee flex w-max items-center gap-12 whitespace-nowrap px-6 text-[10px] sm:text-xs uppercase tracking-[0.4em] text-text-dim font-display">
+      <div className="absolute bottom-0 left-0 right-0 border-t border-white/[0.07] bg-bg/60 backdrop-blur-md py-3 overflow-hidden">
+        <div className="marquee flex w-max items-center gap-10 whitespace-nowrap px-6 font-syne text-[10px] sm:text-[11px] uppercase tracking-[0.38em] text-text-dim">
           {Array.from({ length: 2 }).map((_, i) => (
-            <div key={i} className="flex items-center gap-12">
-              <span className="text-neon-pink">★ Season of Creation 2026</span>
-              <span>/ Build In Public</span>
-              <span className="text-neon-violet">★ Get Verified</span>
-              <span>/ Mentor Network</span>
-              <span className="text-neon-cyan">★ Get Drafted</span>
-              <span>/ Squad Missions</span>
-              <span className="text-neon-orange">★ Real Builds</span>
-              <span>/ Global Demo Day</span>
+            <div key={i} className="flex items-center gap-10">
+              <span className="text-neon-pink font-bold">✦ Season of Creation 2026</span>
+              <span className="text-white/30">·</span>
+              <span>Proof Beats Pedigree</span>
+              <span className="text-white/30">·</span>
+              <span className="text-neon-violet font-bold">✦ Real Missions · Real Badges</span>
+              <span className="text-white/30">·</span>
+              <span>No Résumé Required</span>
+              <span className="text-white/30">·</span>
+              <span className="text-neon-cyan font-bold">✦ Get Drafted Direct</span>
+              <span className="text-white/30">·</span>
+              <span>500 Builder Seats</span>
+              <span className="text-white/30">·</span>
+              <span className="text-neon-orange font-bold">✦ Aug 2026 · Global Demo Day</span>
+              <span className="text-white/30">·</span>
+              <span>Mentor Verified Skills</span>
+              <span className="text-white/30">·</span>
             </div>
           ))}
         </div>
