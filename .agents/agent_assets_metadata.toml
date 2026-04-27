@@ -1,0 +1,80 @@
+uploads = []
+outputs = []
+
+[[generated]]
+id = "aEf5wURdaBzocA1Gadgt4"
+uri = "file://src/assets/characters/builder.png"
+type = "image"
+title = "generated_image"
+
+[[generated]]
+id = "ZEMVTN13pE0wNNSDsujVU"
+uri = "file://src/assets/characters/mentor.png"
+type = "image"
+title = "generated_image"
+
+[[generated]]
+id = "XenvWcjhPvJvluVC6Lj--"
+uri = "file://src/assets/characters/aibot.png"
+type = "image"
+title = "generated_image"
+
+[[generated]]
+id = "Z0d-u1f2pHGeZI76th-vG"
+uri = "file://src/assets/characters/squad.png"
+type = "image"
+title = "generated_image"
+
+[[generated]]
+id = "oGHrhQC1fQdzG9wyU9uuA"
+uri = "file://src/assets/characters/rocket.png"
+type = "image"
+title = "generated_image"
+
+[[generated]]
+id = "dfL0JWD99YSUGFSnAWwBo"
+uri = "file://src/assets/scenes/space-bg.png"
+type = "image"
+title = "generated_image"
+
+[[generated]]
+id = "xl7Sms44yzBr0atIm7PPC"
+uri = "file://src/assets/scenes/problem.png"
+type = "image"
+title = "generated_image"
+
+[[generated]]
+id = "GBiVZ7xBndQGxL7lmqErN"
+uri = "file://src/assets/scenes/success.png"
+type = "image"
+title = "generated_image"
+
+[[generated]]
+id = "uggIdltk8D6OSaJ9wDzv0"
+uri = "file://src/assets/scenes/season-launch.png"
+type = "image"
+title = "generated_image"
+
+[[generated]]
+id = "SE_2Ms6EuTLWCYWc7_NIC"
+uri = "file://src/assets/projects/project-ai.png"
+type = "image"
+title = "generated_image"
+
+[[generated]]
+id = "cYldxLJe9XLCyAQOvfd-2"
+uri = "file://src/assets/projects/project-open.png"
+type = "image"
+title = "generated_image"
+
+[[generated]]
+id = "874uP2yjtXODK9DRiOdiv"
+uri = "file://src/assets/projects/project-design.png"
+type = "image"
+title = "generated_image"
+
+[[generated]]
+id = "NS_M7VdvM2a_6XM00-J0x"
+uri = "file://src/assets/projects/project-robotics.png"
+type = "image"
+title = "generated_image"
