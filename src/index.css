@@ -265,6 +265,62 @@ body {
   animation: spin-slow 22s linear infinite;
 }
 
+/* Glow border rotate */
+@keyframes glow-border-rotate {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Shimmer sweep */
+@keyframes shimmer {
+  0% { transform: translateX(-100%) skewX(-12deg); }
+  100% { transform: translateX(200%) skewX(-12deg); }
+}
+.shimmer-once {
+  animation: shimmer 0.9s ease-out forwards;
+}
+
+/* Scale in */
+@keyframes scale-in {
+  from { transform: scale(0.88); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+.scale-in {
+  animation: scale-in 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+/* Slide up fade */
+@keyframes slide-up-fade {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+.slide-up-fade {
+  animation: slide-up-fade 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+/* Text flicker (for labels) */
+@keyframes flicker {
+  0%, 100% { opacity: 1; }
+  92% { opacity: 1; }
+  93% { opacity: 0.4; }
+  94% { opacity: 1; }
+  96% { opacity: 0.6; }
+  97% { opacity: 1; }
+}
+.flicker {
+  animation: flicker 4s ease-in-out infinite;
+}
+
+/* Number ticker */
+@keyframes ticker-up {
+  from { transform: translateY(8px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+.ticker-up {
+  animation: ticker-up 0.25s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
 /* Loader */
 .three-body {
   --uib-size: 50px;
