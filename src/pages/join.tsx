@@ -1,13 +1,21 @@
-import { useState } from "react";
-import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { TiLocationArrow } from "react-icons/ti";
+import { HiSparkles } from "react-icons/hi";
+import { FaBolt, FaStar } from "react-icons/fa";
 
-import { SectionHeading } from "@/components/ui/section-heading";
 import { Button } from "@/components/ui/button";
 import { ConfettiBurst, StarField } from "@/components/ui/particles";
 import builder from "@/assets/characters/builder.png";
+import mentor from "@/assets/characters/mentor.png";
 import aibot from "@/assets/characters/aibot.png";
 import rocket from "@/assets/characters/rocket.png";
+
+const JOIN_DIALOGUE = [
+  { left: "Pick your class. Choose your weapon.", right: "Mentors waiting. Squads forming." },
+  { left: "Every answer = +XP.", right: "Demo Day in T-minus 12 weeks." },
+  { left: "No résumé. Just receipts.", right: "I'll verify everything you ship." },
+];
 
 const ROLES = [
   {
@@ -64,6 +72,12 @@ export const Join = () => {
   const [done, setDone] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [d, setD] = useState(0);
+
+  useEffect(() => {
+    const t = setInterval(() => setD((c) => (c + 1) % JOIN_DIALOGUE.length), 4500);
+    return () => clearInterval(t);
+  }, []);
 
   // Smoother XP calculation for more steps/skills
   const xp = Math.min(100, (step + (done ? 1 : 0)) * 20 + skills.length * 5);
@@ -116,15 +130,130 @@ export const Join = () => {
 
   return (
     <>
-      <section className="relative overflow-hidden py-24">
-        <StarField count={80} />
+      {/* ─── HERO ─────────────────────────────────────────── */}
+      <section className="relative flex min-h-[80vh] flex-col items-center justify-center overflow-hidden pt-32 pb-16">
+        <StarField count={120} />
         {done && <ConfettiBurst count={40} />}
-        <div className="mx-auto max-w-4xl px-6">
-          <SectionHeading
-            eyebrow="Join the Team"
-            title="Apply for your |dream role.|"
-            subtitle="Want to join as a content creator, designer, or community lead? Pick your role and show us what you bring! Every answer earns XP."
+        <div className="grid-bg pointer-events-none absolute inset-0 opacity-25" />
+        <div className="pointer-events-none absolute top-0 left-1/2 h-[500px] w-[800px] -translate-x-1/2 bg-gradient-to-b from-pink-500/22 via-violet-500/12 to-transparent blur-3xl" />
+        <div className="pointer-events-none absolute -bottom-20 left-1/2 h-[400px] w-[800px] -translate-x-1/2 rounded-full bg-gradient-to-t from-orange-500/15 to-transparent blur-3xl" />
+
+        {/* Speed lines */}
+        <div className="pointer-events-none absolute inset-0 -z-10 opacity-40">
+          {[...Array(7)].map((_, i) => (
+            <motion.div
+              key={i}
+              className="absolute h-px w-32 bg-gradient-to-r from-transparent via-pink-500/40 to-transparent"
+              style={{ top: `${10 + i * 12}%`, left: i % 2 ? "60%" : "-10%" }}
+              animate={{ x: ["0%", "120%"] }}
+              transition={{ duration: 3 + (i % 3), repeat: Infinity, delay: i * 0.4, ease: "linear" }}
+            />
+          ))}
+        </div>
+
+        {/* Builder character + speech bubble */}
+        <motion.div
+          initial={{ opacity: 0, x: -60, y: 30 }}
+          animate={{ opacity: 1, x: 0, y: 0 }}
+          transition={{ duration: 1, delay: 0.4 }}
+          className="float-y pointer-events-none absolute bottom-0 left-2 z-10 hidden md:block lg:left-10"
+        >
+          <img
+            src={builder}
+            alt="Builder"
+            className="h-72 w-auto drop-shadow-[0_0_50px_rgba(255,61,160,0.55)] lg:h-96"
+            draggable={false}
           />
+          <div className="absolute -top-2 left-32 hidden w-56 lg:block">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={d}
+                initial={{ opacity: 0, y: 8, scale: 0.95 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: -6 }}
+                transition={{ duration: 0.4 }}
+                className="relative rounded-2xl border-2 border-pink-400/70 bg-bg/90 px-4 py-3 shadow-[0_0_30px_rgba(255,61,160,0.4)] backdrop-blur-md"
+              >
+                <p className="font-comic text-sm leading-tight text-white">
+                  {JOIN_DIALOGUE[d].left}
+                </p>
+                <div className="absolute -left-3 bottom-3 h-0 w-0 border-y-[8px] border-r-[14px] border-y-transparent border-r-pink-400/70" />
+                <div className="absolute -top-2 -left-2 flex size-6 items-center justify-center rounded-full bg-gradient-to-br from-pink-500 to-orange-400 text-[9px] text-white">
+                  <FaBolt />
+                </div>
+              </motion.div>
+            </AnimatePresence>
+          </div>
+        </motion.div>
+
+        {/* Mentor character + speech bubble */}
+        <motion.div
+          initial={{ opacity: 0, x: 60, y: 30 }}
+          animate={{ opacity: 1, x: 0, y: 0 }}
+          transition={{ duration: 1, delay: 0.6 }}
+          className="float-slow pointer-events-none absolute right-2 bottom-0 z-10 hidden md:block lg:right-10"
+        >
+          <img
+            src={mentor}
+            alt="Mentor"
+            className="h-72 w-auto drop-shadow-[0_0_50px_rgba(139,92,246,0.55)] lg:h-96"
+            draggable={false}
+          />
+          <div className="absolute -top-2 right-32 hidden w-56 lg:block">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={d + 100}
+                initial={{ opacity: 0, y: 8, scale: 0.95 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: -6 }}
+                transition={{ duration: 0.4, delay: 0.2 }}
+                className="relative rounded-2xl border-2 border-violet-400/70 bg-bg/90 px-4 py-3 text-right shadow-[0_0_30px_rgba(139,92,246,0.4)] backdrop-blur-md"
+              >
+                <p className="font-comic text-sm leading-tight text-white">
+                  {JOIN_DIALOGUE[d].right}
+                </p>
+                <div className="absolute -right-3 bottom-3 h-0 w-0 border-y-[8px] border-l-[14px] border-y-transparent border-l-violet-400/70" />
+                <div className="absolute -top-2 -right-2 flex size-6 items-center justify-center rounded-full bg-gradient-to-br from-violet-500 to-blue-500 text-[9px] text-white">
+                  <FaStar />
+                </div>
+              </motion.div>
+            </AnimatePresence>
+          </div>
+        </motion.div>
+
+        <div className="relative z-20 mx-auto max-w-4xl px-6 text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="font-display mb-5 inline-flex items-center gap-2 rounded-full border border-pink-400/40 bg-pink-500/10 px-4 py-1.5 text-[10px] tracking-[0.4em] text-pink-200 uppercase backdrop-blur-md"
+          >
+            <HiSparkles className="size-3 text-pink-300" />
+            Founder Cohort · 500 Seats
+          </motion.div>
+          <motion.h1
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="font-impact mb-6 text-[clamp(2.6rem,8.5vw,6rem)] leading-[0.92] tracking-tight uppercase"
+          >
+            <span className="shimmer-text block drop-shadow-[0_0_32px_rgba(255,61,160,0.55)]">
+              Choose your class.
+            </span>
+            <span className="shimmer-text block drop-shadow-[0_0_32px_rgba(139,92,246,0.55)]">
+              Earn your badge.
+            </span>
+          </motion.h1>
+          <motion.p
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.45 }}
+            className="text-text-dim mx-auto max-w-xl text-base sm:text-lg"
+          >
+            Builder, content creator, designer, or community lead. Pick your
+            role, equip your skills, and apply in 4 quick steps. Every answer
+            earns XP.
+          </motion.p>
         </div>
       </section>
 

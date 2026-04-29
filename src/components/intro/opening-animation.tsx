@@ -25,10 +25,23 @@ export const OpeningAnimation = ({ onComplete, forceShow = false }: Props) => {
   const [showFlash, setShowFlash] = useState(false);
   const timersRef = useRef<ReturnType<typeof setTimeout>[]>([]);
 
-  // PATCH: Always show the intro animation for testing
   useEffect(() => {
-    setShow(true);
-  }, []);
+    if (forceShow) {
+      setShow(true);
+      return;
+    }
+    try {
+      const seen = sessionStorage.getItem(SEEN_KEY);
+      if (!seen) {
+        setShow(true);
+        sessionStorage.setItem(SEEN_KEY, "1");
+      } else {
+        onComplete?.();
+      }
+    } catch {
+      setShow(true);
+    }
+  }, [forceShow, onComplete]);
 
   useEffect(() => {
     if (!show) return;
