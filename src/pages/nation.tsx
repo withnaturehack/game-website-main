@@ -6,7 +6,6 @@ import { HiSparkles } from "react-icons/hi";
 import { FaBolt, FaStar } from "react-icons/fa";
 
 import squad from "@/assets/characters/squad.png";
-import builder from "@/assets/characters/builder.png";
 import mentor from "@/assets/characters/mentor.png";
 import aibot from "@/assets/characters/aibot.png";
 
@@ -15,81 +14,31 @@ import { StarField } from "@/components/ui/particles";
 import { CtaBanner } from "@/components/sections/cta-banner";
 import { BADGES } from "@/constants";
 
-const FEED = [
-  {
-    who: "@aria.builds",
-    accent: "from-pink-500 to-orange-400",
-    text: "Just shipped v0.2 of the AI study buddy 🚀 — mentor verified by @kenji_dev",
-    time: "2m",
-  },
-  {
-    who: "@team-atlas",
-    accent: "from-cyan-400 to-violet-500",
-    text: "Atlas crossed 1k stars on GitHub. Squad earned the Launch Hero badge ✺",
-    time: "14m",
-  },
-  {
-    who: "@designlab",
-    accent: "from-fuchsia-500 to-pink-500",
-    text: "Co-Drafts squad just got mentor sign-off on Mission 03 — moving to Mission 04 ✓",
-    time: "32m",
-  },
-  {
-    who: "@forge.lab",
-    accent: "from-amber-400 to-rose-500",
-    text: "First open-hardware kit shipped to a beta builder in Tokyo 🤖",
-    time: "1h",
-  },
-  {
-    who: "@kenji_dev",
-    accent: "from-violet-500 to-blue-500",
-    text: "Just verified 3 squads this morning. Coffee count: 4 ☕",
-    time: "2h",
-  },
-];
-
-const MISSIONS = [
-  {
-    code: "M01",
-    title: "Pitch the Vision",
-    status: "OPEN",
-    accent: "from-pink-500 to-orange-400",
-    desc: "Ship a 2-min pitch video + a 1-page brief. XP +50",
-  },
-  {
-    code: "M02",
-    title: "Assemble the Squad",
-    status: "OPEN",
-    accent: "from-violet-500 to-blue-500",
-    desc: "Recruit 3 teammates with complementary skills. XP +75",
-  },
-  {
-    code: "M03",
-    title: "Build the MVP",
-    status: "QUEUED",
-    accent: "from-cyan-400 to-violet-500",
-    desc: "12-day sprint. Mentor sign-off required. XP +200",
-  },
-  {
-    code: "M04",
-    title: "Verify & Polish",
-    status: "QUEUED",
-    accent: "from-fuchsia-500 to-pink-500",
-    desc: "Mentors review, you iterate, badge unlocks. XP +150",
-  },
-  {
-    code: "M05",
-    title: "Demo Day Launch",
-    status: "LOCKED",
-    accent: "from-amber-400 to-rose-500",
-    desc: "Live to 100+ recruiters at the global Demo Day. XP +500",
-  },
-];
-
 const SQUAD_DIALOGUE = [
-  { left: "Squad assembled. Mission queue loaded.", right: "Verified. Locked. Loaded." },
+  { left: "Squad assembling soon.", right: "Verified. Locked. Launching." },
   { left: "Welcome to the Nation.", right: "Where every commit becomes proof." },
   { left: "We don't apply. We ship.", right: "And the world watches us launch." },
+];
+
+const PREVIEW_BEATS = [
+  {
+    code: "01",
+    title: "Citizens Onboarding",
+    desc: "Builders, designers, mentors — all welcomed in one feed.",
+    accent: "from-pink-500 to-orange-400",
+  },
+  {
+    code: "02",
+    title: "Live Mission Queue",
+    desc: "Pitch, build, verify, launch — five missions, one cohort.",
+    accent: "from-violet-500 to-blue-500",
+  },
+  {
+    code: "03",
+    title: "Public Badge Wall",
+    desc: "Cryptographically signed proof. Permanent. Verifiable.",
+    accent: "from-cyan-400 to-violet-500",
+  },
 ];
 
 export const Nation = () => {
@@ -103,13 +52,13 @@ export const Nation = () => {
   return (
     <>
       {/* ─── HERO ────────────────────────────────────────────── */}
-      <section className="relative flex min-h-[80vh] flex-col items-center justify-center overflow-hidden pt-32 pb-24">
-        <StarField count={120} />
+      <section className="relative flex min-h-[90vh] flex-col items-center justify-center overflow-hidden pt-32 pb-24">
+        <StarField count={130} />
         <div className="grid-bg pointer-events-none absolute inset-0 opacity-25" />
-        <div className="pointer-events-none absolute top-0 left-1/2 h-[500px] w-[800px] -translate-x-1/2 bg-gradient-to-b from-violet-500/20 via-pink-500/12 to-transparent blur-3xl" />
+        <div className="pointer-events-none absolute top-0 left-1/2 h-[520px] w-[820px] -translate-x-1/2 bg-gradient-to-b from-violet-500/22 via-pink-500/12 to-transparent blur-3xl" />
         <div className="pointer-events-none absolute bottom-0 left-0 h-[400px] w-[400px] rounded-full bg-gradient-to-tr from-pink-500/15 to-transparent blur-3xl" />
 
-        {/* Manga speed lines */}
+        {/* Speed lines */}
         <div className="pointer-events-none absolute inset-0 -z-10 opacity-40">
           {[...Array(6)].map((_, i) => (
             <motion.div
@@ -117,26 +66,30 @@ export const Nation = () => {
               className="absolute h-px w-32 bg-gradient-to-r from-transparent via-violet-500/40 to-transparent"
               style={{ top: `${15 + i * 14}%`, left: i % 2 ? "65%" : "-10%" }}
               animate={{ x: ["0%", "120%"] }}
-              transition={{ duration: 3 + (i % 3), repeat: Infinity, delay: i * 0.4, ease: "linear" }}
+              transition={{
+                duration: 3 + (i % 3),
+                repeat: Infinity,
+                delay: i * 0.4,
+                ease: "linear",
+              }}
             />
           ))}
         </div>
 
-        {/* Squad character left */}
+        {/* Squad character left — pushed off-screen so they frame, not fight */}
         <motion.div
           initial={{ opacity: 0, x: -60, y: 30 }}
           animate={{ opacity: 1, x: 0, y: 0 }}
           transition={{ duration: 1, delay: 0.3 }}
-          className="float-slow pointer-events-none absolute bottom-12 left-4 z-10 hidden md:block lg:left-12"
+          className="float-slow pointer-events-none absolute -bottom-4 left-0 z-10 hidden lg:block xl:-left-32 2xl:-left-40"
         >
           <img
             src={squad}
             alt="Squad"
-            className="h-72 w-auto drop-shadow-[0_0_50px_rgba(255,61,160,0.55)] lg:h-[26rem]"
+            className="h-[58vh] max-h-[540px] w-auto drop-shadow-[0_0_50px_rgba(255,61,160,0.45)]"
             draggable={false}
           />
-          {/* Speech bubble */}
-          <div className="absolute -top-2 left-32 hidden w-56 lg:block">
+          <div className="absolute top-12 left-[60%] hidden w-56 xl:block">
             <AnimatePresence mode="wait">
               <motion.div
                 key={d}
@@ -163,15 +116,15 @@ export const Nation = () => {
           initial={{ opacity: 0, x: 60, y: 30 }}
           animate={{ opacity: 1, x: 0, y: 0 }}
           transition={{ duration: 1, delay: 0.5 }}
-          className="float-y pointer-events-none absolute right-4 bottom-12 z-10 hidden md:block lg:right-12"
+          className="float-y pointer-events-none absolute right-0 bottom-0 z-10 hidden lg:block xl:-right-8 2xl:-right-16"
         >
           <img
             src={mentor}
             alt="Mentor"
-            className="h-72 w-auto drop-shadow-[0_0_50px_rgba(139,92,246,0.55)] lg:h-[26rem]"
+            className="h-[60vh] max-h-[560px] w-auto drop-shadow-[0_0_50px_rgba(139,92,246,0.55)]"
             draggable={false}
           />
-          <div className="absolute -top-2 right-32 hidden w-56 lg:block">
+          <div className="absolute top-10 right-44 hidden w-56 xl:block">
             <AnimatePresence mode="wait">
               <motion.div
                 key={d + 100}
@@ -193,22 +146,23 @@ export const Nation = () => {
           </div>
         </motion.div>
 
-        <div className="relative z-20 max-w-4xl px-6 text-center">
+        <div className="relative z-20 mx-auto max-w-3xl px-6 text-center">
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="font-display mb-5 inline-flex items-center gap-2 rounded-full border border-violet-400/40 bg-violet-500/10 px-4 py-1.5 text-[10px] tracking-[0.4em] text-violet-200 uppercase backdrop-blur-md"
+            className="font-display mb-6 inline-flex items-center gap-2 rounded-full border border-violet-400/50 bg-violet-500/10 px-5 py-2 text-[10px] tracking-[0.45em] text-violet-200 uppercase backdrop-blur-md"
           >
-            <FaBolt className="size-3 text-violet-300" />
-            The CoLab Nation · Live Soon
+            <span className="size-1.5 animate-pulse rounded-full bg-violet-400" />
+            Coming May 2026
+            <HiSparkles className="size-3 text-violet-300" />
           </motion.div>
 
           <motion.h1
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="font-impact mb-6 text-[clamp(2.8rem,9vw,6.25rem)] leading-[0.92] tracking-tight uppercase"
+            className="font-impact mb-6 text-[clamp(2.6rem,8.5vw,6rem)] leading-[0.92] tracking-tight uppercase"
           >
             <span className="shimmer-text block drop-shadow-[0_0_32px_rgba(255,61,160,0.55)]">
               Find your squad.
@@ -222,200 +176,138 @@ export const Nation = () => {
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.45 }}
-            className="text-text-dim mx-auto mb-8 max-w-xl text-base sm:text-lg"
+            className="font-display mx-auto mb-3 max-w-xl text-sm tracking-[0.22em] text-white/85 uppercase sm:text-base"
           >
-            12,500+ builders worldwide. Live missions, public badges, and a feed
-            that reads like a launch room. This is the citizen layer of CoLab.
+            The citizen layer goes live in May.
+          </motion.p>
+          <motion.p
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.6 }}
+            className="text-text-dim mx-auto mb-8 max-w-md text-sm sm:text-base"
+          >
+            A live launch room of builders, mentors, and missions. Get early
+            access — citizenship slots are limited.
           </motion.p>
 
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.6 }}
+            transition={{ duration: 0.8, delay: 0.75 }}
             className="flex flex-wrap items-center justify-center gap-3"
           >
             <Link to="/join">
-              <Button rightIcon={TiLocationArrow} className="px-7 py-3.5">
-                Become a Citizen
+              <Button
+                rightIcon={TiLocationArrow}
+                className="px-7 py-3.5 shadow-[0_0_40px_rgba(255,61,160,0.45)]"
+              >
+                Get Early Access
               </Button>
             </Link>
             <Link to="/programs">
               <Button variant="ghost" className="px-7 py-3.5">
-                Explore Missions
+                See Programs
               </Button>
             </Link>
           </motion.div>
         </div>
       </section>
 
-      {/* ─── LIVE FEED + MISSIONS ─────────────────────────────── */}
+      {/* ─── PREVIEW BEATS ─────────────────────────────────── */}
       <section className="relative overflow-hidden py-20">
-        <div className="mx-auto grid max-w-7xl gap-10 px-6 lg:grid-cols-[1.2fr,1fr]">
-          {/* Live missions */}
+        <div className="mx-auto max-w-5xl px-6">
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7 }}
-          >
-            <p className="font-display text-neon-pink mb-3 text-xs tracking-[0.4em] uppercase">
-              ✦ Mission Queue
-            </p>
-            <h2 className="font-display mb-8 text-3xl font-black uppercase sm:text-4xl">
-              Season 1 <span className="gradient-text">missions.</span>
-            </h2>
-
-            <div className="space-y-4">
-              {MISSIONS.map((m, i) => (
-                <motion.div
-                  key={m.code}
-                  initial={{ opacity: 0, x: -20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: i * 0.08 }}
-                  className="neon-border group relative overflow-hidden rounded-2xl p-5 transition-all hover:translate-x-1"
-                >
-                  <div
-                    className={`pointer-events-none absolute -top-12 -right-12 size-40 rounded-full bg-gradient-to-br ${m.accent} opacity-15 blur-2xl transition-opacity group-hover:opacity-30`}
-                  />
-                  <div className="relative flex items-center gap-5">
-                    <div
-                      className={`font-display flex size-14 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br ${m.accent} text-sm font-black text-white shadow-lg`}
-                    >
-                      {m.code}
-                    </div>
-                    <div className="flex-1">
-                      <div className="flex items-center gap-2">
-                        <h3 className="font-display text-base font-black uppercase sm:text-lg">
-                          {m.title}
-                        </h3>
-                        <span
-                          className={`font-display rounded-full px-2.5 py-0.5 text-[9px] font-bold tracking-widest uppercase ${
-                            m.status === "OPEN"
-                              ? "border border-emerald-400/40 bg-emerald-500/10 text-emerald-300"
-                              : m.status === "QUEUED"
-                                ? "border border-amber-400/40 bg-amber-500/10 text-amber-300"
-                                : "border border-white/10 bg-white/5 text-white/40"
-                          }`}
-                        >
-                          {m.status === "OPEN" && (
-                            <span className="mr-1 inline-block size-1.5 animate-pulse rounded-full bg-emerald-400" />
-                          )}
-                          {m.status}
-                        </span>
-                      </div>
-                      <p className="text-text-dim mt-1 text-xs sm:text-sm">
-                        {m.desc}
-                      </p>
-                    </div>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </motion.div>
-
-          {/* Live feed */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7, delay: 0.15 }}
-          >
-            <p className="font-display text-neon-violet mb-3 text-xs tracking-[0.4em] uppercase">
-              ✦ Live Nation Feed
-            </p>
-            <h2 className="font-display mb-8 text-3xl font-black uppercase sm:text-4xl">
-              The <span className="gradient-text">launch room.</span>
-            </h2>
-            <div className="neon-border relative overflow-hidden rounded-3xl p-5 sm:p-6">
-              <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-violet-500/5 via-transparent to-pink-500/5" />
-              <div className="relative space-y-4">
-                {FEED.map((f, i) => (
-                  <motion.div
-                    key={f.who + i}
-                    initial={{ opacity: 0, y: 10 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.5, delay: i * 0.1 }}
-                    className="group flex items-start gap-3 rounded-xl border border-white/5 bg-white/[0.03] p-4 transition-colors hover:border-white/15 hover:bg-white/[0.05]"
-                  >
-                    <div
-                      className={`size-9 shrink-0 rounded-full bg-gradient-to-br ${f.accent} shadow-lg`}
-                    />
-                    <div className="min-w-0 flex-1">
-                      <div className="flex items-baseline justify-between gap-2">
-                        <p className="font-display text-sm font-bold text-white">
-                          {f.who}
-                        </p>
-                        <span className="text-text-dim text-[10px] tracking-wider uppercase">
-                          {f.time} ago
-                        </span>
-                      </div>
-                      <p className="text-text-dim mt-1 text-sm leading-relaxed">
-                        {f.text}
-                      </p>
-                    </div>
-                  </motion.div>
-                ))}
-              </div>
-              <div className="mt-5 flex items-center justify-center border-t border-white/10 pt-5">
-                <span className="text-text-dim font-display flex items-center gap-2 text-[10px] tracking-widest uppercase">
-                  <span className="size-1.5 animate-pulse rounded-full bg-emerald-400" />
-                  Live · 12.5K+ active citizens
-                </span>
-              </div>
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* ─── BADGES ─────────────────────────────────────────────── */}
-      <section className="relative overflow-hidden py-24">
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-pink-500/4 to-transparent" />
-        <div className="mx-auto max-w-7xl px-6">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            viewport={{ once: true, margin: "-60px" }}
             transition={{ duration: 0.7 }}
             className="mb-12 text-center"
           >
-            <p className="font-display text-neon-cyan mb-3 text-xs tracking-[0.4em] uppercase">
-              ✦ Citizenship
+            <p className="font-display text-neon-violet mb-3 text-[10px] tracking-[0.45em] uppercase">
+              ✦ What's Coming
             </p>
-            <h2 className="font-display text-3xl leading-[0.95] font-black uppercase sm:text-4xl lg:text-5xl">
-              Badges <span className="gradient-text">recruiters trust.</span>
+            <h2 className="font-display text-2xl leading-tight font-black uppercase sm:text-3xl lg:text-4xl">
+              The nation, <span className="gradient-text">step by step.</span>
             </h2>
-            <p className="text-text-dim mx-auto mt-4 max-w-lg text-base sm:text-lg">
-              Cryptographically signed. Mentor verified. Public on your profile,
-              forever.
+          </motion.div>
+
+          <div className="grid gap-4 md:grid-cols-3">
+            {PREVIEW_BEATS.map((b, i) => (
+              <motion.div
+                key={b.code}
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-60px" }}
+                transition={{ duration: 0.55, delay: i * 0.1 }}
+                whileHover={{ y: -4 }}
+                className="neon-border group relative overflow-hidden rounded-2xl p-6"
+              >
+                <div
+                  className={`pointer-events-none absolute -top-12 -right-12 size-40 rounded-full bg-gradient-to-br ${b.accent} opacity-15 blur-2xl transition-opacity duration-500 group-hover:opacity-35`}
+                />
+                <div className="relative">
+                  <div className="mb-4 flex items-center justify-between">
+                    <div
+                      className={`font-display flex size-12 items-center justify-center rounded-xl bg-gradient-to-br ${b.accent} text-xs font-black text-white shadow-lg`}
+                    >
+                      {b.code}
+                    </div>
+                    <span className="font-display rounded-full border border-white/15 bg-white/5 px-2.5 py-1 text-[9px] tracking-widest text-white/50 uppercase">
+                      Soon
+                    </span>
+                  </div>
+                  <h3 className="font-display mb-2 text-base font-black uppercase sm:text-lg">
+                    {b.title}
+                  </h3>
+                  <p className="text-text-dim text-sm leading-relaxed">
+                    {b.desc}
+                  </p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ─── BADGE PREVIEW ─────────────────────────────────── */}
+      <section className="relative overflow-hidden py-20">
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-pink-500/4 to-transparent" />
+        <div className="mx-auto max-w-6xl px-6">
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-60px" }}
+            transition={{ duration: 0.7 }}
+            className="mb-10 text-center"
+          >
+            <p className="font-display text-neon-cyan mb-3 text-[10px] tracking-[0.45em] uppercase">
+              ✦ Badge Preview
             </p>
+            <h2 className="font-display text-2xl leading-tight font-black uppercase sm:text-3xl lg:text-4xl">
+              Earn what <span className="gradient-text">recruiters trust.</span>
+            </h2>
           </motion.div>
 
           <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6">
             {BADGES.map((b, i) => (
               <motion.div
                 key={b.name}
-                initial={{ opacity: 0, scale: 0.8 }}
+                initial={{ opacity: 0, scale: 0.85 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
-                transition={{
-                  duration: 0.5,
-                  delay: i * 0.07,
-                  ease: [0.22, 1, 0.36, 1],
-                }}
-                whileHover={{ y: -6, scale: 1.05 }}
+                transition={{ duration: 0.5, delay: i * 0.07 }}
+                whileHover={{ y: -4, scale: 1.04 }}
                 className="neon-border group relative overflow-hidden rounded-2xl p-5 text-center"
               >
                 <div
-                  className={`pointer-events-none absolute -top-10 left-1/2 size-24 -translate-x-1/2 rounded-full bg-gradient-to-br ${b.color} opacity-30 blur-2xl transition-opacity duration-500 group-hover:opacity-60`}
+                  className={`pointer-events-none absolute -top-10 left-1/2 size-24 -translate-x-1/2 rounded-full bg-gradient-to-br ${b.color} opacity-25 blur-2xl transition-opacity duration-500 group-hover:opacity-55`}
                 />
                 <div
-                  className={`mx-auto mb-3 flex size-14 items-center justify-center rounded-2xl bg-gradient-to-br ${b.color} text-2xl text-white shadow-lg`}
+                  className={`mx-auto mb-3 flex size-12 items-center justify-center rounded-2xl bg-gradient-to-br ${b.color} text-xl text-white shadow-lg`}
                 >
                   {b.icon}
                 </div>
-                <p className="font-display text-xs font-black tracking-wider uppercase">
+                <p className="font-display text-[11px] font-black tracking-wider uppercase">
                   {b.name}
                 </p>
               </motion.div>
@@ -424,9 +316,9 @@ export const Nation = () => {
         </div>
       </section>
 
-      {/* ─── CITIZENSHIP CTA ─────────────────────────────────── */}
+      {/* ─── CITIZENSHIP CTA ─────────────────────────────── */}
       <section className="relative overflow-hidden py-20">
-        <div className="mx-auto max-w-7xl px-6">
+        <div className="mx-auto max-w-3xl px-6">
           <motion.div
             initial={{ opacity: 0, scale: 0.96 }}
             whileInView={{ opacity: 1, scale: 1 }}
@@ -439,29 +331,29 @@ export const Nation = () => {
             <img
               src={aibot}
               alt="Nova"
-              className="float-y pointer-events-none absolute -top-6 right-12 hidden h-40 w-auto drop-shadow-[0_0_40px_rgba(56,240,255,0.6)] sm:block"
+              className="float-y pointer-events-none absolute -top-6 right-8 hidden h-32 w-auto drop-shadow-[0_0_40px_rgba(56,240,255,0.6)] sm:block"
               draggable={false}
             />
 
-            <div className="relative max-w-2xl">
-              <p className="font-display text-neon-pink mb-3 text-xs tracking-[0.4em] uppercase">
+            <div className="relative max-w-xl">
+              <p className="font-display text-neon-pink mb-3 text-[10px] tracking-[0.45em] uppercase">
                 <HiSparkles className="mr-1.5 inline" />
-                Apply for Citizenship
+                Founders' Cohort
               </p>
-              <h3 className="font-impact mb-4 text-3xl leading-[0.92] font-black uppercase sm:text-5xl">
-                The nation is{" "}
-                <span className="gradient-text">accepting citizens.</span>
+              <h3 className="font-impact mb-4 text-2xl leading-tight font-black uppercase sm:text-4xl">
+                Citizenship opens{" "}
+                <span className="gradient-text">May 2026.</span>
               </h3>
-              <p className="text-text-dim mb-8 max-w-md text-base">
-                500 founding builder seats for Season 1. One verified badge. One
-                global Demo Day. Zero résumé games.
+              <p className="text-text-dim mb-7 max-w-md text-sm sm:text-base">
+                500 founder seats. Verified work. Direct draft to companies that
+                hire on proof — not promises.
               </p>
               <Link to="/join">
                 <Button
                   rightIcon={TiLocationArrow}
                   className="px-8 py-4 shadow-[0_0_40px_rgba(255,61,160,0.45)]"
                 >
-                  Become a Citizen
+                  Reserve My Seat
                 </Button>
               </Link>
             </div>

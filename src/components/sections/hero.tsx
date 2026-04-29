@@ -25,13 +25,8 @@ const HERO_VIDEOS = [
   "/videos/hero-4.mp4",
 ];
 
-const TAGLINES = [
-  "Proof beats pedigree. Every. Single. Time.",
-  "One verified badge. Infinite doors.",
-  "Your commits are your credentials.",
-  "Ship loud. Get seen. Get drafted.",
-  "The arena where skills speak louder than résumés.",
-];
+// Single, calm tagline — no rotation
+const TAGLINE = "Where creators become legends.";
 
 // Manga-style dialogue between the two heroes
 const DIALOGUE = [
@@ -45,7 +40,7 @@ const DIALOGUE = [
   },
   {
     left: "Squad assembled. Mission loaded.",
-    right: "Recruiters incoming in T-minus 12 weeks.",
+    right: "Recruiters incoming. May 2026.",
   },
   {
     left: "Pitch beats pedigree.",
@@ -59,7 +54,6 @@ const DIALOGUE = [
 
 export const Hero = () => {
   const [current, setCurrent] = useState(0);
-  const [tagline, setTagline] = useState(0);
   const [dialogue, setDialogue] = useState(0);
   const sectionRef = useRef<HTMLElement>(null);
 
@@ -76,14 +70,6 @@ export const Hero = () => {
     const t = setInterval(() => {
       setCurrent((c) => (c + 1) % HERO_VIDEOS.length);
     }, 7000);
-    return () => clearInterval(t);
-  }, []);
-
-  useEffect(() => {
-    const t = setInterval(
-      () => setTagline((c) => (c + 1) % TAGLINES.length),
-      3200
-    );
     return () => clearInterval(t);
   }, []);
 
@@ -189,7 +175,7 @@ export const Hero = () => {
       {/* LEFT character — Builder */}
       <motion.div
         style={{ y: yLeft }}
-        className="pointer-events-none absolute bottom-0 left-0 z-10 hidden lg:block"
+        className="pointer-events-none absolute bottom-0 left-0 z-10 hidden lg:block xl:-left-10 2xl:-left-20"
       >
         <motion.img
           src={builder}
@@ -197,7 +183,7 @@ export const Hero = () => {
           initial={{ opacity: 0, x: -80, y: 40 }}
           animate={{ opacity: 1, x: 0, y: 0 }}
           transition={{ duration: 1.2, delay: 0.6, ease: [0.22, 1, 0.36, 1] }}
-          className="float-y h-[78vh] max-h-[720px] w-auto drop-shadow-[0_0_60px_rgba(255,61,160,0.55)]"
+          className="float-y h-[68vh] max-h-[640px] w-auto drop-shadow-[0_0_60px_rgba(255,61,160,0.55)]"
           draggable={false}
         />
         {/* Builder energy aura */}
@@ -237,7 +223,7 @@ export const Hero = () => {
       {/* RIGHT character — Mentor */}
       <motion.div
         style={{ y: yRight }}
-        className="pointer-events-none absolute right-0 bottom-0 z-10 hidden lg:block"
+        className="pointer-events-none absolute right-0 bottom-0 z-10 hidden lg:block xl:-right-10 2xl:-right-20"
       >
         <motion.img
           src={mentor}
@@ -245,7 +231,7 @@ export const Hero = () => {
           initial={{ opacity: 0, x: 80, y: 40 }}
           animate={{ opacity: 1, x: 0, y: 0 }}
           transition={{ duration: 1.2, delay: 0.8, ease: [0.22, 1, 0.36, 1] }}
-          className="float-slow h-[78vh] max-h-[720px] w-auto drop-shadow-[0_0_60px_rgba(139,92,246,0.55)]"
+          className="float-slow h-[68vh] max-h-[640px] w-auto drop-shadow-[0_0_60px_rgba(139,92,246,0.55)]"
           draggable={false}
         />
         {/* Mentor energy aura */}
@@ -323,15 +309,15 @@ export const Hero = () => {
           />
         </motion.div>
 
-        {/* Eyebrow chip */}
+        {/* Eyebrow chip — Coming Soon */}
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.55 }}
-          className="font-display mb-5 inline-flex items-center gap-2 rounded-full border border-pink-400/40 bg-pink-500/10 px-4 py-1.5 text-[10px] tracking-[0.4em] text-pink-200 uppercase backdrop-blur-md"
+          className="font-display mb-6 inline-flex items-center gap-2 rounded-full border border-pink-400/50 bg-pink-500/10 px-5 py-2 text-[10px] tracking-[0.45em] text-pink-200 uppercase backdrop-blur-md"
         >
-          <HiSparkles className="size-3 text-pink-300" />
-          Season of Creation 2026 · Live Soon
+          <span className="size-1.5 animate-pulse rounded-full bg-pink-400" />
+          Coming May 2026 · Founders' Cohort
           <HiSparkles className="size-3 text-pink-300" />
         </motion.div>
 
@@ -350,38 +336,25 @@ export const Hero = () => {
           </span>
         </motion.h1>
 
-        {/* Sub headline */}
+        {/* Calm sub headline (no motion) */}
         <motion.p
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.95 }}
-          className="font-display mb-2 max-w-2xl text-sm tracking-[0.18em] text-white/80 uppercase sm:text-base"
+          className="font-display mb-3 max-w-2xl text-sm tracking-[0.22em] text-white/85 uppercase sm:text-base"
         >
-          Where creators become legends.
+          {TAGLINE}
         </motion.p>
 
-        {/* Rotating tagline */}
-        <motion.div
+        {/* Static sub-tagline */}
+        <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8, delay: 1.1 }}
-          className="text-text-dim mt-3 mb-2 flex h-6 items-center justify-center text-sm sm:text-base"
+          className="text-text-dim mt-1 mb-2 max-w-md text-sm sm:text-base"
         >
-          <AnimatePresence mode="wait">
-            <motion.span
-              key={tagline}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.45 }}
-              className="inline-flex items-center gap-2"
-            >
-              <HiSparkles className="text-pink-400" />
-              <span className="italic">{TAGLINES[tagline]}</span>
-              <HiSparkles className="text-violet-400" />
-            </motion.span>
-          </AnimatePresence>
-        </motion.div>
+          A new world for builders. Drops May 2026.
+        </motion.p>
 
         {/* CTAs */}
         <motion.div
