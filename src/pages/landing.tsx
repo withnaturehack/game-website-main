@@ -25,14 +25,16 @@ export const Landing = () => {
       <Stats />
 
       {/* ── HOW IT WORKS ─────────────────────────────────────────── */}
-      <section className="relative py-24 overflow-hidden" id="how-it-works">
-        <div className="pointer-events-none absolute inset-0 grid-bg opacity-15" />
-        <div className="pointer-events-none absolute top-0 left-1/2 -translate-x-1/2 h-[350px] w-[700px] bg-gradient-to-b from-violet-500/10 to-transparent blur-3xl" />
+      <section className="relative overflow-hidden py-24" id="how-it-works">
+        <div className="grid-bg pointer-events-none absolute inset-0 opacity-15" />
+        <div className="pointer-events-none absolute top-0 left-1/2 h-87.5 w-175 -translate-x-1/2 bg-linear-to-b from-violet-500/10 to-transparent blur-3xl" />
 
         <div className="mx-auto max-w-7xl px-6">
-          <motion.div {...fadeUp()} className="text-center mb-16">
-            <p className="font-display text-xs uppercase tracking-[0.4em] text-neon-pink mb-3">The System</p>
-            <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-black uppercase leading-[0.95]">
+          <motion.div {...fadeUp()} className="mb-16 text-center">
+            <p className="font-display text-neon-pink mb-3 text-xs tracking-[0.4em] uppercase">
+              The System
+            </p>
+            <h2 className="font-display text-3xl leading-[0.95] font-black uppercase sm:text-4xl lg:text-5xl">
               From builder to{" "}
               <span
                 style={{
@@ -45,8 +47,9 @@ export const Landing = () => {
                 drafted.
               </span>
             </h2>
-            <p className="mt-4 text-text-dim text-base sm:text-lg max-w-lg mx-auto">
-              Four steps that turn your skills into a verified identity recruiters can trust.
+            <p className="text-text-dim mx-auto mt-4 max-w-lg text-base sm:text-lg">
+              Four steps that turn your skills into a verified identity
+              recruiters can trust.
             </p>
           </motion.div>
 
@@ -85,23 +88,25 @@ export const Landing = () => {
                 key={item.step}
                 {...fadeUp(i * 0.1)}
                 whileHover={{ y: -6 }}
-                className="neon-border group relative overflow-hidden rounded-2xl p-6 sm:p-7 transition-shadow duration-300 hover:shadow-[0_8px_40px_-8px_rgba(255,61,160,0.25)]"
+                className="neon-border group relative overflow-hidden rounded-2xl p-6 transition-shadow duration-300 hover:shadow-[0_8px_40px_-8px_rgba(255,61,160,0.25)] sm:p-7"
               >
                 <div
-                  className={`pointer-events-none absolute -top-16 -right-16 size-48 rounded-full bg-gradient-to-br ${item.accent} opacity-10 blur-3xl group-hover:opacity-25 transition-opacity duration-500`}
+                  className={`pointer-events-none absolute -top-16 -right-16 size-48 rounded-full bg-linear-to-br ${item.accent} opacity-10 blur-3xl transition-opacity duration-500 group-hover:opacity-25`}
                 />
-                <div className="flex items-center justify-between mb-5">
+                <div className="mb-5 flex items-center justify-between">
                   <span className="text-3xl">{item.icon}</span>
                   <span
-                    className={`font-display text-5xl font-black text-transparent bg-gradient-to-br ${item.accent} bg-clip-text opacity-30 select-none`}
+                    className={`font-display bg-linear-to-br text-5xl font-black text-transparent ${item.accent} bg-clip-text opacity-30 select-none`}
                   >
                     {item.step}
                   </span>
                 </div>
-                <h3 className="font-display text-sm sm:text-base font-black uppercase tracking-wider mb-2">
+                <h3 className="font-display mb-2 text-sm font-black tracking-wider uppercase sm:text-base">
                   {item.title}
                 </h3>
-                <p className="text-text-dim text-xs sm:text-sm leading-relaxed">{item.desc}</p>
+                <p className="text-text-dim text-xs leading-relaxed sm:text-sm">
+                  {item.desc}
+                </p>
               </motion.div>
             ))}
           </div>
@@ -109,11 +114,13 @@ export const Landing = () => {
       </section>
 
       {/* ── POWERS GRID ───────────────────────────────────────────── */}
-      <section className="relative py-24 overflow-hidden">
+      <section className="relative overflow-hidden py-24">
         <div className="mx-auto max-w-7xl px-6">
-          <motion.div {...fadeUp()} className="text-center mb-16">
-            <p className="font-display text-xs uppercase tracking-[0.4em] text-neon-violet mb-3">Superpowers</p>
-            <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-black uppercase leading-[0.95]">
+          <motion.div {...fadeUp()} className="mb-16 text-center">
+            <p className="font-display text-neon-violet mb-3 text-xs tracking-[0.4em] uppercase">
+              Superpowers
+            </p>
+            <h2 className="font-display text-3xl leading-[0.95] font-black uppercase sm:text-4xl lg:text-5xl">
               Your{" "}
               <span
                 style={{
@@ -136,11 +143,17 @@ export const Landing = () => {
                 whileHover={{ y: -5, scale: 1.01 }}
                 className="neon-border group relative overflow-hidden rounded-2xl p-7 transition-shadow duration-300 hover:shadow-[0_6px_40px_-8px_rgba(139,92,246,0.3)]"
               >
-                <div className="pointer-events-none absolute -top-10 -right-10 size-36 rounded-full bg-gradient-to-br from-violet-500/15 to-transparent blur-2xl group-hover:opacity-50 transition-opacity duration-500" />
-                <span className="text-4xl mb-5 block">{p.icon}</span>
-                <p className="font-display text-[10px] uppercase tracking-[0.3em] text-neon-pink mb-1.5">{p.subtitle}</p>
-                <h3 className="font-display text-base font-black uppercase tracking-wider mb-3">{p.title}</h3>
-                <p className="text-text-dim text-sm leading-relaxed">{p.description}</p>
+                <div className="pointer-events-none absolute -top-10 -right-10 size-36 rounded-full bg-linear-to-br from-violet-500/15 to-transparent blur-2xl transition-opacity duration-500 group-hover:opacity-50" />
+                <span className="mb-5 block text-4xl">{p.icon}</span>
+                <p className="font-display text-neon-pink mb-1.5 text-[10px] tracking-[0.3em] uppercase">
+                  {p.subtitle}
+                </p>
+                <h3 className="font-display mb-3 text-base font-black tracking-wider uppercase">
+                  {p.title}
+                </h3>
+                <p className="text-text-dim text-sm leading-relaxed">
+                  {p.description}
+                </p>
               </motion.div>
             ))}
           </div>
@@ -148,41 +161,42 @@ export const Landing = () => {
       </section>
 
       {/* ── SEASON OF CREATION 2026 ────────────────────────────────── */}
-      <section className="relative py-20 overflow-hidden">
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-pink-500/[0.04] to-transparent" />
-        <div className="pointer-events-none absolute inset-0 grid-bg opacity-15" />
+      <section className="relative overflow-hidden py-20">
+        <div className="pointer-events-none absolute inset-0 bg-linear-to-b from-transparent via-pink-500/4 to-transparent" />
+        <div className="grid-bg pointer-events-none absolute inset-0 opacity-15" />
 
         <div className="mx-auto max-w-7xl px-6">
           <motion.div
             {...fadeUp()}
-            className="neon-border group relative overflow-hidden rounded-3xl p-8 sm:p-14 transition-shadow duration-500 hover:shadow-[0_16px_80px_-10px_rgba(255,61,160,0.4)]"
+            className="neon-border group relative overflow-hidden rounded-3xl p-8 transition-shadow duration-500 hover:shadow-[0_16px_80px_-10px_rgba(255,61,160,0.4)] sm:p-14"
           >
-            <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-pink-500/8 via-orange-400/4 to-violet-500/8" />
-            <div className="pointer-events-none absolute -top-32 -right-32 size-[500px] rounded-full bg-gradient-to-br from-pink-500/20 via-orange-400/10 to-transparent blur-3xl group-hover:from-pink-500/35 transition-all duration-700" />
-            <div className="pointer-events-none absolute -bottom-20 -left-20 size-[300px] rounded-full bg-gradient-to-tr from-violet-500/15 to-transparent blur-3xl" />
+            <div className="pointer-events-none absolute inset-0 bg-linear-to-br from-pink-500/8 via-orange-400/4 to-violet-500/8" />
+            <div className="pointer-events-none absolute -top-32 -right-32 size-125 rounded-full bg-linear-to-br from-pink-500/20 via-orange-400/10 to-transparent blur-3xl transition-all duration-700 group-hover:from-pink-500/35" />
+            <div className="pointer-events-none absolute -bottom-20 -left-20 size-75 rounded-full bg-linear-to-tr from-violet-500/15 to-transparent blur-3xl" />
 
-            <div className="relative flex flex-col lg:flex-row lg:items-center gap-10 lg:gap-16">
+            <div className="relative flex flex-col gap-10 lg:flex-row lg:items-center lg:gap-16">
               <div className="flex-1">
-                <div className="flex flex-wrap items-center gap-3 mb-6">
+                <div className="mb-6 flex flex-wrap items-center gap-3">
                   <div className="relative">
-                    <div className="absolute inset-0 rounded-2xl bg-gradient-to-tr from-pink-500 via-orange-400 to-violet-500 blur-xl opacity-90" />
+                    <div className="absolute inset-0 rounded-2xl bg-linear-to-tr from-pink-500 via-orange-400 to-violet-500 opacity-90 blur-xl" />
                     <img
                       src={logo}
                       alt="CoLab Nation"
-                      className="relative h-14 w-14 sm:h-16 sm:w-16 rounded-2xl border border-white/20 object-cover"
+                      className="relative h-14 w-14 rounded-2xl border border-white/20 object-cover sm:h-16 sm:w-16"
                     />
                   </div>
-                  <div className="inline-flex items-center gap-2 rounded-full border border-pink-500/40 bg-pink-500/10 px-4 py-2 text-[10px] font-display uppercase tracking-[0.3em] text-pink-300">
+                  <div className="font-display inline-flex items-center gap-2 rounded-full border border-pink-500/40 bg-pink-500/10 px-4 py-2 text-[10px] tracking-[0.3em] text-pink-300 uppercase">
                     <HiSparkles className="size-3" />
                     Flagship Program · Coming Soon
                   </div>
                 </div>
 
-                <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-black uppercase leading-[0.92] mb-5">
+                <h2 className="font-display mb-5 text-3xl leading-[0.92] font-black uppercase sm:text-4xl lg:text-5xl">
                   Season of <br />
                   <span
                     style={{
-                      background: "linear-gradient(90deg,#ff3da0,#ff8a3d,#8b5cf6)",
+                      background:
+                        "linear-gradient(90deg,#ff3da0,#ff8a3d,#8b5cf6)",
                       WebkitBackgroundClip: "text",
                       backgroundClip: "text",
                       color: "transparent",
@@ -191,9 +205,10 @@ export const Landing = () => {
                     Creation 2026
                   </span>
                 </h2>
-                <p className="text-text-dim text-base leading-relaxed max-w-md mb-8">
-                  12 weeks · 5 missions · Global Demo Day. The first CoLab Nation cohort launches
-                  August 2026. 500 founding builder seats — yours for the taking.
+                <p className="text-text-dim mb-8 max-w-md text-base leading-relaxed">
+                  12 weeks · 5 missions · Global Demo Day. The first CoLab
+                  Nation cohort launches May 2026. 500 founding builder seats —
+                  yours for the taking.
                 </p>
 
                 <div className="flex flex-wrap gap-3">
@@ -211,26 +226,31 @@ export const Landing = () => {
               </div>
 
               {/* Stats column */}
-              <div className="grid grid-cols-2 gap-3 lg:flex lg:flex-col lg:shrink-0 lg:gap-3">
+              <div className="grid grid-cols-2 gap-3 lg:flex lg:shrink-0 lg:flex-col lg:gap-3">
                 {[
                   { v: "500", l: "Builder seats" },
                   { v: "12 wks", l: "Duration" },
                   { v: "100+", l: "Recruiters on Demo Day" },
-                  { v: "Aug 2026", l: "Cohort opens" },
+                  { v: "May 2026", l: "Cohort opens" },
                 ].map((st) => (
                   <div
                     key={st.l}
-                    className="neon-border rounded-2xl bg-white/[0.03] px-5 py-4 text-center min-w-[130px]"
+                    className="neon-border min-w-32.5 rounded-2xl bg-white/3 px-5 py-4 text-center"
                   >
-                    <p className="font-display text-xl sm:text-2xl font-black"
+                    <p
+                      className="font-display text-xl font-black sm:text-2xl"
                       style={{
                         background: "linear-gradient(90deg,#ff3da0,#8b5cf6)",
                         WebkitBackgroundClip: "text",
                         backgroundClip: "text",
                         color: "transparent",
                       }}
-                    >{st.v}</p>
-                    <p className="font-display text-[10px] uppercase tracking-widest text-text-dim mt-1">{st.l}</p>
+                    >
+                      {st.v}
+                    </p>
+                    <p className="font-display text-text-dim mt-1 text-[10px] tracking-widest uppercase">
+                      {st.l}
+                    </p>
                   </div>
                 ))}
               </div>
@@ -240,12 +260,14 @@ export const Landing = () => {
       </section>
 
       {/* ── DIRECT HIRING ─────────────────────────────────────────── */}
-      <section className="relative py-24 overflow-hidden">
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-orange-500/[0.03] to-transparent" />
+      <section className="relative overflow-hidden py-24">
+        <div className="pointer-events-none absolute inset-0 bg-linear-to-b from-transparent via-orange-500/3 to-transparent" />
         <div className="mx-auto max-w-7xl px-6">
-          <motion.div {...fadeUp()} className="text-center mb-16">
-            <p className="font-display text-xs uppercase tracking-[0.4em] text-neon-orange mb-3">Career Bridge</p>
-            <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-black uppercase leading-[0.95]">
+          <motion.div {...fadeUp()} className="mb-16 text-center">
+            <p className="font-display text-neon-orange mb-3 text-xs tracking-[0.4em] uppercase">
+              Career Bridge
+            </p>
+            <h2 className="font-display text-3xl leading-[0.95] font-black uppercase sm:text-4xl lg:text-5xl">
               Skip the application.{" "}
               <span
                 style={{
@@ -258,13 +280,14 @@ export const Landing = () => {
                 Get drafted.
               </span>
             </h2>
-            <p className="mt-4 text-text-dim text-base sm:text-lg max-w-lg mx-auto">
-              CoLab's hiring network connects verified builders directly with companies — no cold emails, no ghosting.
+            <p className="text-text-dim mx-auto mt-4 max-w-lg text-base sm:text-lg">
+              CoLab's hiring network connects verified builders directly with
+              companies — no cold emails, no ghosting.
             </p>
           </motion.div>
 
           {/* How hiring works */}
-          <div className="grid gap-5 sm:grid-cols-3 mb-10">
+          <div className="mb-10 grid gap-5 sm:grid-cols-3">
             {[
               {
                 step: "01",
@@ -292,15 +315,25 @@ export const Landing = () => {
                 key={item.step}
                 {...fadeUp(i * 0.1)}
                 whileHover={{ y: -6 }}
-                className="neon-border group relative overflow-hidden rounded-2xl p-7 hover:shadow-[0_8px_40px_-8px_rgba(255,138,61,0.25)] transition-shadow duration-300"
+                className="neon-border group relative overflow-hidden rounded-2xl p-7 transition-shadow duration-300 hover:shadow-[0_8px_40px_-8px_rgba(255,138,61,0.25)]"
               >
-                <div className={`pointer-events-none absolute -top-12 -right-12 size-40 rounded-full bg-gradient-to-br ${item.accent} opacity-10 blur-2xl group-hover:opacity-25 transition-opacity duration-500`} />
-                <div className="flex items-start justify-between mb-5">
+                <div
+                  className={`pointer-events-none absolute -top-12 -right-12 size-40 rounded-full bg-linear-to-br ${item.accent} opacity-10 blur-2xl transition-opacity duration-500 group-hover:opacity-25`}
+                />
+                <div className="mb-5 flex items-start justify-between">
                   <span className="text-3xl">{item.icon}</span>
-                  <span className={`font-display text-5xl font-black text-transparent bg-gradient-to-br ${item.accent} bg-clip-text opacity-20 select-none`}>{item.step}</span>
+                  <span
+                    className={`font-display bg-linear-to-br text-5xl font-black text-transparent ${item.accent} bg-clip-text opacity-20 select-none`}
+                  >
+                    {item.step}
+                  </span>
                 </div>
-                <h3 className="font-display text-sm font-black uppercase tracking-wider mb-2">{item.title}</h3>
-                <p className="text-text-dim text-sm leading-relaxed">{item.desc}</p>
+                <h3 className="font-display mb-2 text-sm font-black tracking-wider uppercase">
+                  {item.title}
+                </h3>
+                <p className="text-text-dim text-sm leading-relaxed">
+                  {item.desc}
+                </p>
               </motion.div>
             ))}
           </div>
@@ -308,36 +341,56 @@ export const Landing = () => {
           {/* Hiring partner slots */}
           <motion.div
             {...fadeUp(0.2)}
-            className="neon-border relative overflow-hidden rounded-3xl p-8 sm:p-10 bg-white/[0.02]"
+            className="neon-border relative overflow-hidden rounded-3xl bg-white/2 p-8 sm:p-10"
           >
-            <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-orange-500/[0.05] via-transparent to-violet-500/[0.05]" />
-            <div className="relative flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+            <div className="pointer-events-none absolute inset-0 bg-linear-to-br from-orange-500/5 via-transparent to-violet-500/5" />
+            <div className="relative flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-center">
               <div>
-                <p className="font-display text-xs uppercase tracking-[0.3em] text-neon-orange mb-2">Hiring Network</p>
-                <h3 className="font-display text-xl sm:text-2xl font-black uppercase mb-2">
-                  Companies joining <span className="gradient-text">Season 1</span>
+                <p className="font-display text-neon-orange mb-2 text-xs tracking-[0.3em] uppercase">
+                  Hiring Network
+                </p>
+                <h3 className="font-display mb-2 text-xl font-black uppercase sm:text-2xl">
+                  Companies joining{" "}
+                  <span className="gradient-text">Season 1</span>
                 </h3>
-                <p className="text-text-dim text-sm leading-relaxed max-w-md">
-                  Partner slots are opening for companies that want first access to verified CoLab builders at Demo Day.
-                  Startups, scale-ups, and product studios welcome.
+                <p className="text-text-dim max-w-md text-sm leading-relaxed">
+                  Partner slots are opening for companies that want first access
+                  to verified CoLab builders at Demo Day. Startups, scale-ups,
+                  and product studios welcome.
                 </p>
               </div>
-              <div className="flex flex-col gap-3 shrink-0">
+              <div className="flex shrink-0 flex-col gap-3">
                 <Link to="/join">
-                  <Button rightIcon={TiLocationArrow} className="whitespace-nowrap">
+                  <Button
+                    rightIcon={TiLocationArrow}
+                    className="whitespace-nowrap"
+                  >
                     Join as a Builder
                   </Button>
                 </Link>
                 <a href="mailto:team@colabnation.com">
-                  <Button variant="outline" className="whitespace-nowrap text-xs px-5 py-2.5">
+                  <Button
+                    variant="outline"
+                    className="px-5 py-2.5 text-xs whitespace-nowrap"
+                  >
                     Partner with CoLab →
                   </Button>
                 </a>
               </div>
             </div>
             <div className="mt-8 flex flex-wrap gap-3">
-              {["Startups", "Scale-ups", "Tech Labs", "Product Studios", "Venture-backed Teams", "+ You?"].map((co) => (
-                <span key={co} className="font-display text-[10px] sm:text-xs font-bold uppercase tracking-widest text-white/30 border border-white/10 rounded-full px-4 py-2 hover:text-white/60 hover:border-white/25 transition-colors cursor-default">
+              {[
+                "Startups",
+                "Scale-ups",
+                "Tech Labs",
+                "Product Studios",
+                "Venture-backed Teams",
+                "+ You?",
+              ].map((co) => (
+                <span
+                  key={co}
+                  className="font-display cursor-default rounded-full border border-white/10 px-4 py-2 text-[10px] font-bold tracking-widest text-white/30 uppercase transition-colors hover:border-white/25 hover:text-white/60 sm:text-xs"
+                >
                   {co}
                 </span>
               ))}

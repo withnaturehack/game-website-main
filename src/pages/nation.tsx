@@ -1,322 +1,35 @@
-import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
-import { TiLocationArrow } from "react-icons/ti";
-import { HiSparkles } from "react-icons/hi";
-import { Button } from "@/components/ui/button";
-
-import { BADGES } from "@/constants";
-import { SectionHeading } from "@/components/ui/section-heading";
 import squad from "@/assets/characters/squad.png";
-import logo from "@assets/45375_1777311860118.png";
-import { CtaBanner } from "@/components/sections/cta-banner";
-import { ConfettiBurst, StarField } from "@/components/ui/particles";
-
-const MISSIONS = [
-  {
-    title: "Operation: Open Source Atlas",
-    squad: "8 builders · 2 mentors",
-    type: "Open Source",
-    status: "Active",
-    accent: "from-pink-500 to-orange-400",
-  },
-  {
-    title: "AI Agent Build Week",
-    squad: "12 builders · 3 mentors",
-    type: "Hackathon",
-    status: "48h left",
-    accent: "from-violet-500 to-blue-500",
-  },
-  {
-    title: "Indie Founders Studio",
-    squad: "6 builders · 1 mentor",
-    type: "Startup Sprint",
-    status: "Recruiting",
-    accent: "from-emerald-400 to-cyan-400",
-  },
-  {
-    title: "DesignLab Residency",
-    squad: "5 builders · 2 mentors",
-    type: "Design",
-    status: "Active",
-    accent: "from-fuchsia-500 to-pink-500",
-  },
-];
+import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { StarField } from "@/components/ui/particles";
 
 export const Nation = () => {
   return (
     <>
-      {/* ─── HEADER ───────────────────────────────────────────────── */}
-      <section className="relative overflow-hidden py-28 sm:py-36">
-        <StarField count={80} />
-        <ConfettiBurst count={18} />
-        <div className="pointer-events-none absolute inset-0 grid-bg opacity-15" />
-        <div className="pointer-events-none absolute top-0 left-1/2 -translate-x-1/2 h-[400px] w-[600px] bg-gradient-to-b from-violet-500/15 via-pink-500/10 to-transparent blur-3xl" />
-        <div className="mx-auto max-w-5xl px-6">
-          <SectionHeading
-            eyebrow="The Nation"
-            title="A community that |actually ships.|"
-            subtitle="Open source vibes, gamified missions, real friendships. Less Slack noise, more launches."
-          />
-        </div>
-      </section>
-
-      {/* ─── SEASON OF CREATION 2026 BANNER ──────────────────────── */}
-      <section className="relative py-6 px-6 overflow-hidden">
-        <div className="mx-auto max-w-7xl">
-          <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-            className="neon-border group relative overflow-hidden rounded-3xl p-6 sm:p-10 hover:shadow-[0_12px_60px_-8px_rgba(255,61,160,0.4)] transition-shadow duration-500"
-          >
-            <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-pink-500/8 via-orange-400/4 to-violet-500/8" />
-            <div className="pointer-events-none absolute -top-24 -right-24 size-[400px] rounded-full bg-gradient-to-br from-pink-500/20 via-orange-400/10 to-transparent blur-3xl group-hover:from-pink-500/35 transition-all duration-700" />
-
-            <div className="relative flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
-              <div className="flex items-center gap-5">
-                <div className="relative shrink-0">
-                  <div className="absolute inset-0 rounded-xl bg-gradient-to-tr from-pink-500 via-orange-400 to-violet-500 blur-lg opacity-80" />
-                  <img
-                    src={logo}
-                    alt="CoLab Nation"
-                    className="relative h-14 w-14 sm:h-16 sm:w-16 rounded-xl border border-white/20 object-cover"
-                  />
-                </div>
-                <div>
-                  <div className="inline-flex items-center gap-1.5 rounded-full border border-pink-500/40 bg-pink-500/10 px-3 py-1 text-[10px] font-display uppercase tracking-[0.3em] text-pink-300 mb-2">
-                    <HiSparkles className="size-2.5" />
-                    Flagship · Coming Soon
-                  </div>
-                  <h3 className="font-display text-xl sm:text-2xl lg:text-3xl font-black uppercase leading-tight">
-                    Season of <span className="gradient-text">Creation 2026</span>
-                  </h3>
-                  <p className="text-text-dim text-xs sm:text-sm mt-1">
-                    12 weeks · 5 missions · Global Demo Day · Opens Aug 2026
-                  </p>
-                </div>
-              </div>
-              <div className="flex flex-wrap gap-3 shrink-0">
-                <Link to="/join">
-                  <Button rightIcon={TiLocationArrow} className="px-6 py-3 text-xs whitespace-nowrap">
-                    Join Waitlist
-                  </Button>
-                </Link>
-                <Link to="/programs">
-                  <Button variant="ghost" className="px-6 py-3 text-xs whitespace-nowrap">
-                    Learn More
-                  </Button>
-                </Link>
-              </div>
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* ─── LIVE MISSIONS — COMING SOON ──────────────────────────── */}
-      <section className="relative py-16">
-        <div className="mx-auto max-w-7xl px-6">
-          <div className="flex items-end justify-between flex-wrap gap-4 mb-10">
-            <div>
-              <h3 className="font-display text-2xl sm:text-3xl font-black uppercase">
-                Live Missions
-              </h3>
-              <p className="text-text-dim text-sm mt-1">Opening with Season of Creation 2026</p>
-            </div>
-            <div className="inline-flex items-center gap-2 rounded-full border border-violet-400/30 bg-violet-500/10 px-4 py-2 text-xs font-display uppercase tracking-[0.3em] text-violet-300">
-              <span className="size-1.5 rounded-full bg-violet-400 animate-pulse" />
-              Coming Soon · Aug 2026
-            </div>
-          </div>
-
-          {/* Coming Soon overlay grid */}
-          <div className="grid gap-5 sm:grid-cols-2">
-            {MISSIONS.map((m, i) => (
-              <motion.div
-                key={m.title}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: i * 0.08, ease: [0.22, 1, 0.36, 1] }}
-                className="group neon-border relative overflow-hidden rounded-2xl p-6 opacity-60"
-              >
-                {/* Coming soon overlay */}
-                <div className="absolute inset-0 z-10 flex items-center justify-center rounded-2xl bg-bg/60 backdrop-blur-[2px]">
-                  <div className="text-center">
-                    <span className="inline-flex items-center gap-2 rounded-full border border-violet-400/40 bg-violet-500/15 px-4 py-2 text-xs font-display uppercase tracking-[0.3em] text-violet-300">
-                      <span className="size-1.5 rounded-full bg-violet-400 animate-pulse" />
-                      Opening Aug 2026
-                    </span>
-                  </div>
-                </div>
-
-                <div
-                  className={`pointer-events-none absolute -top-16 -right-16 size-48 rounded-full bg-gradient-to-br ${m.accent} opacity-10 blur-3xl`}
-                />
-                <div className="flex items-start justify-between gap-4 mb-5">
-                  <div>
-                    <p className="font-display text-[10px] uppercase tracking-[0.35em] text-neon-pink mb-1">{m.type}</p>
-                    <h4 className="font-display text-xl font-black leading-tight">{m.title}</h4>
-                    <p className="mt-2 text-sm text-text-dim">{m.squad}</p>
-                  </div>
-                  <span className="shrink-0 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-display uppercase tracking-widest text-white/40">
-                    {m.status}
-                  </span>
-                </div>
-                <div className="flex items-center justify-between">
-                  <div className="flex -space-x-2">
-                    {Array.from({ length: 5 }).map((_, idx) => (
-                      <span key={idx} className={`grid size-9 place-items-center rounded-full border-2 border-bg bg-gradient-to-br ${m.accent} text-[11px] font-display font-black text-white`}>
-                        {String.fromCharCode(65 + idx)}
-                      </span>
-                    ))}
-                  </div>
-                  <span className="text-sm font-display uppercase tracking-widest text-white/30">Enlist →</span>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-
-          {/* CTA below */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7 }}
-            className="mt-8 neon-border rounded-2xl p-6 sm:p-8 text-center bg-white/[0.02]"
-          >
-            <p className="font-display text-lg sm:text-xl font-black uppercase mb-2">
-              Be first to <span className="gradient-text">enlist in a mission</span>
-            </p>
-            <p className="text-text-dim text-sm mb-5">
-              Join the waitlist — founding builders get priority placement in Season 1 missions launching August 2026.
-            </p>
-            <Link to="/join">
-              <Button rightIcon={TiLocationArrow}>Reserve My Spot</Button>
-            </Link>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* ─── BADGES ───────────────────────────────────────────────── */}
-      <section className="relative py-24 overflow-hidden">
-        <div className="pointer-events-none absolute inset-0 grid-bg opacity-10" />
-        <SectionHeading
-          eyebrow="Achievements"
-          title="Earn |badges.| Unlock the future."
-          subtitle="Every milestone unlocks a permanent, verifiable badge on your profile."
+      {/* ─── NATION COMING SOON ──────────────────────────────── */}
+      <section className="relative flex min-h-[60vh] flex-col items-center justify-center py-32">
+        <StarField count={60} />
+        <div className="grid-bg pointer-events-none absolute inset-0 opacity-15" />
+        <div className="pointer-events-none absolute top-0 left-1/2 h-100 w-150 -translate-x-1/2 bg-linear-to-b from-violet-500/15 via-pink-500/10 to-transparent blur-3xl" />
+        {/* Animated character */}
+        <img
+          src={squad}
+          alt="Squad Character"
+          className="animate-float pointer-events-none absolute bottom-0 left-10 hidden h-64 w-auto drop-shadow-xl md:block"
+          style={{ animationDuration: "4s" }}
         />
-        <div className="mx-auto mt-14 grid max-w-5xl grid-cols-2 gap-6 px-6 sm:grid-cols-3 lg:grid-cols-6">
-          {BADGES.map((b, i) => (
-            <motion.div
-              key={b.name}
-              initial={{ opacity: 0, scale: 0.5, rotate: -15 }}
-              whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.55, delay: i * 0.07, type: "spring", stiffness: 200, damping: 15 }}
-              whileHover={{ y: -10, rotate: 5, scale: 1.05 }}
-              className="flex flex-col items-center gap-3"
-            >
-              <div
-                className={`relative grid size-20 sm:size-24 place-items-center clip-hex bg-gradient-to-br ${b.color} text-2xl sm:text-3xl text-white pulse-glow`}
-              >
-                <span className="relative z-10">{b.icon}</span>
-                <div className={`absolute inset-0 clip-hex bg-gradient-to-br ${b.color} opacity-50 blur-md`} />
-              </div>
-              <p className="font-display text-[10px] uppercase tracking-[0.2em] text-center text-white/85 leading-tight">
-                {b.name}
-              </p>
-            </motion.div>
-          ))}
+        <div className="relative z-10 text-center">
+          <h1 className="font-impact gradient-text mb-6 text-5xl font-black tracking-tight uppercase sm:text-7xl">
+            Nation Section
+          </h1>
+          <p className="text-text-dim mb-8 text-xl sm:text-2xl">
+            Launching May 2026. The next era of community is almost here.
+          </p>
+          <Link to="/join">
+            <Button className="px-8 py-4 text-lg">Get Early Access</Button>
+          </Link>
         </div>
       </section>
-
-      {/* ─── COMMUNITY FEED ──────────────────────────────────────── */}
-      <section className="relative py-24 overflow-hidden">
-        <SectionHeading
-          eyebrow="Live Feed"
-          title="The nation moves |out loud.|"
-        />
-        <div className="mx-auto mt-12 grid max-w-7xl gap-6 px-6 lg:grid-cols-3">
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-            className="lg:col-span-1 flex items-center justify-center"
-          >
-            <img
-              src={squad}
-              alt="Squad"
-              className="float-y w-full max-w-xs drop-shadow-[0_0_50px_rgba(255,61,160,0.4)]"
-              draggable={false}
-            />
-          </motion.div>
-
-          <div className="lg:col-span-2 space-y-4">
-            {[
-              {
-                user: "@aria.builds",
-                text: "Just shipped my AI study buddy MVP 🎉 Mentor said it's production-ready!",
-                time: "2m",
-                tag: "LAUNCH",
-                color: "from-pink-500 to-orange-400",
-              },
-              {
-                user: "@kenji.codes",
-                text: "Squad locked in for AI Agent Build Week. 12 humans. 1 mission. LET'S GO 🚀",
-                time: "14m",
-                tag: "SQUAD",
-                color: "from-violet-500 to-blue-500",
-              },
-              {
-                user: "@nova.research",
-                text: "Mentor's Pick badge unlocked! Months of papers finally paid off.",
-                time: "1h",
-                tag: "BADGE",
-                color: "from-amber-400 to-rose-500",
-              },
-              {
-                user: "@team-atlas",
-                text: "Open Source Atlas hit 1.2k stars overnight. The nation showed up ⚡",
-                time: "3h",
-                tag: "MILESTONE",
-                color: "from-emerald-400 to-cyan-400",
-              },
-            ].map((post, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, x: 30 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: i * 0.08, ease: [0.22, 1, 0.36, 1] }}
-                whileHover={{ x: 4 }}
-                className="neon-border flex items-start gap-4 rounded-2xl p-5 transition-shadow duration-300 hover:shadow-[0_4px_30px_-8px_rgba(255,61,160,0.2)]"
-              >
-                <div
-                  className={`grid size-12 place-items-center rounded-2xl bg-gradient-to-br ${post.color} font-display text-sm font-black shrink-0`}
-                >
-                  {post.user[1]?.toUpperCase()}
-                </div>
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center justify-between flex-wrap gap-2 mb-1">
-                    <p className="font-display font-semibold text-sm">{post.user}</p>
-                    <span className="text-xs text-text-dim">{post.time} ago</span>
-                  </div>
-                  <p className="text-text-dim text-sm leading-relaxed">{post.text}</p>
-                  <span
-                    className={`mt-3 inline-block rounded-full bg-gradient-to-r ${post.color} px-3 py-0.5 text-[10px] font-display uppercase tracking-widest`}
-                  >
-                    {post.tag}
-                  </span>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <CtaBanner />
     </>
   );
 };

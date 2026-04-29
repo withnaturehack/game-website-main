@@ -22,7 +22,7 @@ export const STATS = [
   { value: 0, suffix: " spots", label: "Founding Members (Fill Yours)" },
   { value: 500, suffix: "", label: "Builder Seats · Season 1" },
   { value: 12, suffix: " wks", label: "Program Duration" },
-  { value: 1, suffix: " launch", label: "Global Demo Day · Aug 2026" },
+  { value: 1, suffix: " launch", label: "Global Demo Day · May 2026" },
 ] as const;
 
 export const STORY_BEATS = [
@@ -95,8 +95,7 @@ export const POWERS = [
   {
     title: "Launch Pad",
     subtitle: "Visibility Boost",
-    description:
-      "Ship-day takes your project to the entire CoLab Nation feed.",
+    description: "Ship-day takes your project to the entire CoLab Nation feed.",
     icon: "🚀",
   },
   {
@@ -109,10 +108,26 @@ export const POWERS = [
 ] as const;
 
 export const TIMELINE = [
-  { year: "2023", title: "Origin Story", text: "A handful of students rejected the resume game and built the first CoLab squad." },
-  { year: "2024", title: "First Launch", text: "100 builders. 14 missions. Zero ghosted applications." },
-  { year: "2025", title: "Mentor Wave", text: "480 senior engineers and founders joined as verifiers." },
-  { year: "2026", title: "Nation Mode", text: "12.5K+ builders worldwide. The movement goes global." },
+  {
+    year: "2023",
+    title: "Origin Story",
+    text: "A handful of students rejected the resume game and built the first CoLab squad.",
+  },
+  {
+    year: "2024",
+    title: "First Launch",
+    text: "100 builders. 14 missions. Zero ghosted applications.",
+  },
+  {
+    year: "2025",
+    title: "Mentor Wave",
+    text: "480 senior engineers and founders joined as verifiers.",
+  },
+  {
+    year: "2026",
+    title: "Nation Mode",
+    text: "12.5K+ builders worldwide. The movement goes global.",
+  },
 ] as const;
 
 export const BADGES = [
@@ -130,7 +145,7 @@ export const PROGRAMS = [
     title: "Season of Creation 2026",
     tagline: "12 weeks. 5 missions. One launch.",
     status: "Coming Soon",
-    when: "Opens Aug 2026",
+    when: "Opens May 2026",
     cohort: "500 builders",
     description:
       "The flagship CoLab Nation cohort. Twelve weeks of squad missions, mentor-verified milestones, and a global Demo Day at the end.",
@@ -165,7 +180,7 @@ export const PROGRAMS = [
     title: "AI Agent Build Week",
     tagline: "From prompt to product in 7 days.",
     status: "Coming Soon",
-    when: "Q3 2026",
+    when: "Opens May 2026",
     cohort: "200 builders",
     description:
       "A one-week sprint to ship a real AI agent with squad-style collaboration, daily standups, and mentor reviews.",
@@ -182,7 +197,7 @@ export const PROGRAMS = [
     title: "DesignLab Residency",
     tagline: "Where designers earn craft proof.",
     status: "Coming Soon",
-    when: "Winter 2026",
+    when: "Opens May 2026",
     cohort: "120 designers",
     description:
       "An eight-week residency for designers shipping real product missions, mentored by founders and design leads.",

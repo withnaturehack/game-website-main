@@ -21,7 +21,9 @@ export const Navbar = () => {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  useEffect(() => { setOpen(false); }, [location.pathname]);
+  useEffect(() => {
+    setOpen(false);
+  }, [location.pathname]);
 
   return (
     <motion.header
@@ -36,24 +38,24 @@ export const Navbar = () => {
     >
       <div
         className={cn(
-          "mx-4 sm:mx-6 flex max-w-[1360px] xl:mx-auto items-center justify-between rounded-2xl px-4 sm:px-6 py-3 transition-all duration-500",
+          "mx-4 flex max-w-[1360px] items-center justify-between rounded-2xl px-4 py-3 transition-all duration-500 sm:mx-6 sm:px-6 xl:mx-auto",
           scrolled
-            ? "bg-[rgba(5,2,15,0.75)] backdrop-blur-2xl border border-white/[0.09] shadow-[0_8px_60px_-8px_rgba(139,92,246,0.35)]"
+            ? "border border-white/[0.09] bg-[rgba(5,2,15,0.75)] shadow-[0_8px_60px_-8px_rgba(139,92,246,0.35)] backdrop-blur-2xl"
             : "bg-transparent"
         )}
       >
         {/* ── Logo ── */}
-        <Link to="/" className="group flex items-center gap-3 shrink-0">
+        <Link to="/" className="group flex shrink-0 items-center gap-3">
           <span className="relative">
-            <span className="absolute inset-0 rounded-xl bg-gradient-to-tr from-pink-500 via-orange-400 to-violet-500 blur-md opacity-50 group-hover:opacity-90 transition-opacity duration-300" />
+            <span className="absolute inset-0 rounded-xl bg-gradient-to-tr from-pink-500 via-orange-400 to-violet-500 opacity-50 blur-md transition-opacity duration-300 group-hover:opacity-90" />
             <img
               src={logo}
               alt="CoLab Nation"
-              className="relative h-9 w-9 sm:h-10 sm:w-10 rounded-xl border border-white/15 object-cover"
+              className="relative h-9 w-9 rounded-xl border border-white/15 object-cover sm:h-10 sm:w-10"
             />
           </span>
-          <span className="hidden sm:flex flex-col leading-tight">
-            <span className="font-display text-sm sm:text-base font-bold tracking-wider">
+          <span className="hidden flex-col leading-tight sm:flex">
+            <span className="font-display text-sm font-bold tracking-wider sm:text-base">
               CoLab
               <span
                 style={{
@@ -66,14 +68,14 @@ export const Navbar = () => {
                 Nation
               </span>
             </span>
-            <span className="font-display text-[8px] uppercase tracking-[0.25em] text-white/35">
+            <span className="font-display text-[8px] tracking-[0.25em] text-white/35 uppercase">
               Powered by Ideas
             </span>
           </span>
         </Link>
 
         {/* ── Desktop Nav ── */}
-        <nav className="hidden md:flex items-center gap-0.5">
+        <nav className="hidden items-center gap-0.5 md:flex">
           {NAV_ITEMS.map((item) => (
             <NavLink
               key={item.to}
@@ -81,7 +83,7 @@ export const Navbar = () => {
               end={item.to === "/"}
               className={({ isActive }) =>
                 cn(
-                  "relative px-3.5 py-2 text-xs font-display font-semibold uppercase tracking-[0.12em] transition-colors duration-200",
+                  "font-display relative px-3.5 py-2 text-xs font-semibold tracking-[0.12em] uppercase transition-colors duration-200",
                   isActive ? "text-white" : "text-white/50 hover:text-white/90"
                 )
               }
@@ -92,8 +94,12 @@ export const Navbar = () => {
                   {isActive && (
                     <motion.span
                       layoutId="nav-pill"
-                      className="absolute inset-0 -z-10 rounded-xl bg-white/[0.08] border border-white/[0.10]"
-                      transition={{ type: "spring", stiffness: 380, damping: 32 }}
+                      className="absolute inset-0 -z-10 rounded-xl border border-white/[0.10] bg-white/[0.08]"
+                      transition={{
+                        type: "spring",
+                        stiffness: 380,
+                        damping: 32,
+                      }}
                     />
                   )}
                 </>
@@ -105,9 +111,9 @@ export const Navbar = () => {
         {/* ── Right side ── */}
         <div className="flex items-center gap-2.5">
           {/* Season badge – desktop */}
-          <div className="hidden lg:flex items-center gap-1.5 rounded-full border border-pink-500/30 bg-pink-500/[0.08] px-3 py-1.5 text-[10px] font-display uppercase tracking-widest text-pink-300">
-            <span className="size-1.5 rounded-full bg-pink-400 animate-pulse" />
-            Season 1 · Aug 2026
+          <div className="font-display hidden items-center gap-1.5 rounded-full border border-pink-500/30 bg-pink-500/[0.08] px-3 py-1.5 text-[10px] tracking-widest text-pink-300 uppercase lg:flex">
+            <span className="size-1.5 animate-pulse rounded-full bg-pink-400" />
+            Season 1 · May 2026
           </div>
 
           <Link to="/join" className="hidden md:inline-block">
@@ -118,7 +124,7 @@ export const Navbar = () => {
           <motion.button
             whileTap={{ scale: 0.9 }}
             onClick={() => setOpen((v) => !v)}
-            className="md:hidden rounded-xl p-2.5 border border-white/15 bg-white/[0.04] text-white hover:bg-white/[0.08] transition-colors"
+            className="rounded-xl border border-white/15 bg-white/[0.04] p-2.5 text-white transition-colors hover:bg-white/[0.08] md:hidden"
             aria-label="Toggle menu"
           >
             <AnimatePresence mode="wait" initial={false}>
@@ -130,7 +136,11 @@ export const Navbar = () => {
                 transition={{ duration: 0.18 }}
                 className="block"
               >
-                {open ? <HiX className="size-5" /> : <HiMenu className="size-5" />}
+                {open ? (
+                  <HiX className="size-5" />
+                ) : (
+                  <HiMenu className="size-5" />
+                )}
               </motion.span>
             </AnimatePresence>
           </motion.button>
@@ -145,12 +155,12 @@ export const Navbar = () => {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -12, scale: 0.97 }}
             transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
-            className="md:hidden mx-4 mt-2 overflow-hidden rounded-2xl border border-white/[0.09] bg-[rgba(5,2,15,0.88)] backdrop-blur-2xl"
+            className="mx-4 mt-2 overflow-hidden rounded-2xl border border-white/[0.09] bg-[rgba(5,2,15,0.88)] backdrop-blur-2xl md:hidden"
           >
             {/* Season banner inside mobile menu */}
-            <div className="border-b border-white/[0.06] px-5 py-3 flex items-center gap-2">
-              <span className="size-2 rounded-full bg-pink-400 animate-pulse" />
-              <span className="font-display text-[10px] uppercase tracking-[0.3em] text-pink-300">
+            <div className="flex items-center gap-2 border-b border-white/[0.06] px-5 py-3">
+              <span className="size-2 animate-pulse rounded-full bg-pink-400" />
+              <span className="font-display text-[10px] tracking-[0.3em] text-pink-300 uppercase">
                 Season of Creation 2026 · Coming Soon
               </span>
             </div>
@@ -168,10 +178,10 @@ export const Navbar = () => {
                     end={item.to === "/"}
                     className={({ isActive }) =>
                       cn(
-                        "flex items-center rounded-xl px-4 py-3.5 text-sm font-display uppercase tracking-[0.12em] transition-colors duration-150",
+                        "font-display flex items-center rounded-xl px-4 py-3.5 text-sm tracking-[0.12em] uppercase transition-colors duration-150",
                         isActive
-                          ? "bg-white/[0.08] text-white border border-white/[0.08]"
-                          : "text-white/55 hover:text-white hover:bg-white/[0.04]"
+                          ? "border border-white/[0.08] bg-white/[0.08] text-white"
+                          : "text-white/55 hover:bg-white/[0.04] hover:text-white"
                       )
                     }
                   >
