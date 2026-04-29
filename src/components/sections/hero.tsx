@@ -1,14 +1,8 @@
 import { useEffect, useRef, useState } from "react";
-import {
-  motion,
-  useScroll,
-  useTransform,
-  AnimatePresence,
-} from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { Link } from "react-router-dom";
 import { TiLocationArrow } from "react-icons/ti";
 import { HiSparkles } from "react-icons/hi";
-import { FaBolt, FaStar } from "react-icons/fa";
 
 import { Button } from "@/components/ui/button";
 import { StarField } from "@/components/ui/particles";
@@ -25,36 +19,10 @@ const HERO_VIDEOS = [
   "/videos/hero-4.mp4",
 ];
 
-// Single, calm tagline — no rotation
 const TAGLINE = "Where creators become legends.";
-
-// Manga-style dialogue between the two heroes
-const DIALOGUE = [
-  {
-    left: "Ready to ship something the world remembers?",
-    right: "Already coding. Mentor mode: ON.",
-  },
-  {
-    left: "No résumé. Just receipts.",
-    right: "Verified. Public. Permanent.",
-  },
-  {
-    left: "Squad assembled. Mission loaded.",
-    right: "Recruiters incoming. May 2026.",
-  },
-  {
-    left: "Pitch beats pedigree.",
-    right: "Proof beats promises.",
-  },
-  {
-    left: "You build. I verify.",
-    right: "Companies draft. You launch.",
-  },
-];
 
 export const Hero = () => {
   const [current, setCurrent] = useState(0);
-  const [dialogue, setDialogue] = useState(0);
   const sectionRef = useRef<HTMLElement>(null);
 
   const { scrollYProgress } = useScroll({
@@ -70,14 +38,6 @@ export const Hero = () => {
     const t = setInterval(() => {
       setCurrent((c) => (c + 1) % HERO_VIDEOS.length);
     }, 7000);
-    return () => clearInterval(t);
-  }, []);
-
-  useEffect(() => {
-    const t = setInterval(
-      () => setDialogue((c) => (c + 1) % DIALOGUE.length),
-      4500
-    );
     return () => clearInterval(t);
   }, []);
 
@@ -194,32 +154,6 @@ export const Hero = () => {
         />
       </motion.div>
 
-      {/* LEFT speech bubble */}
-      <div className="pointer-events-none absolute top-[26%] left-[8%] z-20 hidden max-w-[280px] xl:block">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={dialogue}
-            initial={{ opacity: 0, y: 12, scale: 0.92 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: -10, scale: 0.94 }}
-            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-            className="relative"
-          >
-            <div className="relative rounded-2xl border-2 border-pink-400/70 bg-bg/85 px-5 py-3.5 shadow-[0_0_40px_rgba(255,61,160,0.45)] backdrop-blur-md">
-              <p className="font-comic text-base leading-tight text-white">
-                {DIALOGUE[dialogue].left}
-              </p>
-              {/* Tail */}
-              <div className="absolute -right-3 bottom-3 h-0 w-0 border-y-[10px] border-l-[16px] border-y-transparent border-l-pink-400/70" />
-              <div className="absolute -right-[10px] bottom-[14px] h-0 w-0 border-y-[8px] border-l-[14px] border-y-transparent border-l-bg" />
-            </div>
-            <div className="absolute -top-2 -left-2 flex size-7 items-center justify-center rounded-full bg-gradient-to-br from-pink-500 to-orange-400 text-[10px] font-black text-white shadow-lg">
-              <FaBolt />
-            </div>
-          </motion.div>
-        </AnimatePresence>
-      </div>
-
       {/* RIGHT character — Mentor */}
       <motion.div
         style={{ y: yRight }}
@@ -246,36 +180,6 @@ export const Hero = () => {
           }}
         />
       </motion.div>
-
-      {/* RIGHT speech bubble */}
-      <div className="pointer-events-none absolute top-[26%] right-[8%] z-20 hidden max-w-[280px] xl:block">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={dialogue + 100}
-            initial={{ opacity: 0, y: 12, scale: 0.92 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: -10, scale: 0.94 }}
-            transition={{
-              duration: 0.5,
-              delay: 0.25,
-              ease: [0.22, 1, 0.36, 1],
-            }}
-            className="relative"
-          >
-            <div className="relative rounded-2xl border-2 border-violet-400/70 bg-bg/85 px-5 py-3.5 text-right shadow-[0_0_40px_rgba(139,92,246,0.45)] backdrop-blur-md">
-              <p className="font-comic text-base leading-tight text-white">
-                {DIALOGUE[dialogue].right}
-              </p>
-              {/* Tail */}
-              <div className="absolute -left-3 bottom-3 h-0 w-0 border-y-[10px] border-r-[16px] border-y-transparent border-r-violet-400/70" />
-              <div className="absolute -left-[10px] bottom-[14px] h-0 w-0 border-y-[8px] border-r-[14px] border-y-transparent border-r-bg" />
-            </div>
-            <div className="absolute -top-2 -right-2 flex size-7 items-center justify-center rounded-full bg-gradient-to-br from-violet-500 to-blue-500 text-[10px] font-black text-white shadow-lg">
-              <FaStar />
-            </div>
-          </motion.div>
-        </AnimatePresence>
-      </div>
 
       {/* Floating Nova bot — peeking from above */}
       <motion.img
@@ -309,60 +213,35 @@ export const Hero = () => {
           />
         </motion.div>
 
-        {/* Eyebrow chip — Coming Soon */}
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.55 }}
-          className="font-display mb-6 inline-flex items-center gap-2 rounded-full border border-pink-400/50 bg-pink-500/10 px-5 py-2 text-[10px] tracking-[0.45em] text-pink-200 uppercase backdrop-blur-md"
-        >
-          <span className="size-1.5 animate-pulse rounded-full bg-pink-400" />
+        {/* Eyebrow chip — Coming Soon (static) */}
+        <div className="font-display mb-6 inline-flex items-center gap-2 rounded-full border border-pink-400/50 bg-pink-500/10 px-5 py-2 text-[10px] tracking-[0.45em] text-pink-200 uppercase backdrop-blur-md">
+          <span className="size-1.5 rounded-full bg-pink-400" />
           Coming May 2026 · Founders' Cohort
           <HiSparkles className="size-3 text-pink-300" />
-        </motion.div>
+        </div>
 
-        {/* WOW Headline */}
-        <motion.h1
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.9, delay: 0.7, ease: [0.22, 1, 0.36, 1] }}
-          className="font-impact relative mb-3 text-[clamp(3rem,9vw,6.75rem)] leading-[0.92] tracking-tight uppercase"
-        >
-          <span className="shimmer-text block drop-shadow-[0_0_32px_rgba(255,61,160,0.55)]">
+        {/* Headline (static) */}
+        <h1 className="font-impact relative mb-3 text-[clamp(3rem,9vw,6.75rem)] leading-[0.92] tracking-tight uppercase">
+          <span className="block bg-gradient-to-r from-pink-400 via-fuchsia-300 to-pink-400 bg-clip-text text-transparent drop-shadow-[0_0_32px_rgba(255,61,160,0.55)]">
             Dream. Build.
           </span>
-          <span className="shimmer-text block drop-shadow-[0_0_32px_rgba(139,92,246,0.55)]">
+          <span className="block bg-gradient-to-r from-violet-400 via-pink-300 to-violet-400 bg-clip-text text-transparent drop-shadow-[0_0_32px_rgba(139,92,246,0.55)]">
             Shine. Repeat.
           </span>
-        </motion.h1>
+        </h1>
 
-        {/* Calm sub headline (no motion) */}
-        <motion.p
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.95 }}
-          className="font-display mb-3 max-w-2xl text-sm tracking-[0.22em] text-white/85 uppercase sm:text-base"
-        >
+        {/* Calm sub headline (static) */}
+        <p className="font-display mb-3 max-w-2xl text-sm tracking-[0.22em] text-white/85 uppercase sm:text-base">
           {TAGLINE}
-        </motion.p>
+        </p>
 
         {/* Static sub-tagline */}
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.8, delay: 1.1 }}
-          className="text-text-dim mt-1 mb-2 max-w-md text-sm sm:text-base"
-        >
+        <p className="text-text-dim mt-1 mb-2 max-w-md text-sm sm:text-base">
           A new world for builders. Drops May 2026.
-        </motion.p>
+        </p>
 
-        {/* CTAs */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 1.25 }}
-          className="mt-9 flex flex-wrap items-center justify-center gap-3 sm:gap-4"
-        >
+        {/* CTAs (static) */}
+        <div className="mt-9 flex flex-wrap items-center justify-center gap-3 sm:gap-4">
           <Link to="/join">
             <Button
               rightIcon={TiLocationArrow}
@@ -376,15 +255,10 @@ export const Hero = () => {
               Explore Programs
             </Button>
           </Link>
-        </motion.div>
+        </div>
 
-        {/* Live stats row */}
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.9, delay: 1.45 }}
-          className="mt-10 flex flex-wrap items-center justify-center gap-2.5 sm:gap-3"
-        >
+        {/* Live stats row (static) */}
+        <div className="mt-10 flex flex-wrap items-center justify-center gap-2.5 sm:gap-3">
           {[
             {
               label: "Founding Season",
@@ -409,7 +283,7 @@ export const Hero = () => {
               </span>
             </div>
           ))}
-        </motion.div>
+        </div>
 
         {/* Mobile-only character row */}
         <div className="mt-12 flex w-full items-end justify-center gap-2 lg:hidden">
