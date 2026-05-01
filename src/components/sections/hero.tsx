@@ -11,6 +11,7 @@ import mentor from "@/assets/characters/mentor.png";
 import aibot from "@/assets/characters/aibot.png";
 import rocket from "@/assets/characters/rocket.png";
 import logo from "@assets/45375_1777311860118.png";
+import { useMotionBudget } from "@/lib/motion";
 
 const HERO_VIDEOS = [
   "/videos/hero-1.mp4",
@@ -22,7 +23,14 @@ const HERO_VIDEOS = [
 const TAGLINE = "Where creators become legends.";
 
 export const Hero = () => {
-  const [current, setCurrent] = useState(0);
+  const { shouldReduceEffects } = useMotionBudget();
+  const [frontVideo, setFrontVideo] = useState(0);
+  const [backVideo, setBackVideo] = useState<number | null>(null);
+  const [isFading, setIsFading] = useState(false);
+
+  const frontVideoRef = useRef(0);
+  const fadeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
   const sectionRef = useRef<HTMLElement>(null);
 
   const { scrollYProgress } = useScroll({
@@ -35,11 +43,36 @@ export const Hero = () => {
   const opacity = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
 
   useEffect(() => {
-    const t = setInterval(() => {
-      setCurrent((c) => (c + 1) % HERO_VIDEOS.length);
-    }, 7000);
-    return () => clearInterval(t);
-  }, []);
+    frontVideoRef.current = frontVideo;
+  }, [frontVideo]);
+
+  useEffect(() => {
+    if (shouldReduceEffects) return;
+
+    const transitionMs = 1500;
+
+    const transitionToNext = () => {
+      const next = (frontVideoRef.current + 1) % HERO_VIDEOS.length;
+
+      if (fadeTimerRef.current) clearTimeout(fadeTimerRef.current);
+
+      setBackVideo(next);
+      // Let the "back" video mount at opacity 0, then trigger the fade.
+      requestAnimationFrame(() => setIsFading(true));
+
+      fadeTimerRef.current = setTimeout(() => {
+        setFrontVideo(next);
+        setBackVideo(null);
+        setIsFading(false);
+      }, transitionMs);
+    };
+
+    const t = setInterval(transitionToNext, 7000);
+    return () => {
+      clearInterval(t);
+      if (fadeTimerRef.current) clearTimeout(fadeTimerRef.current);
+    };
+  }, [shouldReduceEffects]);
 
   return (
     <section
@@ -48,20 +81,32 @@ export const Hero = () => {
     >
       {/* ── VIDEO BACKDROP ── */}
       <motion.div className="absolute inset-0 -z-30" style={{ y: yBg }}>
-        {HERO_VIDEOS.map((src, i) => (
+        <video
+          key={`front-${frontVideo}`}
+          src={HERO_VIDEOS[frontVideo]}
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="auto"
+          className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-[1500ms] ${
+            isFading ? "opacity-0" : "opacity-45"
+          }`}
+        />
+        {backVideo !== null && (
           <video
-            key={src}
-            src={src}
+            key={`back-${backVideo}`}
+            src={HERO_VIDEOS[backVideo]}
             autoPlay
             muted
             loop
             playsInline
             preload="auto"
             className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-[1500ms] ${
-              i === current ? "opacity-45" : "opacity-0"
+              isFading ? "opacity-45" : "opacity-0"
             }`}
           />
-        ))}
+        )}
       </motion.div>
 
       {/* ── OVERLAYS ── */}

@@ -1,4 +1,5 @@
 import { useMemo } from "react";
+import { useMotionBudget } from "@/lib/motion";
 
 interface StarFieldProps {
   count?: number;
@@ -6,9 +7,14 @@ interface StarFieldProps {
 }
 
 export const StarField = ({ count = 80, className = "" }: StarFieldProps) => {
+  const { shouldReduceEffects } = useMotionBudget();
+  const effectiveCount = shouldReduceEffects
+    ? Math.max(24, Math.floor(count * 0.55))
+    : count;
+
   const stars = useMemo(
     () =>
-      Array.from({ length: count }).map((_, i) => ({
+      Array.from({ length: effectiveCount }).map((_, i) => ({
         id: i,
         top: Math.random() * 100,
         left: Math.random() * 100,
@@ -22,7 +28,7 @@ export const StarField = ({ count = 80, className = "" }: StarFieldProps) => {
               ? "#8b5cf6"
               : "#ffffff",
       })),
-    [count]
+    [effectiveCount]
   );
 
   return (
@@ -37,7 +43,9 @@ export const StarField = ({ count = 80, className = "" }: StarFieldProps) => {
             width: `${s.size}px`,
             height: `${s.size}px`,
             background: s.hue,
-            boxShadow: `0 0 ${s.size * 3}px ${s.hue}`,
+            boxShadow: shouldReduceEffects
+              ? "none"
+              : `0 0 ${s.size * 3}px ${s.hue}`,
             animationDelay: `${s.delay}s`,
             animationDuration: `${s.duration}s`,
           }}
@@ -51,9 +59,14 @@ interface ConfettiBurstProps {
   count?: number;
 }
 export const ConfettiBurst = ({ count = 24 }: ConfettiBurstProps) => {
+  const { shouldReduceEffects } = useMotionBudget();
+  const effectiveCount = shouldReduceEffects
+    ? Math.max(10, Math.floor(count * 0.55))
+    : count;
+
   const bits = useMemo(
     () =>
-      Array.from({ length: count }).map((_, i) => ({
+      Array.from({ length: effectiveCount }).map((_, i) => ({
         id: i,
         left: 50 + (Math.random() * 30 - 15),
         delay: Math.random() * 0.6,
@@ -62,7 +75,7 @@ export const ConfettiBurst = ({ count = 24 }: ConfettiBurstProps) => {
         size: 6 + Math.random() * 6,
         color: ["#ff3da0", "#ff8a3d", "#8b5cf6", "#4fb7ff", "#38f0ff"][i % 5],
       })),
-    [count]
+    [effectiveCount]
   );
 
   return (

@@ -1,7 +1,8 @@
 import { motion, AnimatePresence } from "framer-motion";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import logo from "@assets/45375_1777311860118.png";
 import rocket from "@/assets/characters/rocket.png";
+import { useMotionBudget } from "@/lib/motion";
 
 const SEEN_KEY = "colab.intro.v3.seen";
 
@@ -16,6 +17,7 @@ interface Props {
 }
 
 export const OpeningAnimation = ({ onComplete, forceShow = false }: Props) => {
+  const { shouldReduceEffects } = useMotionBudget();
   const [show, setShow] = useState(false);
   const [phase, setPhase] = useState<
     "countdown" | "launch" | "flash" | "reveal" | "exit"
@@ -24,6 +26,47 @@ export const OpeningAnimation = ({ onComplete, forceShow = false }: Props) => {
   const [shockwaveKey, setShockwaveKey] = useState(0);
   const [showFlash, setShowFlash] = useState(false);
   const timersRef = useRef<ReturnType<typeof setTimeout>[]>([]);
+
+  const starCount = shouldReduceEffects ? 80 : 120;
+  const speedLineCount = shouldReduceEffects ? 14 : SPEED_LINE_COUNT;
+
+  const stars = useMemo(
+    () =>
+      Array.from({ length: starCount }).map((_, i) => ({
+        id: i,
+        size: Math.random() * 2.8 + 0.4,
+        top: `${Math.random() * 100}%`,
+        left: `${Math.random() * 100}%`,
+        opacity: Math.random() * 0.8 + 0.1,
+        animation: `twinkle ${2 + Math.random() * 5}s ease-in-out ${Math.random() * 4}s infinite`,
+      })),
+    [starCount]
+  );
+
+  const speedLines = useMemo(
+    () =>
+      Array.from({ length: speedLineCount }).map((_, i) => {
+        const angle = (i / speedLineCount) * 360;
+        const lengthVw = 45 + Math.random() * 40;
+        const heightPx = Math.random() * 2 + 0.5;
+        const color =
+          i % 3 === 0
+            ? "rgba(255,61,160,0.9)"
+            : i % 3 === 1
+              ? "rgba(255,138,61,0.8)"
+              : "rgba(139,92,246,0.7)";
+
+        return {
+          id: i,
+          angle,
+          lengthVw,
+          heightPx,
+          background: `linear-gradient(to right, ${color}, transparent)`,
+          delay: Math.random() * 0.08,
+        };
+      }),
+    [speedLineCount]
+  );
 
   useEffect(() => {
     if (forceShow) {
@@ -107,17 +150,18 @@ export const OpeningAnimation = ({ onComplete, forceShow = false }: Props) => {
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_40%_at_50%_0%,rgba(79,183,255,0.06)_0%,transparent_60%)]" />
 
           {/* Stars */}
-          {Array.from({ length: 120 }).map((_, i) => (
+          {stars.map((s) => (
             <span
-              key={i}
+              key={s.id}
               className="absolute rounded-full bg-white"
               style={{
-                width: Math.random() * 2.8 + 0.4,
-                height: Math.random() * 2.8 + 0.4,
-                top: `${Math.random() * 100}%`,
-                left: `${Math.random() * 100}%`,
-                opacity: Math.random() * 0.8 + 0.1,
-                animation: `twinkle ${2 + Math.random() * 5}s ease-in-out ${Math.random() * 4}s infinite`,
+                width: s.size,
+                height: s.size,
+                top: s.top,
+                left: s.left,
+                opacity: s.opacity,
+                animation: s.animation,
+                willChange: "transform, opacity",
               }}
             />
           ))}
@@ -166,33 +210,24 @@ export const OpeningAnimation = ({ onComplete, forceShow = false }: Props) => {
           {/* ── LAUNCH PHASE SPEED LINES ── */}
           {(phase === "launch" || phase === "flash") && (
             <div className="pointer-events-none absolute inset-0 z-10 overflow-hidden">
-              {Array.from({ length: SPEED_LINE_COUNT }).map((_, i) => {
-                const angle = (i / SPEED_LINE_COUNT) * 360;
-                const length = 45 + Math.random() * 40;
-                return (
-                  <div
-                    key={i}
-                    style={{
-                      position: "absolute",
-                      top: "50%",
-                      left: "50%",
-                      width: `${length}vw`,
-                      height: Math.random() * 2 + 0.5,
-                      transformOrigin: "left center",
-                      transform: `rotate(${angle}deg)`,
-                      background: `linear-gradient(to right, ${
-                        i % 3 === 0
-                          ? "rgba(255,61,160,0.9)"
-                          : i % 3 === 1
-                            ? "rgba(255,138,61,0.8)"
-                            : "rgba(139,92,246,0.7)"
-                      }, transparent)`,
-                      animation: "speed-line 0.5s ease-out forwards",
-                      animationDelay: `${Math.random() * 0.08}s`,
-                    }}
-                  />
-                );
-              })}
+              {speedLines.map((l) => (
+                <div
+                  key={l.id}
+                  style={{
+                    position: "absolute",
+                    top: "50%",
+                    left: "50%",
+                    width: `${l.lengthVw}vw`,
+                    height: l.heightPx,
+                    transformOrigin: "left center",
+                    transform: `rotate(${l.angle}deg)`,
+                    background: l.background,
+                    animation: "speed-line 0.5s ease-out forwards",
+                    animationDelay: `${l.delay}s`,
+                    willChange: "transform, opacity",
+                  }}
+                />
+              ))}
             </div>
           )}
 
