@@ -156,6 +156,8 @@ export const PROGRAMS = [
       "Exclusive Season 2026 launch badge",
     ],
     accent: "from-pink-500 via-orange-400 to-violet-500",
+    color: "from-pink-500 via-orange-400 to-violet-500",
+    icon: "✦",
     eyebrow: "Flagship",
   },
   {
@@ -173,6 +175,8 @@ export const PROGRAMS = [
       "Atlas profile contributions",
     ],
     accent: "from-emerald-400 to-cyan-400",
+    color: "from-emerald-400 to-cyan-400",
+    icon: "⌬",
     eyebrow: "Open Source",
   },
   {
@@ -190,6 +194,8 @@ export const PROGRAMS = [
       "Live launch night demo",
     ],
     accent: "from-violet-500 to-blue-500",
+    color: "from-violet-500 to-blue-500",
+    icon: "⚡",
     eyebrow: "Sprint",
   },
   {
@@ -207,6 +213,8 @@ export const PROGRAMS = [
       "Cross-squad design sprints",
     ],
     accent: "from-fuchsia-500 to-pink-500",
+    color: "from-fuchsia-500 to-pink-500",
+    icon: "✶",
     eyebrow: "Design",
   },
 ] as const;
