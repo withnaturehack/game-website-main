@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import { motion } from "framer-motion";
 import {
   CONTACT_EMAIL,
   CONTACT_EMAIL_HREF,
@@ -17,14 +16,25 @@ export const Footer = () => {
         <div className="grid gap-12 md:grid-cols-4">
           <div className="md:col-span-2">
             <Link to="/" className="flex items-center gap-3">
-              <img
-                src={logo}
-                alt="CoLab Nation"
-                className="h-12 w-12 rounded-full border border-white/15"
-              />
-              <span className="font-display text-xl font-bold">
-                CoLab<span className="gradient-text">Nation</span>
-              </span>
+              <div className="relative shrink-0">
+                <div className="absolute inset-0 rounded-xl bg-gradient-to-tr from-pink-500 via-orange-400 to-violet-500 opacity-40 blur-md" />
+                <img
+                  src={logo}
+                  alt="CoLab Nation"
+                  className="relative h-11 w-11 rounded-xl object-contain"
+                />
+              </div>
+              <div className="flex flex-col leading-tight">
+                <span className="font-display text-base font-bold">
+                  CoLab{" "}
+                  <span style={{ background: "linear-gradient(90deg,#ff3da0,#ff8a3d,#8b5cf6)", WebkitBackgroundClip: "text", backgroundClip: "text", color: "transparent" }}>
+                    Nation
+                  </span>
+                </span>
+                <span className="font-display text-[9px] tracking-[0.25em] text-white/35 uppercase">
+                  Powering Ideas into Reality
+                </span>
+              </div>
             </Link>
             <p className="text-text-dim mt-4 max-w-md">
               Powering ideas into reality. A movement where builders become
@@ -40,19 +50,19 @@ export const Footer = () => {
               </span>
               <span className="font-medium">{CONTACT_EMAIL}</span>
             </a>
-            <div className="mt-6 flex items-center gap-3">
+            <div className="mt-6 flex flex-wrap items-center gap-2.5">
               {SOCIAL_LINKS.map((s) => (
-                <motion.a
+                <a
                   key={s.label}
-                  whileHover={{ y: -3, scale: 1.08 }}
                   href={s.href}
                   target="_blank"
                   rel="noreferrer noopener"
                   aria-label={s.label}
-                  className="hover:text-neon-pink grid size-10 place-items-center rounded-full border border-white/15 bg-white/5 text-white transition-colors hover:border-pink-500/60"
+                  className="hover:text-neon-pink flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3.5 py-2 text-white transition-all duration-150 hover:-translate-y-0.5 hover:border-pink-500/60 hover:bg-pink-500/10"
                 >
-                  <s.icon className="size-4" />
-                </motion.a>
+                  <s.icon className="size-3.5" />
+                  <span className="font-display text-[10px] tracking-wider uppercase">{s.label}</span>
+                </a>
               ))}
             </div>
           </div>

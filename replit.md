@@ -91,6 +91,26 @@ Skipped automatically on `/admin` and on URLs with `?nointro`.
 
 `Start application` runs `npm run dev` (Vite on port 5000, all hosts allowed).
 
+## Performance Optimizations
+
+- `page-shell.tsx` uses opacity-only transition (0.22s, `mode="sync"`) for zero-lag page changes.
+- All `whileHover` Framer Motion props on landing page cards replaced with CSS `hover:-translate-y-1.5 transition-all` to avoid JS-driven hover lag.
+- Star field counts reduced: 60/50/40 on desktop/mobile.
+- `useMotionBudget` in `src/lib/motion.ts` auto-detects mobile via `navigator.userAgent` to disable effects.
+
+## Join Form (17 Roles)
+
+- 3 categories: Tech & Engineering (9 roles), Design & Creative (4 roles), Content & Growth (4 roles).
+- 40+ skills across 6 groups with live search and max 6 selections.
+- Live profile preview sidebar with XP bar, season info, "No Résumé Required" badge, and contact email.
+
+## Contact & Social
+
+- Email: `support@colabnation.live` (`CONTACT_EMAIL` constant).
+- LinkedIn: `https://www.linkedin.com/company/colab-nation/` (`SOCIAL_LINKS`).
+- Instagram: `https://www.instagram.com/colab__nation` (`SOCIAL_LINKS`).
+- Social links prominently shown in footer (pill buttons with labels) and in landing page "Join the Movement" section.
+
 ## Notes
 
 - Dependencies installed with `--legacy-peer-deps` because of the eslint v10

@@ -32,7 +32,7 @@ const AnimatedRoutes = () => {
   return (
     <>
       {!isAdmin && <Navbar />}
-      <AnimatePresence mode="wait">
+      <AnimatePresence mode="sync">
         <Routes location={location} key={location.pathname}>
           <Route path="/" element={wrap(<Landing />)} />
           <Route path="/about" element={wrap(<About />)} />

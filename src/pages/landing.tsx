@@ -7,8 +7,9 @@ import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { TiLocationArrow } from "react-icons/ti";
 import { HiSparkles } from "react-icons/hi";
+import { FaInstagram, FaLinkedinIn, FaEnvelope } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
-import { CONTACT_EMAIL_HREF, POWERS } from "@/constants";
+import { CONTACT_EMAIL_HREF, POWERS, SOCIAL_LINKS } from "@/constants";
 
 const logo = "/img/logo.png";
 
@@ -88,8 +89,7 @@ export const Landing = () => {
               <motion.div
                 key={item.step}
                 {...fadeUp(i * 0.1)}
-                whileHover={{ y: -6 }}
-                className="neon-border group relative overflow-hidden rounded-2xl p-6 transition-shadow duration-300 hover:shadow-[0_8px_40px_-8px_rgba(255,61,160,0.25)] sm:p-7"
+                className="neon-border group relative overflow-hidden rounded-2xl p-6 transition-all duration-200 hover:-translate-y-1.5 hover:shadow-[0_8px_40px_-8px_rgba(255,61,160,0.25)] sm:p-7"
               >
                 <div
                   className={`pointer-events-none absolute -top-16 -right-16 size-48 rounded-full bg-linear-to-br ${item.accent} opacity-10 blur-3xl transition-opacity duration-500 group-hover:opacity-25`}
@@ -141,8 +141,7 @@ export const Landing = () => {
               <motion.div
                 key={p.title}
                 {...fadeUp(i * 0.07)}
-                whileHover={{ y: -5, scale: 1.01 }}
-                className="neon-border group relative overflow-hidden rounded-2xl p-7 transition-shadow duration-300 hover:shadow-[0_6px_40px_-8px_rgba(139,92,246,0.3)]"
+                className="neon-border group relative overflow-hidden rounded-2xl p-7 transition-all duration-200 hover:-translate-y-1.5 hover:shadow-[0_6px_40px_-8px_rgba(139,92,246,0.3)]"
               >
                 <div className="pointer-events-none absolute -top-10 -right-10 size-36 rounded-full bg-linear-to-br from-violet-500/15 to-transparent blur-2xl transition-opacity duration-500 group-hover:opacity-50" />
                 <span className="mb-5 block text-4xl">{p.icon}</span>
@@ -315,8 +314,7 @@ export const Landing = () => {
               <motion.div
                 key={item.step}
                 {...fadeUp(i * 0.1)}
-                whileHover={{ y: -6 }}
-                className="neon-border group relative overflow-hidden rounded-2xl p-7 transition-shadow duration-300 hover:shadow-[0_8px_40px_-8px_rgba(255,138,61,0.25)]"
+                className="neon-border group relative overflow-hidden rounded-2xl p-7 transition-all duration-200 hover:-translate-y-1.5 hover:shadow-[0_8px_40px_-8px_rgba(255,138,61,0.25)]"
               >
                 <div
                   className={`pointer-events-none absolute -top-12 -right-12 size-40 rounded-full bg-linear-to-br ${item.accent} opacity-10 blur-2xl transition-opacity duration-500 group-hover:opacity-25`}
@@ -396,6 +394,112 @@ export const Landing = () => {
                 </span>
               ))}
             </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ── COMMUNITY & SOCIAL ─────────────────────────────────── */}
+      <section className="relative overflow-hidden py-20">
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-violet-500/5 to-transparent" />
+        <div className="mx-auto max-w-7xl px-6">
+          <motion.div {...fadeUp()} className="mb-12 text-center">
+            <p className="font-display text-neon-cyan mb-3 text-xs tracking-[0.4em] uppercase">
+              Connect
+            </p>
+            <h2 className="font-display text-3xl leading-[0.95] font-black uppercase sm:text-4xl lg:text-5xl">
+              Join the{" "}
+              <span style={{ background: "linear-gradient(90deg,#38f0ff,#8b5cf6)", WebkitBackgroundClip: "text", backgroundClip: "text", color: "transparent" }}>
+                movement.
+              </span>
+            </h2>
+            <p className="text-text-dim mx-auto mt-4 max-w-md text-base">
+              Follow us for launch updates, builder spotlights, and Season 1 announcements.
+            </p>
+          </motion.div>
+
+          <div className="grid gap-5 sm:grid-cols-3">
+            {/* Instagram */}
+            <motion.a
+              {...fadeUp(0)}
+              href={SOCIAL_LINKS.find(s => s.label === "Instagram")?.href ?? "#"}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="neon-border group relative flex flex-col items-center justify-center gap-4 overflow-hidden rounded-2xl p-8 text-center transition-all duration-200 hover:-translate-y-1.5 hover:shadow-[0_8px_40px_-8px_rgba(255,61,160,0.35)]"
+            >
+              <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-pink-500/8 via-orange-400/4 to-transparent" />
+              <div className="flex size-14 items-center justify-center rounded-2xl bg-gradient-to-br from-pink-500 to-orange-400 shadow-lg">
+                <FaInstagram className="text-2xl text-white" />
+              </div>
+              <div>
+                <p className="font-display text-base font-black uppercase">Instagram</p>
+                <p className="text-text-dim text-sm">@colabnation</p>
+              </div>
+              <span className="font-display mt-1 inline-flex items-center gap-1.5 rounded-full border border-pink-500/30 bg-pink-500/10 px-3 py-1.5 text-[10px] tracking-[0.3em] text-pink-300 uppercase">
+                Follow us →
+              </span>
+            </motion.a>
+
+            {/* LinkedIn */}
+            <motion.a
+              {...fadeUp(0.08)}
+              href={SOCIAL_LINKS.find(s => s.label === "LinkedIn")?.href ?? "#"}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="neon-border group relative flex flex-col items-center justify-center gap-4 overflow-hidden rounded-2xl p-8 text-center transition-all duration-200 hover:-translate-y-1.5 hover:shadow-[0_8px_40px_-8px_rgba(79,183,255,0.35)]"
+            >
+              <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-blue-500/8 via-cyan-400/4 to-transparent" />
+              <div className="flex size-14 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-500 to-cyan-400 shadow-lg">
+                <FaLinkedinIn className="text-2xl text-white" />
+              </div>
+              <div>
+                <p className="font-display text-base font-black uppercase">LinkedIn</p>
+                <p className="text-text-dim text-sm">CoLab Nation</p>
+              </div>
+              <span className="font-display mt-1 inline-flex items-center gap-1.5 rounded-full border border-blue-500/30 bg-blue-500/10 px-3 py-1.5 text-[10px] tracking-[0.3em] text-blue-300 uppercase">
+                Connect →
+              </span>
+            </motion.a>
+
+            {/* Email */}
+            <motion.a
+              {...fadeUp(0.16)}
+              href="mailto:support@colabnation.live"
+              className="neon-border group relative flex flex-col items-center justify-center gap-4 overflow-hidden rounded-2xl p-8 text-center transition-all duration-200 hover:-translate-y-1.5 hover:shadow-[0_8px_40px_-8px_rgba(139,92,246,0.35)]"
+            >
+              <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-violet-500/8 via-fuchsia-400/4 to-transparent" />
+              <div className="flex size-14 items-center justify-center rounded-2xl bg-gradient-to-br from-violet-500 to-fuchsia-500 shadow-lg">
+                <FaEnvelope className="text-2xl text-white" />
+              </div>
+              <div>
+                <p className="font-display text-base font-black uppercase">Email</p>
+                <p className="text-text-dim text-sm">support@colabnation.live</p>
+              </div>
+              <span className="font-display mt-1 inline-flex items-center gap-1.5 rounded-full border border-violet-500/30 bg-violet-500/10 px-3 py-1.5 text-[10px] tracking-[0.3em] text-violet-300 uppercase">
+                Say hello →
+              </span>
+            </motion.a>
+          </div>
+
+          {/* Quotes strip */}
+          <motion.div {...fadeUp(0.2)} className="mt-10 grid gap-4 sm:grid-cols-3">
+            {[
+              { quote: "This is what LinkedIn should have been.", handle: "@devbuilder_sam", role: "Frontend Dev" },
+              { quote: "Finally a platform that values what I ship, not where I went to school.", handle: "@ux_orla", role: "UX Designer" },
+              { quote: "Got a job offer 2 weeks after Demo Day. No résumé sent.", handle: "@mlhunter_k", role: "ML Engineer" },
+            ].map((q, i) => (
+              <div key={i} className="rounded-2xl border border-white/[0.07] bg-white/[0.025] p-5">
+                <p className="mb-3 text-sm leading-relaxed text-white/70 italic">"{q.quote}"</p>
+                <div className="flex items-center gap-2">
+                  <div className="flex size-7 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-pink-500 to-violet-500 text-[10px] font-bold text-white">
+                    {q.handle[1].toUpperCase()}
+                  </div>
+                  <div>
+                    <p className="font-display text-[11px] font-bold text-white/80">{q.handle}</p>
+                    <p className="text-text-dim text-[10px]">{q.role}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
           </motion.div>
         </div>
       </section>
