@@ -198,6 +198,7 @@ body {
 }
 .float-y {
   animation: float 5s ease-in-out infinite;
+  will-change: transform;
 }
 
 @keyframes float-slow {
@@ -206,6 +207,23 @@ body {
 }
 .float-slow {
   animation: float-slow 7s ease-in-out infinite;
+  will-change: transform;
+}
+
+/* Reduce heavy animations on mobile */
+@media (max-width: 768px) {
+  .float-y { animation-duration: 7s; }
+  .float-slow { animation-duration: 9s; }
+  .shimmer-text { animation: none; background-position: 0 center; }
+  .rocket-rise { display: none; }
+  .marquee { animation-duration: 40s; }
+}
+
+/* Reduce for prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  .float-y, .float-slow, .rocket-rise, .marquee, .shimmer-text, .pulse-glow, .twinkle {
+    animation: none !important;
+  }
 }
 
 /* Gradient shift */

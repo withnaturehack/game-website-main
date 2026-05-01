@@ -183,7 +183,7 @@ export const Landing = () => {
                     <img
                       src={logo}
                       alt="CoLab Nation"
-                      className="relative h-14 w-14 rounded-2xl border border-white/20 object-cover sm:h-16 sm:w-16"
+                      className="relative h-14 w-14 rounded-2xl object-contain sm:h-16 sm:w-16"
                     />
                   </div>
                   <div className="font-display inline-flex items-center gap-2 rounded-full border border-pink-500/40 bg-pink-500/10 px-4 py-2 text-[10px] tracking-[0.3em] text-pink-300 uppercase">

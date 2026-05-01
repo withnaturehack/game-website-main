@@ -1,46 +1,44 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { TiLocationArrow } from "react-icons/ti";
-import { HiSparkles } from "react-icons/hi";
-import { FaBolt, FaStar } from "react-icons/fa";
+import { HiSparkles, HiCheckCircle } from "react-icons/hi";
+import { FaRocket, FaMedal, FaBolt, FaStar, FaUser, FaEnvelope } from "react-icons/fa";
 
 import { Button } from "@/components/ui/button";
 import { ConfettiBurst, StarField } from "@/components/ui/particles";
 import builder from "@/assets/characters/builder.png";
-import mentor from "@/assets/characters/mentor.png";
-import aibot from "@/assets/characters/aibot.png";
 import rocket from "@/assets/characters/rocket.png";
 
-const JOIN_DIALOGUE = [
-  { left: "Pick your class. Choose your weapon.", right: "Mentors waiting. Squads forming." },
-  { left: "Every answer = +XP.", right: "Demo Day in T-minus 12 weeks." },
-  { left: "No résumé. Just receipts.", right: "I'll verify everything you ship." },
-];
+const logo = "/img/logo.png";
 
 const ROLES = [
   {
     value: "builder",
     label: "Builder",
     emoji: "⚡",
-    desc: "Ship code, design, research",
+    desc: "Ship code, design, and research",
+    color: "from-pink-500 to-orange-400",
   },
   {
     value: "content",
     label: "Content Creator",
     emoji: "🎥",
-    desc: "Craft stories, videos, and social media",
+    desc: "Craft stories, videos & social",
+    color: "from-violet-500 to-blue-500",
   },
   {
     value: "designer",
     label: "Graphic Designer",
     emoji: "🎨",
-    desc: "Design visuals, UI, and branding",
+    desc: "Design visuals, UI & branding",
+    color: "from-cyan-400 to-violet-500",
   },
   {
     value: "community",
     label: "Community Manager",
     emoji: "💬",
     desc: "Grow and engage the squad",
+    color: "from-orange-400 to-pink-500",
   },
 ];
 
@@ -62,6 +60,14 @@ const SKILLS = [
   "Animation",
 ];
 
+const STEPS = ["Role", "Skills", "Profile", "Review"];
+
+const stepVariants = {
+  enter: { opacity: 0, x: 30 },
+  center: { opacity: 1, x: 0 },
+  exit: { opacity: 0, x: -30 },
+};
+
 export const Join = () => {
   const [step, setStep] = useState(0);
   const [role, setRole] = useState("builder");
@@ -72,15 +78,9 @@ export const Join = () => {
   const [done, setDone] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [d, setD] = useState(0);
 
-  useEffect(() => {
-    const t = setInterval(() => setD((c) => (c + 1) % JOIN_DIALOGUE.length), 4500);
-    return () => clearInterval(t);
-  }, []);
-
-  // Smoother XP calculation for more steps/skills
   const xp = Math.min(100, (step + (done ? 1 : 0)) * 20 + skills.length * 5);
+  const selectedRole = ROLES.find((r) => r.value === role) || ROLES[0];
 
   const toggleSkill = (s: string) => {
     setSkills((prev) =>
@@ -92,13 +92,16 @@ export const Join = () => {
     setError(null);
     if (step === 2) {
       if (!name.trim() || !email.trim() || !/^\S+@\S+\.\S+$/.test(email)) {
-        setError("Add a name and a valid email to continue.");
+        setError("Please enter a valid name and email to continue.");
         return;
       }
     }
     setStep((s) => Math.min(s + 1, 3));
   };
-  const back = () => setStep((s) => Math.max(s - 1, 0));
+  const back = () => {
+    setError(null);
+    setStep((s) => Math.max(s - 1, 0));
+  };
 
   const submit = async () => {
     setSubmitting(true);
@@ -107,18 +110,11 @@ export const Join = () => {
       const res = await fetch("/api/join", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          role,
-          name,
-          email,
-          skills,
-          message,
-          source: "join-form",
-        }),
+        body: JSON.stringify({ role, name, email, skills, message, source: "join-form" }),
       });
       if (!res.ok) {
         const j = await res.json().catch(() => ({}));
-        throw new Error(j.error || "Submission failed");
+        throw new Error((j as { error?: string }).error || "Submission failed");
       }
       setDone(true);
     } catch (e) {
@@ -128,430 +124,423 @@ export const Join = () => {
     }
   };
 
+  if (done) {
+    return (
+      <section className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden px-6 pt-32 pb-20 text-center">
+        <StarField count={40} />
+        <ConfettiBurst count={35} />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-violet-500/10 via-transparent to-pink-500/10" />
+        <div className="relative z-10 mx-auto max-w-lg">
+          <img
+            src={rocket}
+            alt=""
+            className="float-y mx-auto mb-6 h-36 w-auto drop-shadow-[0_0_50px_rgba(255,138,61,0.6)]"
+          />
+          <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-emerald-400/40 bg-emerald-500/10 px-4 py-2 text-sm text-emerald-300">
+            <HiCheckCircle className="text-lg text-emerald-400" />
+            Application submitted!
+          </div>
+          <h2 className="font-impact mb-4 text-4xl uppercase sm:text-6xl">
+            Welcome to{" "}
+            <span className="bg-gradient-to-r from-pink-400 to-violet-400 bg-clip-text text-transparent">
+              CoLab Nation
+            </span>{" "}
+            🎉
+          </h2>
+          <p className="text-text-dim mb-6 leading-relaxed">
+            Hey {name || "Builder"} — your squad is being assembled. A mission
+            briefing is headed to{" "}
+            <span className="font-semibold text-white">{email}</span> shortly.
+          </p>
+          <div className="font-display mx-auto inline-flex items-center gap-3 rounded-full border border-white/10 bg-white/5 px-6 py-3 text-sm tracking-wider uppercase">
+            <span className="size-2 animate-pulse rounded-full bg-emerald-400" />
+            XP Earned:{" "}
+            <span className="bg-gradient-to-r from-pink-400 to-violet-400 bg-clip-text font-black text-transparent">
+              +125
+            </span>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
   return (
     <>
-      {/* ─── HERO ─────────────────────────────────────────── */}
-      <section className="relative flex min-h-[80vh] flex-col items-center justify-center overflow-hidden pt-32 pb-16">
-        <StarField count={120} />
-        {done && <ConfettiBurst count={40} />}
-        <div className="grid-bg pointer-events-none absolute inset-0 opacity-25" />
-        <div className="pointer-events-none absolute top-0 left-1/2 h-[500px] w-[800px] -translate-x-1/2 bg-gradient-to-b from-pink-500/22 via-violet-500/12 to-transparent blur-3xl" />
-        <div className="pointer-events-none absolute -bottom-20 left-1/2 h-[400px] w-[800px] -translate-x-1/2 rounded-full bg-gradient-to-t from-orange-500/15 to-transparent blur-3xl" />
+      {/* ─── PAGE HERO ─────────────────────────────────────── */}
+      <section className="relative flex min-h-[55vh] flex-col items-center justify-center overflow-hidden pt-32 pb-16">
+        <StarField count={40} />
+        <div className="grid-bg pointer-events-none absolute inset-0 opacity-20" />
+        <div className="pointer-events-none absolute top-0 left-1/2 h-[400px] w-[700px] -translate-x-1/2 bg-gradient-to-b from-pink-500/20 via-violet-500/10 to-transparent blur-3xl" />
 
-        {/* Speed lines */}
-        <div className="pointer-events-none absolute inset-0 -z-10 opacity-40">
-          {[...Array(7)].map((_, i) => (
-            <motion.div
-              key={i}
-              className="absolute h-px w-32 bg-gradient-to-r from-transparent via-pink-500/40 to-transparent"
-              style={{ top: `${10 + i * 12}%`, left: i % 2 ? "60%" : "-10%" }}
-              animate={{ x: ["0%", "120%"] }}
-              transition={{ duration: 3 + (i % 3), repeat: Infinity, delay: i * 0.4, ease: "linear" }}
-            />
-          ))}
-        </div>
-
-        {/* Builder character + speech bubble */}
-        <motion.div
-          initial={{ opacity: 0, x: -60, y: 30 }}
-          animate={{ opacity: 1, x: 0, y: 0 }}
-          transition={{ duration: 1, delay: 0.4 }}
-          className="float-y pointer-events-none absolute bottom-0 left-2 z-10 hidden md:block lg:left-10"
-        >
+        {/* Builder character - desktop only */}
+        <div className="float-y pointer-events-none absolute bottom-0 left-4 z-10 hidden lg:block xl:left-16">
           <img
             src={builder}
             alt="Builder"
-            className="h-72 w-auto drop-shadow-[0_0_50px_rgba(255,61,160,0.55)] lg:h-96"
+            className="h-60 w-auto drop-shadow-[0_0_40px_rgba(255,61,160,0.5)] xl:h-80"
             draggable={false}
           />
-          <div className="absolute -top-2 left-32 hidden w-56 lg:block">
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={d}
-                initial={{ opacity: 0, y: 8, scale: 0.95 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                exit={{ opacity: 0, y: -6 }}
-                transition={{ duration: 0.4 }}
-                className="relative rounded-2xl border-2 border-pink-400/70 bg-bg/90 px-4 py-3 shadow-[0_0_30px_rgba(255,61,160,0.4)] backdrop-blur-md"
-              >
-                <p className="font-comic text-sm leading-tight text-white">
-                  {JOIN_DIALOGUE[d].left}
-                </p>
-                <div className="absolute -left-3 bottom-3 h-0 w-0 border-y-[8px] border-r-[14px] border-y-transparent border-r-pink-400/70" />
-                <div className="absolute -top-2 -left-2 flex size-6 items-center justify-center rounded-full bg-gradient-to-br from-pink-500 to-orange-400 text-[9px] text-white">
-                  <FaBolt />
-                </div>
-              </motion.div>
-            </AnimatePresence>
-          </div>
-        </motion.div>
+        </div>
 
-        {/* Mentor character + speech bubble */}
-        <motion.div
-          initial={{ opacity: 0, x: 60, y: 30 }}
-          animate={{ opacity: 1, x: 0, y: 0 }}
-          transition={{ duration: 1, delay: 0.6 }}
-          className="float-slow pointer-events-none absolute right-2 bottom-0 z-10 hidden md:block lg:right-10"
-        >
-          <img
-            src={mentor}
-            alt="Mentor"
-            className="h-72 w-auto drop-shadow-[0_0_50px_rgba(139,92,246,0.55)] lg:h-96"
-            draggable={false}
-          />
-          <div className="absolute -top-2 right-32 hidden w-56 lg:block">
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={d + 100}
-                initial={{ opacity: 0, y: 8, scale: 0.95 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                exit={{ opacity: 0, y: -6 }}
-                transition={{ duration: 0.4, delay: 0.2 }}
-                className="relative rounded-2xl border-2 border-violet-400/70 bg-bg/90 px-4 py-3 text-right shadow-[0_0_30px_rgba(139,92,246,0.4)] backdrop-blur-md"
-              >
-                <p className="font-comic text-sm leading-tight text-white">
-                  {JOIN_DIALOGUE[d].right}
-                </p>
-                <div className="absolute -right-3 bottom-3 h-0 w-0 border-y-[8px] border-l-[14px] border-y-transparent border-l-violet-400/70" />
-                <div className="absolute -top-2 -right-2 flex size-6 items-center justify-center rounded-full bg-gradient-to-br from-violet-500 to-blue-500 text-[9px] text-white">
-                  <FaStar />
-                </div>
-              </motion.div>
-            </AnimatePresence>
+        <div className="relative z-20 mx-auto max-w-2xl px-6 text-center">
+          <div className="mb-5 flex justify-center">
+            <div className="relative">
+              <div className="absolute inset-0 scale-125 rounded-2xl bg-gradient-to-tr from-pink-500 via-orange-400 to-violet-500 opacity-40 blur-xl" />
+              <img
+                src={logo}
+                alt="CoLab Nation"
+                className="relative h-14 w-14 rounded-2xl object-contain sm:h-16 sm:w-16"
+              />
+            </div>
           </div>
-        </motion.div>
 
-        <div className="relative z-20 mx-auto max-w-4xl px-6 text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="font-display mb-5 inline-flex items-center gap-2 rounded-full border border-pink-400/40 bg-pink-500/10 px-4 py-1.5 text-[10px] tracking-[0.4em] text-pink-200 uppercase backdrop-blur-md"
-          >
+          <div className="font-display mb-4 inline-flex items-center gap-2 rounded-full border border-pink-400/40 bg-pink-500/10 px-4 py-1.5 text-[10px] tracking-[0.4em] text-pink-200 uppercase backdrop-blur-md">
             <HiSparkles className="size-3 text-pink-300" />
-            Founder Cohort · 500 Seats
-          </motion.div>
-          <motion.h1
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="font-impact mb-6 text-[clamp(2.6rem,8.5vw,6rem)] leading-[0.92] tracking-tight uppercase"
-          >
-            <span className="shimmer-text block drop-shadow-[0_0_32px_rgba(255,61,160,0.55)]">
-              Choose your class.
+            Founder Cohort · 500 Seats Only
+          </div>
+
+          <h1 className="font-impact mb-4 text-[clamp(2.4rem,8vw,5.5rem)] leading-[0.92] tracking-tight uppercase">
+            <span className="block bg-gradient-to-r from-pink-400 via-fuchsia-300 to-pink-400 bg-clip-text text-transparent">
+              Choose Your Role.
             </span>
-            <span className="shimmer-text block drop-shadow-[0_0_32px_rgba(139,92,246,0.55)]">
-              Earn your badge.
+            <span className="block bg-gradient-to-r from-violet-400 via-pink-300 to-violet-400 bg-clip-text text-transparent">
+              Earn Your Badge.
             </span>
-          </motion.h1>
-          <motion.p
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.45 }}
-            className="text-text-dim mx-auto max-w-xl text-base sm:text-lg"
-          >
-            Builder, content creator, designer, or community lead. Pick your
-            role, equip your skills, and apply in 4 quick steps. Every answer
-            earns XP.
-          </motion.p>
+          </h1>
+          <p className="text-text-dim mx-auto max-w-md text-sm leading-relaxed sm:text-base">
+            Four quick steps. Pick your role, select your skills, and submit
+            your application. Every step earns XP.
+          </p>
         </div>
       </section>
 
+      {/* ─── FORM SECTION ──────────────────────────────────── */}
       <section className="relative pb-32">
-        <div className="mx-auto grid max-w-7xl gap-10 px-6 lg:grid-cols-[1fr,420px]">
-          <motion.div
-            layout
-            className="neon-border relative overflow-hidden rounded-3xl p-6 sm:p-10"
-          >
-            <div className="mb-8 flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                {[0, 1, 2, 3].map((i) => (
-                  <span
-                    key={i}
-                    className={`h-2 rounded-full transition-all ${
-                      i <= step ? "gradient-bg w-10" : "w-6 bg-white/10"
-                    }`}
-                  />
-                ))}
-              </div>
-              <p className="font-display text-text-dim text-xs tracking-widest uppercase">
-                {done ? "Complete" : `Step ${step + 1} / 4`}
-              </p>
-            </div>
+        <div className="mx-auto max-w-7xl px-4 sm:px-6">
+          <div className="grid gap-6 lg:grid-cols-[1fr,360px] xl:grid-cols-[1fr,400px]">
 
-            {done ? (
-              <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="py-10 text-center"
-              >
-                <img
-                  src={rocket}
-                  alt=""
-                  className="float-y mx-auto h-44 w-auto drop-shadow-[0_0_50px_rgba(255,138,61,0.6)]"
-                />
-                <h3 className="font-display mt-6 text-3xl font-black uppercase sm:text-5xl">
-                  Welcome to <span className="gradient-text">CoLab Nation</span>{" "}
-                  🎉
-                </h3>
-                <p className="text-text-dim mt-4">
-                  Hey {name || "Builder"} — your squad is being assembled.
-                  Mission briefing landing in your inbox at{" "}
-                  <span className="text-white">{email || "your email"}</span>.
-                </p>
-                <div className="font-display mt-8 inline-flex items-center gap-3 rounded-full border border-white/15 bg-white/5 px-5 py-3 text-sm tracking-widest uppercase">
-                  <span className="size-2 animate-pulse rounded-full bg-emerald-400" />
-                  XP earned:{" "}
-                  <span className="gradient-text font-black">+125</span>
+            {/* ── MAIN FORM PANEL ── */}
+            <div className="neon-border overflow-hidden rounded-3xl">
+              {/* Step indicator */}
+              <div className="border-b border-white/[0.07] bg-white/[0.02] px-6 py-5 sm:px-8">
+                <div className="flex items-center justify-between gap-4">
+                  <div className="flex items-center gap-2">
+                    {STEPS.map((s, i) => (
+                      <div key={s} className="flex items-center gap-2">
+                        <div className={`flex h-7 w-7 items-center justify-center rounded-full text-[11px] font-bold transition-all ${
+                          i < step
+                            ? "bg-emerald-500 text-white"
+                            : i === step
+                            ? "gradient-bg text-white shadow-[0_0_12px_rgba(255,61,160,0.5)]"
+                            : "border border-white/15 bg-white/5 text-white/30"
+                        }`}>
+                          {i < step ? "✓" : i + 1}
+                        </div>
+                        {i < STEPS.length - 1 && (
+                          <div className={`h-px w-6 rounded-full transition-all sm:w-10 ${i < step ? "bg-emerald-500" : "bg-white/10"}`} />
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                  <span className="font-display text-text-dim whitespace-nowrap text-[10px] tracking-widest uppercase">
+                    {STEPS[step]} · {step + 1}/{STEPS.length}
+                  </span>
                 </div>
-              </motion.div>
-            ) : (
-              <>
-                {step === 0 && (
+              </div>
+
+              {/* Step content */}
+              <div className="p-6 sm:p-8">
+                <AnimatePresence mode="wait">
                   <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="space-y-6"
+                    key={step}
+                    variants={stepVariants}
+                    initial="enter"
+                    animate="center"
+                    exit="exit"
+                    transition={{ duration: 0.25 }}
                   >
-                    <h3 className="font-display text-2xl font-black uppercase sm:text-3xl">
-                      Choose your role
-                    </h3>
-                    <div className="grid gap-4 sm:grid-cols-3">
-                      {ROLES.map((r) => (
-                        <button
-                          key={r.value}
-                          onClick={() => setRole(r.value)}
-                          className={`relative rounded-2xl border-2 p-5 text-left transition-all ${
-                            role === r.value
-                              ? "glow-pink border-pink-500 bg-pink-500/10"
-                              : "border-white/10 bg-white/5 hover:border-white/30"
-                          }`}
-                        >
-                          <span className="text-3xl">{r.emoji}</span>
-                          <p className="font-display mt-3 text-lg font-black">
-                            {r.label}
+                    {step === 0 && (
+                      <div className="space-y-5">
+                        <div>
+                          <h3 className="font-display text-xl font-black uppercase sm:text-2xl">
+                            What's your role?
+                          </h3>
+                          <p className="text-text-dim mt-1 text-sm">
+                            Pick the category that best describes how you create and build.
                           </p>
-                          <p className="text-text-dim mt-1 text-xs">{r.desc}</p>
-                          {r.value === "content" && (
-                            <span className="text-neon-pink mt-1 inline-block text-[10px]">
-                              Video, writing, or social
-                            </span>
-                          )}
-                          {r.value === "designer" && (
-                            <span className="text-neon-pink mt-1 inline-block text-[10px]">
-                              UI, graphics, or animation
-                            </span>
-                          )}
-                          {r.value === "community" && (
-                            <span className="text-neon-pink mt-1 inline-block text-[10px]">
-                              Discord, events, or outreach
-                            </span>
-                          )}
-                        </button>
-                      ))}
-                    </div>
-                  </motion.div>
-                )}
+                        </div>
+                        <div className="grid gap-3 sm:grid-cols-2">
+                          {ROLES.map((r) => (
+                            <button
+                              key={r.value}
+                              onClick={() => setRole(r.value)}
+                              className={`relative flex items-start gap-4 rounded-2xl border-2 p-5 text-left transition-all duration-200 ${
+                                role === r.value
+                                  ? "border-pink-500 bg-pink-500/10 shadow-[0_0_20px_rgba(255,61,160,0.2)]"
+                                  : "border-white/10 bg-white/[0.02] hover:border-white/25 hover:bg-white/[0.04]"
+                              }`}
+                            >
+                              <span className="text-2xl leading-none">{r.emoji}</span>
+                              <div className="min-w-0">
+                                <p className="font-display text-sm font-black uppercase">{r.label}</p>
+                                <p className="text-text-dim mt-0.5 text-xs leading-relaxed">{r.desc}</p>
+                              </div>
+                              {role === r.value && (
+                                <HiCheckCircle className="absolute top-4 right-4 text-lg text-pink-400" />
+                              )}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                    )}
 
-                {step === 1 && (
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="space-y-6"
-                  >
-                    <h3 className="font-display text-2xl font-black uppercase sm:text-3xl">
-                      Show your skills
-                    </h3>
-                    <p className="text-text-dim">
-                      Select up to 4 — these unlock your starter missions or
-                      team role.
-                    </p>
-                    <div className="flex flex-wrap gap-3">
-                      {SKILLS.map((s) => {
-                        const active = skills.includes(s);
-                        return (
-                          <button
-                            key={s}
-                            onClick={() => toggleSkill(s)}
-                            disabled={!active && skills.length >= 4}
-                            className={`font-display rounded-full border px-5 py-2.5 text-sm tracking-wider uppercase transition-all ${
-                              active
-                                ? "glow-violet border-violet-400 bg-violet-500/20 text-white"
-                                : "text-text-dim border-white/10 bg-white/5 hover:border-white/30 disabled:opacity-30"
-                            }`}
-                          >
-                            {s}
-                          </button>
-                        );
-                      })}
-                    </div>
-                  </motion.div>
-                )}
+                    {step === 1 && (
+                      <div className="space-y-5">
+                        <div>
+                          <h3 className="font-display text-xl font-black uppercase sm:text-2xl">
+                            What are your skills?
+                          </h3>
+                          <p className="text-text-dim mt-1 text-sm">
+                            Select up to 4 skills — these shape your missions and team match.
+                          </p>
+                        </div>
+                        <div className="flex flex-wrap gap-2.5">
+                          {SKILLS.map((s) => {
+                            const active = skills.includes(s);
+                            return (
+                              <button
+                                key={s}
+                                onClick={() => toggleSkill(s)}
+                                disabled={!active && skills.length >= 4}
+                                className={`font-display rounded-full border px-4 py-2 text-xs tracking-wider uppercase transition-all duration-200 ${
+                                  active
+                                    ? "border-violet-400 bg-violet-500/20 text-white shadow-[0_0_12px_rgba(139,92,246,0.3)]"
+                                    : "text-text-dim border-white/10 bg-white/[0.03] hover:border-white/25 hover:text-white disabled:cursor-not-allowed disabled:opacity-30"
+                                }`}
+                              >
+                                {active && "✓ "}{s}
+                              </button>
+                            );
+                          })}
+                        </div>
+                        {skills.length > 0 && (
+                          <p className="font-display text-neon-violet text-[11px] tracking-wider uppercase">
+                            {4 - skills.length} slot{4 - skills.length === 1 ? "" : "s"} remaining
+                          </p>
+                        )}
+                      </div>
+                    )}
 
-                {step === 2 && (
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="space-y-6"
-                  >
-                    <h3 className="font-display text-2xl font-black uppercase sm:text-3xl">
-                      Tell us about you
-                    </h3>
-                    <div className="space-y-4">
-                      <Field label="Your name">
-                        <input
-                          value={name}
-                          onChange={(e) => setName(e.target.value)}
-                          placeholder="Aria the Architect"
-                          className="mt-2 w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white outline-none focus:border-pink-500"
-                        />
-                      </Field>
-                      <Field label="Email">
-                        <input
-                          type="email"
-                          value={email}
-                          onChange={(e) => setEmail(e.target.value)}
-                          placeholder="builder@colab.nation"
-                          className="mt-2 w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white outline-none focus:border-pink-500"
-                        />
-                      </Field>
-                      <Field label="Why do you want to join? (optional)">
-                        <textarea
-                          value={message}
-                          onChange={(e) => setMessage(e.target.value)}
-                          placeholder="What do you want to build with us?"
-                          rows={3}
-                          className="mt-2 w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white outline-none focus:border-pink-500"
-                        />
-                      </Field>
-                    </div>
-                  </motion.div>
-                )}
+                    {step === 2 && (
+                      <div className="space-y-5">
+                        <div>
+                          <h3 className="font-display text-xl font-black uppercase sm:text-2xl">
+                            Your profile
+                          </h3>
+                          <p className="text-text-dim mt-1 text-sm">
+                            Tell us who you are. We keep it simple — just the essentials.
+                          </p>
+                        </div>
+                        <div className="space-y-4">
+                          <div>
+                            <label className="font-display mb-2 flex items-center gap-2 text-xs tracking-wider text-white/60 uppercase">
+                              <FaUser className="text-pink-400" />
+                              Full Name
+                            </label>
+                            <input
+                              value={name}
+                              onChange={(e) => setName(e.target.value)}
+                              placeholder="Your name"
+                              className="w-full rounded-xl border border-white/10 bg-white/[0.04] px-4 py-3.5 text-white placeholder-white/25 outline-none ring-0 transition-all focus:border-pink-500/60 focus:bg-white/[0.06] focus:shadow-[0_0_0_3px_rgba(255,61,160,0.12)]"
+                            />
+                          </div>
+                          <div>
+                            <label className="font-display mb-2 flex items-center gap-2 text-xs tracking-wider text-white/60 uppercase">
+                              <FaEnvelope className="text-violet-400" />
+                              Email Address
+                            </label>
+                            <input
+                              type="email"
+                              value={email}
+                              onChange={(e) => setEmail(e.target.value)}
+                              placeholder="you@example.com"
+                              className="w-full rounded-xl border border-white/10 bg-white/[0.04] px-4 py-3.5 text-white placeholder-white/25 outline-none ring-0 transition-all focus:border-violet-500/60 focus:bg-white/[0.06] focus:shadow-[0_0_0_3px_rgba(139,92,246,0.12)]"
+                            />
+                          </div>
+                          <div>
+                            <label className="font-display mb-2 text-xs tracking-wider text-white/60 uppercase">
+                              Why do you want to join? <span className="text-white/30">(optional)</span>
+                            </label>
+                            <textarea
+                              value={message}
+                              onChange={(e) => setMessage(e.target.value)}
+                              placeholder="What do you want to build with us?"
+                              rows={3}
+                              className="w-full resize-none rounded-xl border border-white/10 bg-white/[0.04] px-4 py-3.5 text-white placeholder-white/25 outline-none ring-0 transition-all focus:border-pink-500/60 focus:bg-white/[0.06] focus:shadow-[0_0_0_3px_rgba(255,61,160,0.12)]"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    )}
 
-                {step === 3 && (
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="space-y-6"
-                  >
-                    <h3 className="font-display text-2xl font-black uppercase sm:text-3xl">
-                      Confirm application
-                    </h3>
-                    <div className="space-y-3 rounded-2xl border border-white/10 bg-white/5 p-5">
-                      <Row label="Class" value={role.toUpperCase()} />
-                      <Row
-                        label="Skills"
-                        value={skills.join(" · ") || "None yet"}
-                      />
-                      <Row label="Hero name" value={name || "—"} />
-                      <Row label="Email" value={email || "—"} />
-                      {message && <Row label="Note" value={message} />}
-                    </div>
-                    <p className="text-text-dim text-sm">
-                      Ready? Hitting launch saves your application. Our team
-                      will review and reach out if you’re a fit!
-                    </p>
+                    {step === 3 && (
+                      <div className="space-y-5">
+                        <div>
+                          <h3 className="font-display text-xl font-black uppercase sm:text-2xl">
+                            Review & submit
+                          </h3>
+                          <p className="text-text-dim mt-1 text-sm">
+                            Double-check everything before launching your application.
+                          </p>
+                        </div>
+                        <div className="overflow-hidden rounded-2xl border border-white/10">
+                          {[
+                            { label: "Role", value: selectedRole.label, icon: "🎯" },
+                            { label: "Skills", value: skills.join(", ") || "None selected", icon: "⚡" },
+                            { label: "Name", value: name || "—", icon: "👤" },
+                            { label: "Email", value: email || "—", icon: "📧" },
+                            ...(message ? [{ label: "Note", value: message, icon: "💬" }] : []),
+                          ].map((row, i) => (
+                            <div
+                              key={row.label}
+                              className={`flex items-start gap-3 px-5 py-4 ${i > 0 ? "border-t border-white/[0.06]" : ""}`}
+                            >
+                              <span className="text-base leading-none">{row.icon}</span>
+                              <div className="min-w-0 flex-1">
+                                <p className="font-display mb-0.5 text-[10px] tracking-widest text-white/40 uppercase">{row.label}</p>
+                                <p className="break-words text-sm text-white/90">{row.value}</p>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                        <p className="text-text-dim rounded-xl border border-white/[0.06] bg-white/[0.02] px-4 py-3 text-xs leading-relaxed">
+                          By submitting you agree to our terms. Our team will review your application and reach out within 72 hours if you're a fit for Season 1.
+                        </p>
+                      </div>
+                    )}
                   </motion.div>
-                )}
+                </AnimatePresence>
 
                 {error && (
-                  <p className="mt-4 rounded-xl border border-rose-500/40 bg-rose-500/10 px-4 py-2 text-sm text-rose-200">
-                    {error}
-                  </p>
+                  <div className="mt-5 flex items-start gap-2 rounded-xl border border-rose-500/30 bg-rose-500/10 px-4 py-3">
+                    <span className="mt-0.5 shrink-0 text-rose-400">⚠</span>
+                    <p className="text-sm text-rose-200">{error}</p>
+                  </div>
                 )}
 
-                <div className="mt-10 flex items-center justify-between">
+                {/* Navigation */}
+                <div className="mt-8 flex items-center justify-between gap-4">
                   <button
                     onClick={back}
                     disabled={step === 0 || submitting}
-                    className="font-display text-text-dim text-sm tracking-widest uppercase hover:text-white disabled:opacity-30"
+                    className="font-display flex items-center gap-1.5 text-xs tracking-widest text-white/40 uppercase transition-colors hover:text-white/80 disabled:cursor-not-allowed disabled:opacity-20"
                   >
                     ← Back
                   </button>
                   {step < 3 ? (
-                    <Button onClick={next} rightIcon={TiLocationArrow}>
-                      Next
+                    <Button onClick={next} rightIcon={TiLocationArrow} className="px-8">
+                      Continue
                     </Button>
                   ) : (
-                    <Button onClick={submit} rightIcon={TiLocationArrow}>
-                      {submitting ? "Launching…" : "Launch"}
+                    <Button
+                      onClick={submit}
+                      rightIcon={FaRocket}
+                      className="px-8 shadow-[0_0_30px_rgba(255,61,160,0.4)]"
+                    >
+                      {submitting ? "Submitting…" : "Launch Application"}
                     </Button>
                   )}
                 </div>
-              </>
-            )}
-          </motion.div>
-
-          <div className="space-y-6">
-            <div className="neon-border rounded-3xl p-6">
-              <div className="flex items-center gap-4">
-                <img
-                  src={builder}
-                  alt=""
-                  className="h-20 w-20 rounded-2xl border border-white/10 object-cover"
-                />
-                <div>
-                  <p className="font-display text-neon-pink text-xs tracking-widest uppercase">
-                    Profile preview
-                  </p>
-                  <p className="font-display text-xl font-black">
-                    {name || "Unnamed Builder"}
-                  </p>
-                  <p className="text-text-dim text-xs">
-                    {role.toUpperCase()} · {skills.length} skill
-                    {skills.length === 1 ? "" : "s"}
-                  </p>
-                </div>
-              </div>
-
-              <div className="mt-6">
-                <div className="font-display text-text-dim flex items-center justify-between text-xs tracking-widest uppercase">
-                  <span>XP Progress</span>
-                  <span>{xp} / 100</span>
-                </div>
-                <div className="mt-2 h-3 w-full overflow-hidden rounded-full bg-white/10">
-                  <motion.div
-                    animate={{ width: `${Math.min(xp, 100)}%` }}
-                    transition={{ duration: 0.6 }}
-                    className="gradient-bg h-full"
-                  />
-                </div>
-              </div>
-
-              <div className="mt-6 flex flex-wrap gap-2">
-                {skills.length === 0 ? (
-                  <span className="text-text-dim text-xs">
-                    No skills equipped yet
-                  </span>
-                ) : (
-                  skills.map((s) => (
-                    <span
-                      key={s}
-                      className="font-display rounded-full bg-violet-500/20 px-3 py-1 text-xs tracking-wider text-white uppercase"
-                    >
-                      {s}
-                    </span>
-                  ))
-                )}
               </div>
             </div>
 
-            <div className="neon-border flex items-center gap-4 rounded-3xl p-5">
-              <img
-                src={aibot}
-                alt="Nova"
-                className="float-y h-16 w-auto drop-shadow-[0_0_24px_rgba(56,240,255,0.6)]"
-              />
-              <div>
-                <p className="font-display text-neon-cyan text-xs tracking-widest uppercase">
-                  Nova
+            {/* ── SIDEBAR PANEL ── */}
+            <div className="flex flex-col gap-5">
+              {/* Profile Card */}
+              <div className="neon-border rounded-3xl p-6">
+                <p className="font-display text-neon-pink mb-4 text-[10px] tracking-[0.4em] uppercase">
+                  Your Application
                 </p>
-                <p className="text-text-dim text-sm">
-                  {step === 0 && "Pick a class — you can swap later."}
-                  {step === 1 && "Squads love range. Mix two stacks."}
-                  {step === 2 && "Use your real name. Builders trust builders."}
-                  {step === 3 && "Hit launch. I'll match you in <24h. Promise."}
-                  {done && "Your first mission drops tomorrow at 9am 🚀"}
+
+                <div className="mb-5 flex items-center gap-4">
+                  <div className={`flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br ${selectedRole.color} text-2xl shadow-lg`}>
+                    {selectedRole.emoji}
+                  </div>
+                  <div className="min-w-0">
+                    <p className="font-display truncate text-lg font-black">
+                      {name || "Your name"}
+                    </p>
+                    <p className="text-text-dim text-xs">
+                      {selectedRole.label} · {skills.length} skill{skills.length !== 1 ? "s" : ""}
+                    </p>
+                  </div>
+                </div>
+
+                {/* XP Bar */}
+                <div className="mb-4">
+                  <div className="font-display text-text-dim mb-2 flex items-center justify-between text-[10px] tracking-widest uppercase">
+                    <span>XP Progress</span>
+                    <span className="text-white">{xp}/100</span>
+                  </div>
+                  <div className="h-2.5 w-full overflow-hidden rounded-full bg-white/10">
+                    <motion.div
+                      animate={{ width: `${xp}%` }}
+                      transition={{ duration: 0.5, ease: "easeOut" }}
+                      className={`h-full rounded-full bg-gradient-to-r ${selectedRole.color}`}
+                    />
+                  </div>
+                </div>
+
+                {/* Skills */}
+                <div className="flex flex-wrap gap-1.5">
+                  {skills.length === 0 ? (
+                    <span className="text-text-dim text-xs">No skills selected yet</span>
+                  ) : (
+                    skills.map((s) => (
+                      <span
+                        key={s}
+                        className="font-display rounded-full bg-violet-500/20 px-3 py-1 text-[11px] tracking-wider text-violet-200 uppercase"
+                      >
+                        {s}
+                      </span>
+                    ))
+                  )}
+                </div>
+              </div>
+
+              {/* Season Info */}
+              <div className="neon-border rounded-3xl p-6">
+                <p className="font-display text-neon-violet mb-4 text-[10px] tracking-[0.4em] uppercase">
+                  Season 1 Details
+                </p>
+                <div className="space-y-3">
+                  {[
+                    { icon: FaStar, label: "Founding Seats", value: "500 total", color: "text-pink-400" },
+                    { icon: FaBolt, label: "Season Length", value: "12 weeks", color: "text-violet-400" },
+                    { icon: FaRocket, label: "Kicks Off", value: "May 2026", color: "text-cyan-400" },
+                    { icon: FaMedal, label: "Verified Badges", value: "On completion", color: "text-orange-400" },
+                  ].map((item) => (
+                    <div key={item.label} className="flex items-center justify-between gap-3">
+                      <div className="flex items-center gap-2.5">
+                        <item.icon className={`shrink-0 text-sm ${item.color}`} />
+                        <span className="text-text-dim text-xs">{item.label}</span>
+                      </div>
+                      <span className="font-display text-[11px] font-bold text-white">{item.value}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Guarantee */}
+              <div className="rounded-2xl border border-emerald-500/20 bg-emerald-500/[0.06] p-5">
+                <div className="mb-2 flex items-center gap-2">
+                  <HiCheckCircle className="text-lg text-emerald-400" />
+                  <p className="font-display text-[11px] font-black tracking-wider text-emerald-300 uppercase">
+                    No Résumé Required
+                  </p>
+                </div>
+                <p className="text-text-dim text-xs leading-relaxed">
+                  We evaluate you on what you want to build — not where you've been. Every accepted member gets a verified proof portfolio automatically.
                 </p>
               </div>
             </div>
@@ -561,29 +550,3 @@ export const Join = () => {
     </>
   );
 };
-
-const Field = ({
-  label,
-  children,
-}: {
-  label: string;
-  children: React.ReactNode;
-}) => (
-  <label className="block">
-    <span className="font-display text-text-dim text-xs tracking-widest uppercase">
-      {label}
-    </span>
-    {children}
-  </label>
-);
-
-const Row = ({ label, value }: { label: string; value: string }) => (
-  <div className="flex items-start justify-between gap-4 text-sm">
-    <span className="font-display text-text-dim shrink-0 text-xs tracking-widest uppercase">
-      {label}
-    </span>
-    <span className="text-right font-medium break-words text-white">
-      {value}
-    </span>
-  </div>
-);

@@ -46,17 +46,17 @@ export const Navbar = () => {
         )}
       >
         {/* ── Logo ── */}
-        <Link to="/" className="group flex shrink-0 items-center gap-3">
+        <Link to="/" className="group flex shrink-0 items-center gap-2">
           <span className="relative">
-            <span className="absolute inset-0 rounded-xl bg-gradient-to-tr from-pink-500 via-orange-400 to-violet-500 opacity-50 blur-md transition-opacity duration-300 group-hover:opacity-90" />
+            <span className="absolute inset-0 rounded-xl bg-gradient-to-tr from-pink-500 via-orange-400 to-violet-500 opacity-30 blur-lg transition-opacity duration-300 group-hover:opacity-70" />
             <img
               src={logo}
               alt="CoLab Nation"
-              className="relative h-9 w-9 rounded-xl border border-white/15 object-cover sm:h-10 sm:w-10"
+              className="relative h-9 w-9 rounded-xl object-contain sm:h-10 sm:w-10"
             />
           </span>
-          <span className="hidden flex-col leading-tight sm:flex">
-            <span className="font-display text-sm font-bold tracking-wider sm:text-base">
+          <span className="flex flex-col leading-tight">
+            <span className="font-display text-sm font-bold tracking-wide sm:text-base">
               CoLab
               <span
                 style={{
@@ -66,11 +66,11 @@ export const Navbar = () => {
                   color: "transparent",
                 }}
               >
-                Nation
+                {" "}Nation
               </span>
             </span>
             <span className="font-display text-[8px] tracking-[0.25em] text-white/35 uppercase">
-              Powered by Ideas
+              Powering Ideas
             </span>
           </span>
         </Link>

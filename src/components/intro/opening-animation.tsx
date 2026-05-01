@@ -450,7 +450,7 @@ export const OpeningAnimation = ({ onComplete, forceShow = false }: Props) => {
                   <img
                     src={logo}
                     alt="CoLab Nation"
-                    className="relative rounded-3xl border border-white/25 object-cover"
+                    className="relative rounded-3xl object-contain"
                     style={{
                       height: "clamp(96px, 14vw, 148px)",
                       width: "clamp(96px, 14vw, 148px)",

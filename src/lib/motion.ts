@@ -50,8 +50,9 @@ export const useMotionBudget = (): MotionBudget => {
     const lowMemory = deviceMemory !== null ? deviceMemory <= 4 : false;
     const lowCpu =
       hardwareConcurrency !== null ? hardwareConcurrency <= 4 : false;
+    const isMobile = /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent);
 
-    setIsLowPowerDevice(Boolean(saveData || lowMemory || lowCpu));
+    setIsLowPowerDevice(Boolean(saveData || lowMemory || lowCpu || isMobile));
   }, []);
 
   return {

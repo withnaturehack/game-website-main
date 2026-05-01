@@ -115,54 +115,30 @@ export const Hero = () => {
       <div className="from-bg/70 to-bg/70 absolute inset-0 -z-10 bg-gradient-to-r via-transparent" />
       <div className="grid-bg absolute inset-0 -z-10 opacity-25" />
       <div className="scan-lines absolute inset-0 -z-10" />
-      <StarField count={140} />
+      <StarField count={60} />
 
       {/* Glow orbs */}
       <div className="pointer-events-none absolute -top-32 left-1/3 -z-10 h-[700px] w-[700px] -translate-x-1/2 rounded-full bg-gradient-to-br from-pink-500/25 via-violet-500/15 to-blue-500/20 blur-[100px]" />
       <div className="pointer-events-none absolute top-1/3 -right-20 -z-10 h-[500px] w-[500px] rounded-full bg-gradient-to-tl from-orange-500/20 to-transparent blur-[80px]" />
       <div className="pointer-events-none absolute bottom-0 left-0 -z-10 h-[420px] w-[420px] rounded-full bg-gradient-to-tr from-cyan-500/15 to-transparent blur-[80px]" />
 
-      {/* Manga speed lines */}
-      <div className="pointer-events-none absolute inset-0 -z-10 opacity-40">
-        {[...Array(8)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute h-px w-32 bg-gradient-to-r from-transparent via-pink-500/40 to-transparent"
-            style={{
-              top: `${10 + i * 11}%`,
-              left: i % 2 === 0 ? "-10%" : "60%",
-            }}
-            animate={{ x: ["0%", "120%"] }}
-            transition={{
-              duration: 3 + (i % 3),
-              repeat: Infinity,
-              delay: i * 0.4,
-              ease: "linear",
-            }}
-          />
-        ))}
-      </div>
-
-      {/* Animated radial rings */}
-      {[0, 1, 2].map((i) => (
-        <motion.div
-          key={i}
-          aria-hidden
-          initial={{ scale: 0.6, opacity: 0 }}
-          animate={{
-            scale: [0.6 + i * 0.3, 1.4 + i * 0.4],
-            opacity: [0.18, 0],
-          }}
-          transition={{
-            duration: 4 + i * 1.5,
-            delay: i * 1.2,
-            repeat: Infinity,
-            ease: "easeOut",
-          }}
-          className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border border-pink-500/20"
-          style={{ width: 400 + i * 200, height: 400 + i * 200 }}
-        />
-      ))}
+      {/* Manga speed lines – CSS only, no JS */}
+      {!shouldReduceEffects && (
+        <div className="pointer-events-none absolute inset-0 -z-10 opacity-30">
+          {[0, 1, 2, 3].map((i) => (
+            <div
+              key={i}
+              className="marquee absolute h-px w-40 bg-gradient-to-r from-transparent via-pink-500/50 to-transparent"
+              style={{
+                top: `${15 + i * 22}%`,
+                left: i % 2 === 0 ? "-10%" : "40%",
+                animationDuration: `${6 + i * 2}s`,
+                animationDelay: `${i * 1.2}s`,
+              }}
+            />
+          ))}
+        </div>
+      )}
 
       {/* Rocket bg decoration */}
       <img
@@ -192,12 +168,6 @@ export const Hero = () => {
           className="float-y h-[68vh] max-h-[640px] w-auto drop-shadow-[0_0_60px_rgba(255,61,160,0.55)]"
           draggable={false}
         />
-        {/* Builder energy aura */}
-        <motion.div
-          className="pointer-events-none absolute bottom-1/3 left-1/2 -z-10 h-72 w-72 -translate-x-1/2 rounded-full bg-pink-500/30 blur-3xl"
-          animate={{ scale: [1, 1.18, 1], opacity: [0.4, 0.7, 0.4] }}
-          transition={{ duration: 3.4, repeat: Infinity, ease: "easeInOut" }}
-        />
       </motion.div>
 
       {/* RIGHT character — Mentor */}
@@ -213,17 +183,6 @@ export const Hero = () => {
           transition={{ duration: 1.2, delay: 0.8, ease: [0.22, 1, 0.36, 1] }}
           className="float-slow h-[68vh] max-h-[640px] w-auto drop-shadow-[0_0_60px_rgba(139,92,246,0.55)]"
           draggable={false}
-        />
-        {/* Mentor energy aura */}
-        <motion.div
-          className="pointer-events-none absolute right-1/2 bottom-1/3 -z-10 h-72 w-72 translate-x-1/2 rounded-full bg-violet-500/30 blur-3xl"
-          animate={{ scale: [1, 1.18, 1], opacity: [0.4, 0.7, 0.4] }}
-          transition={{
-            duration: 3.4,
-            repeat: Infinity,
-            ease: "easeInOut",
-            delay: 1.2,
-          }}
         />
       </motion.div>
 
@@ -251,11 +210,11 @@ export const Hero = () => {
           transition={{ duration: 1, ease: [0.22, 1, 0.36, 1], delay: 0.3 }}
           className="relative mb-6"
         >
-          <div className="absolute inset-0 scale-110 rounded-3xl bg-gradient-to-tr from-pink-500 via-orange-400 to-violet-500 opacity-70 blur-2xl" />
+          <div className="absolute inset-0 scale-110 rounded-3xl bg-gradient-to-tr from-pink-500 via-orange-400 to-violet-500 opacity-60 blur-2xl" />
           <img
             src={logo}
             alt="CoLab Nation"
-            className="relative h-20 w-20 rounded-2xl border border-white/20 object-cover shadow-[0_0_40px_rgba(255,61,160,0.4)] sm:h-24 sm:w-24"
+            className="relative h-20 w-20 rounded-2xl object-contain shadow-[0_0_40px_rgba(255,61,160,0.4)] sm:h-24 sm:w-24"
           />
         </motion.div>
 

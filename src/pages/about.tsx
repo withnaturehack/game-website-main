@@ -81,7 +81,7 @@ export const About = () => {
             <img
               src={logo}
               alt="CoLab Nation"
-              className="relative h-20 w-20 rounded-3xl border border-white/20 object-cover sm:h-24 sm:w-24"
+              className="relative h-20 w-20 rounded-3xl object-contain sm:h-24 sm:w-24"
             />
           </motion.div>
 
