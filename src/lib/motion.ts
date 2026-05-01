@@ -48,7 +48,8 @@ export const useMotionBudget = (): MotionBudget => {
     const hardwareConcurrency = getNavigatorNumber(navAny?.hardwareConcurrency);
 
     const lowMemory = deviceMemory !== null ? deviceMemory <= 4 : false;
-    const lowCpu = hardwareConcurrency !== null ? hardwareConcurrency <= 4 : false;
+    const lowCpu =
+      hardwareConcurrency !== null ? hardwareConcurrency <= 4 : false;
 
     setIsLowPowerDevice(Boolean(saveData || lowMemory || lowCpu));
   }, []);

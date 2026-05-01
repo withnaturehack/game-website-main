@@ -110,8 +110,8 @@ export const Hero = () => {
       </motion.div>
 
       {/* ── OVERLAYS ── */}
-      <div className="absolute inset-0 -z-20 bg-gradient-to-b from-bg/90 via-bg/50 to-bg" />
-      <div className="absolute inset-0 -z-10 bg-gradient-to-r from-bg/70 via-transparent to-bg/70" />
+      <div className="from-bg/90 via-bg/50 to-bg absolute inset-0 -z-20 bg-gradient-to-b" />
+      <div className="from-bg/70 to-bg/70 absolute inset-0 -z-10 bg-gradient-to-r via-transparent" />
       <div className="grid-bg absolute inset-0 -z-10 opacity-25" />
       <div className="scan-lines absolute inset-0 -z-10" />
       <StarField count={140} />
@@ -215,7 +215,7 @@ export const Hero = () => {
         />
         {/* Mentor energy aura */}
         <motion.div
-          className="pointer-events-none absolute bottom-1/3 right-1/2 -z-10 h-72 w-72 translate-x-1/2 rounded-full bg-violet-500/30 blur-3xl"
+          className="pointer-events-none absolute right-1/2 bottom-1/3 -z-10 h-72 w-72 translate-x-1/2 rounded-full bg-violet-500/30 blur-3xl"
           animate={{ scale: [1, 1.18, 1], opacity: [0.4, 0.7, 0.4] }}
           transition={{
             duration: 3.4,
@@ -363,7 +363,7 @@ export const Hero = () => {
       </motion.div>
 
       {/* ── MARQUEE STRIP ── */}
-      <div className="absolute right-0 bottom-0 left-0 z-20 overflow-hidden border-t border-white/[0.08] bg-bg/70 py-3 backdrop-blur-md">
+      <div className="bg-bg/70 absolute right-0 bottom-0 left-0 z-20 overflow-hidden border-t border-white/[0.08] py-3 backdrop-blur-md">
         <div className="marquee font-syne text-text-dim flex w-max items-center gap-10 px-6 text-[10px] tracking-[0.38em] whitespace-nowrap uppercase sm:text-[11px]">
           {Array.from({ length: 2 }).map((_, i) => (
             <div key={i} className="flex items-center gap-10">
