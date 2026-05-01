@@ -1,5 +1,4 @@
-import { FaDiscord, FaInstagram, FaYoutube, FaGithub } from "react-icons/fa";
-import { FaXTwitter } from "react-icons/fa6";
+import { FaInstagram, FaLinkedinIn } from "react-icons/fa";
 
 export const NAV_ITEMS = [
   { label: "Home", to: "/" },
@@ -10,12 +9,20 @@ export const NAV_ITEMS = [
   { label: "Join", to: "/join" },
 ] as const;
 
+export const CONTACT_EMAIL = "support@colabnation.live" as const;
+export const CONTACT_EMAIL_HREF = `mailto:${CONTACT_EMAIL}` as const;
+
 export const SOCIAL_LINKS = [
-  { href: "https://discord.com", icon: FaDiscord, label: "Discord" },
-  { href: "https://x.com", icon: FaXTwitter, label: "X" },
-  { href: "https://instagram.com", icon: FaInstagram, label: "Instagram" },
-  { href: "https://youtube.com", icon: FaYoutube, label: "YouTube" },
-  { href: "https://github.com", icon: FaGithub, label: "GitHub" },
+  {
+    href: "https://www.linkedin.com/company/colab-nation/",
+    icon: FaLinkedinIn,
+    label: "LinkedIn",
+  },
+  {
+    href: "https://www.instagram.com/colab__nation?igsh=Z2Z4eDNhbjE1cmhl",
+    icon: FaInstagram,
+    label: "Instagram",
+  },
 ] as const;
 
 export const STATS = [

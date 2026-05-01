@@ -8,8 +8,9 @@ import { Link } from "react-router-dom";
 import { TiLocationArrow } from "react-icons/ti";
 import { HiSparkles } from "react-icons/hi";
 import { Button } from "@/components/ui/button";
-import { POWERS } from "@/constants";
-import logo from "@assets/45375_1777311860118.png";
+import { CONTACT_EMAIL_HREF, POWERS } from "@/constants";
+
+const logo = "/img/logo.png";
 
 const fadeUp = (delay = 0) => ({
   initial: { opacity: 0, y: 32 },
@@ -368,7 +369,7 @@ export const Landing = () => {
                     Join as a Builder
                   </Button>
                 </Link>
-                <a href="mailto:team@colabnation.com">
+                <a href={CONTACT_EMAIL_HREF}>
                   <Button
                     variant="outline"
                     className="px-5 py-2.5 text-xs whitespace-nowrap"

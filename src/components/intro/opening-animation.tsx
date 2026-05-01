@@ -1,8 +1,9 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useMemo, useRef, useState } from "react";
-import logo from "@assets/45375_1777311860118.png";
 import rocket from "@/assets/characters/rocket.png";
 import { useMotionBudget } from "@/lib/motion";
+
+const logo = "/img/logo.png";
 
 const SEEN_KEY = "colab.intro.v3.seen";
 

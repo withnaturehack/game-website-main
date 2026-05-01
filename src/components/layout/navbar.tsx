@@ -6,7 +6,8 @@ import { HiMenu, HiX } from "react-icons/hi";
 import { NAV_ITEMS } from "@/constants";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import logo from "@assets/45375_1777311860118.png";
+
+const logo = "/img/logo.png";
 
 export const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);

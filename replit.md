@@ -68,8 +68,7 @@ AI-generated anime art lives in `src/assets/`:
 Looping cinematic video backgrounds in `public/videos/hero-1..4.mp4` cycle
 behind the hero (Nova-game inspired).
 
-The brand logo lives at `attached_assets/45375_1777311860118.png` and is
-imported via the `@assets` alias.
+The brand logo lives at `public/img/logo.png`.
 
 ## Opening Animation
 
@@ -86,7 +85,7 @@ Skipped automatically on `/admin` and on URLs with `?nointro`.
 ## Aliases
 
 - `@/*` → `src/*`
-- `@assets/*` → `attached_assets/*`
+- `@assets/*` → `public/img/*`
 
 ## Workflow
 

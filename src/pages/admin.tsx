@@ -4,7 +4,8 @@ import { TiLocationArrow } from "react-icons/ti";
 
 import { Button } from "@/components/ui/button";
 import { StarField } from "@/components/ui/particles";
-import logo from "@assets/45375_1777311860118.png";
+
+const logo = "/img/logo.png";
 
 const TOKEN_KEY = "colab.admin.token";
 
@@ -126,7 +127,10 @@ export const Admin = () => {
 
   const remove = async (id: string) => {
     if (!confirm("Delete this submission?")) return;
-    await fetch(`/api/admin/submissions/${id}`, { method: "DELETE", headers: headers() });
+    await fetch(`/api/admin/submissions/${id}`, {
+      method: "DELETE",
+      headers: headers(),
+    });
     setSubs((p) => p.filter((s) => s.id !== id));
   };
 
@@ -161,8 +165,15 @@ export const Admin = () => {
     const header = "id,createdAt,role,name,email,skills,message\n";
     const rows = subs
       .map((s) =>
-        [s.id, s.createdAt, s.role, JSON.stringify(s.name), s.email, JSON.stringify(s.skills.join("|")), JSON.stringify(s.message || "")]
-          .join(",")
+        [
+          s.id,
+          s.createdAt,
+          s.role,
+          JSON.stringify(s.name),
+          s.email,
+          JSON.stringify(s.skills.join("|")),
+          JSON.stringify(s.message || ""),
+        ].join(",")
       )
       .join("\n");
     const blob = new Blob([header + rows], { type: "text/csv" });
@@ -189,7 +200,7 @@ export const Admin = () => {
     return (
       <section className="relative grid min-h-[100dvh] place-items-center overflow-hidden px-6 py-24">
         <StarField count={80} />
-        <div className="absolute inset-0 -z-10 grid-bg opacity-30" />
+        <div className="grid-bg absolute inset-0 -z-10 opacity-30" />
         <motion.form
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -203,7 +214,7 @@ export const Admin = () => {
               className="h-14 w-14 rounded-xl border border-white/10 object-cover"
             />
             <div>
-              <p className="font-display text-xs uppercase tracking-widest text-neon-pink">
+              <p className="font-display text-neon-pink text-xs tracking-widest uppercase">
                 Mission control
               </p>
               <h1 className="font-display text-2xl font-black uppercase">
@@ -212,7 +223,7 @@ export const Admin = () => {
             </div>
           </div>
           <label className="mt-8 block">
-            <span className="font-display text-xs uppercase tracking-widest text-text-dim">
+            <span className="font-display text-text-dim text-xs tracking-widest uppercase">
               Password
             </span>
             <input
@@ -229,12 +240,18 @@ export const Admin = () => {
               {error}
             </p>
           )}
-          <Button type="submit" className="mt-6 w-full justify-center" rightIcon={TiLocationArrow}>
+          <Button
+            type="submit"
+            className="mt-6 w-full justify-center"
+            rightIcon={TiLocationArrow}
+          >
             {loading ? "Authorizing…" : "Enter"}
           </Button>
-          <p className="mt-4 text-center text-[11px] text-text-dim">
-            Default password: <span className="text-white font-mono">colab2026</span> ·
-            override with <span className="text-white font-mono">ADMIN_PASSWORD</span> env var
+          <p className="text-text-dim mt-4 text-center text-[11px]">
+            Default password:{" "}
+            <span className="font-mono text-white">colab2026</span> · override
+            with <span className="font-mono text-white">ADMIN_PASSWORD</span>{" "}
+            env var
           </p>
         </motion.form>
       </section>
@@ -243,7 +260,7 @@ export const Admin = () => {
 
   return (
     <section className="relative min-h-[100dvh] overflow-hidden px-6 py-12">
-      <div className="absolute inset-0 -z-10 grid-bg opacity-20" />
+      <div className="grid-bg absolute inset-0 -z-10 opacity-20" />
       <div className="mx-auto max-w-7xl">
         <header className="mb-10 flex flex-wrap items-center justify-between gap-4">
           <div className="flex items-center gap-4">
@@ -253,22 +270,34 @@ export const Admin = () => {
               className="h-12 w-12 rounded-xl border border-white/10 object-cover"
             />
             <div>
-              <p className="font-display text-xs uppercase tracking-widest text-neon-pink">
+              <p className="font-display text-neon-pink text-xs tracking-widest uppercase">
                 Mission control
               </p>
-              <h1 className="font-display text-2xl sm:text-3xl font-black uppercase">
+              <h1 className="font-display text-2xl font-black uppercase sm:text-3xl">
                 CoLab · Admin
               </h1>
             </div>
           </div>
           <div className="flex flex-wrap items-center gap-3">
-            <Button variant="outline" onClick={exportCsv} className="text-xs px-4 py-2">
+            <Button
+              variant="outline"
+              onClick={exportCsv}
+              className="px-4 py-2 text-xs"
+            >
               Export CSV
             </Button>
-            <Button variant="ghost" onClick={loadAll} className="text-xs px-4 py-2">
+            <Button
+              variant="ghost"
+              onClick={loadAll}
+              className="px-4 py-2 text-xs"
+            >
               Refresh
             </Button>
-            <Button variant="ghost" onClick={logout} className="text-xs px-4 py-2">
+            <Button
+              variant="ghost"
+              onClick={logout}
+              className="px-4 py-2 text-xs"
+            >
               Logout
             </Button>
           </div>
@@ -279,7 +308,13 @@ export const Admin = () => {
           <Stat label="Emails sent" value={outbox.length} />
           <Stat
             label="Today"
-            value={subs.filter((s) => new Date(s.createdAt).toDateString() === new Date().toDateString()).length}
+            value={
+              subs.filter(
+                (s) =>
+                  new Date(s.createdAt).toDateString() ===
+                  new Date().toDateString()
+              ).length
+            }
           />
         </div>
 
@@ -291,7 +326,7 @@ export const Admin = () => {
         />
 
         <div className="neon-border overflow-hidden rounded-2xl">
-          <div className="hidden grid-cols-[1fr_1.4fr_0.8fr_2fr_1.4fr] gap-3 border-b border-white/10 bg-white/5 px-4 py-3 text-xs font-display uppercase tracking-widest text-text-dim md:grid">
+          <div className="font-display text-text-dim hidden grid-cols-[1fr_1.4fr_0.8fr_2fr_1.4fr] gap-3 border-b border-white/10 bg-white/5 px-4 py-3 text-xs tracking-widest uppercase md:grid">
             <span>Name</span>
             <span>Email</span>
             <span>Class</span>
@@ -299,8 +334,9 @@ export const Admin = () => {
             <span className="text-right">Actions</span>
           </div>
           {filtered.length === 0 && (
-            <div className="px-6 py-10 text-center text-text-dim">
-              No submissions yet — they'll appear here as soon as builders apply.
+            <div className="text-text-dim px-6 py-10 text-center">
+              No submissions yet — they'll appear here as soon as builders
+              apply.
             </div>
           )}
           {filtered.map((s) => (
@@ -310,30 +346,30 @@ export const Admin = () => {
             >
               <div>
                 <p className="font-medium text-white">{s.name}</p>
-                <p className="text-[11px] text-text-dim">
+                <p className="text-text-dim text-[11px]">
                   {new Date(s.createdAt).toLocaleString()}
                 </p>
               </div>
               <a
                 href={`mailto:${s.email}`}
-                className="text-sm text-neon-cyan hover:underline break-all"
+                className="text-neon-cyan text-sm break-all hover:underline"
               >
                 {s.email}
               </a>
-              <span className="inline-flex w-fit rounded-full bg-pink-500/15 px-3 py-1 text-[10px] font-display uppercase tracking-widest text-pink-200">
+              <span className="font-display inline-flex w-fit rounded-full bg-pink-500/15 px-3 py-1 text-[10px] tracking-widest text-pink-200 uppercase">
                 {s.role}
               </span>
               <div className="flex flex-wrap gap-1.5">
                 {s.skills.map((sk) => (
                   <span
                     key={sk}
-                    className="rounded-full bg-violet-500/15 px-2 py-0.5 text-[10px] font-display uppercase tracking-wider text-violet-200"
+                    className="font-display rounded-full bg-violet-500/15 px-2 py-0.5 text-[10px] tracking-wider text-violet-200 uppercase"
                   >
                     {sk}
                   </span>
                 ))}
                 {s.message && (
-                  <span className="basis-full text-xs text-text-dim italic">
+                  <span className="text-text-dim basis-full text-xs italic">
                     "{s.message}"
                   </span>
                 )}
@@ -341,14 +377,14 @@ export const Admin = () => {
               <div className="flex flex-wrap justify-end gap-2">
                 <Button
                   variant="outline"
-                  className="text-[11px] px-3 py-1.5"
+                  className="px-3 py-1.5 text-[11px]"
                   onClick={() => startCompose(s)}
                 >
                   Email
                 </Button>
                 <Button
                   variant="ghost"
-                  className="text-[11px] px-3 py-1.5"
+                  className="px-3 py-1.5 text-[11px]"
                   onClick={() => remove(s.id)}
                 >
                   Delete
@@ -370,12 +406,12 @@ export const Admin = () => {
               </h2>
               <button
                 onClick={() => setComposeFor(null)}
-                className="text-xs font-display uppercase tracking-widest text-text-dim hover:text-white"
+                className="font-display text-text-dim text-xs tracking-widest uppercase hover:text-white"
               >
                 Close
               </button>
             </div>
-            <p className="mt-2 text-xs text-text-dim">
+            <p className="text-text-dim mt-2 text-xs">
               To: <span className="text-white">{composeFor.email}</span>
             </p>
             <input
@@ -392,8 +428,9 @@ export const Admin = () => {
               placeholder="Body"
             />
             <div className="mt-4 flex flex-wrap items-center justify-between gap-4">
-              <p className="text-xs text-text-dim">
-                Click send → your default mail app opens prefilled, and we log the message in the outbox.
+              <p className="text-text-dim text-xs">
+                Click send → your default mail app opens prefilled, and we log
+                the message in the outbox.
               </p>
               <Button onClick={send} rightIcon={TiLocationArrow}>
                 Send
@@ -409,7 +446,7 @@ export const Admin = () => {
 
         {outbox.length > 0 && (
           <div className="mt-12">
-            <h2 className="font-display text-xl font-black uppercase mb-4">
+            <h2 className="font-display mb-4 text-xl font-black uppercase">
               Recent outbox
             </h2>
             <div className="neon-border divide-y divide-white/5 overflow-hidden rounded-2xl">
@@ -417,11 +454,11 @@ export const Admin = () => {
                 <div key={o.id} className="px-4 py-3 text-sm">
                   <div className="flex items-center justify-between gap-4">
                     <span className="font-medium text-white">{o.subject}</span>
-                    <span className="text-[11px] text-text-dim">
+                    <span className="text-text-dim text-[11px]">
                       {new Date(o.sentAt).toLocaleString()}
                     </span>
                   </div>
-                  <p className="text-xs text-text-dim mt-1">→ {o.to}</p>
+                  <p className="text-text-dim mt-1 text-xs">→ {o.to}</p>
                 </div>
               ))}
             </div>
@@ -434,7 +471,11 @@ export const Admin = () => {
 
 const Stat = ({ label, value }: { label: string; value: number }) => (
   <div className="neon-border rounded-2xl p-5">
-    <p className="font-display text-xs uppercase tracking-widest text-text-dim">{label}</p>
-    <p className="mt-1 font-display text-3xl font-black gradient-text">{value}</p>
+    <p className="font-display text-text-dim text-xs tracking-widest uppercase">
+      {label}
+    </p>
+    <p className="font-display gradient-text mt-1 text-3xl font-black">
+      {value}
+    </p>
   </div>
 );

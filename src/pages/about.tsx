@@ -8,9 +8,10 @@ import builder from "@/assets/characters/builder.png";
 import mentor from "@/assets/characters/mentor.png";
 import squad from "@/assets/characters/squad.png";
 import spaceBg from "@/assets/scenes/space-bg.png";
-import logo from "@assets/45375_1777311860118.png";
 import { StarField } from "@/components/ui/particles";
 import { CtaBanner } from "@/components/sections/cta-banner";
+
+const logo = "/img/logo.png";
 
 const fade = (delay = 0) => ({
   initial: { opacity: 0, y: 28 },

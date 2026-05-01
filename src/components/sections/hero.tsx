@@ -10,8 +10,9 @@ import builder from "@/assets/characters/builder.png";
 import mentor from "@/assets/characters/mentor.png";
 import aibot from "@/assets/characters/aibot.png";
 import rocket from "@/assets/characters/rocket.png";
-import logo from "@assets/45375_1777311860118.png";
 import { useMotionBudget } from "@/lib/motion";
+
+const logo = "/img/logo.png";
 
 const HERO_VIDEOS = [
   "/videos/hero-1.mp4",
