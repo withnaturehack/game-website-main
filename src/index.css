@@ -491,6 +491,120 @@ body {
   will-change: transform;
 }
 
+/* ── Glitch text effect ──────────────────────────────────────────── */
+@keyframes glitch-1 {
+  0%, 100% { clip-path: inset(0 0 95% 0); transform: translate(-2px, 0) skewX(-1deg); }
+  20%       { clip-path: inset(30% 0 50% 0); transform: translate(2px, 0) skewX(1deg); }
+  40%       { clip-path: inset(60% 0 20% 0); transform: translate(-1px, 0); }
+  60%       { clip-path: inset(10% 0 80% 0); transform: translate(3px, 0) skewX(-2deg); }
+  80%       { clip-path: inset(70% 0 5% 0);  transform: translate(-3px, 0); }
+}
+@keyframes glitch-2 {
+  0%, 100% { clip-path: inset(50% 0 30% 0); transform: translate(2px, 0); opacity: 0.7; }
+  25%       { clip-path: inset(10% 0 60% 0); transform: translate(-2px, 0) skewX(2deg); }
+  50%       { clip-path: inset(80% 0 5% 0);  transform: translate(1px, 0); }
+  75%       { clip-path: inset(20% 0 70% 0); transform: translate(-3px, 0) skewX(-1deg); }
+}
+.glitch {
+  position: relative;
+}
+.glitch::before,
+.glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.glitch::before {
+  color: #38f0ff;
+  animation: glitch-1 4s step-end infinite;
+  mix-blend-mode: screen;
+  opacity: 0;
+}
+.glitch::after {
+  color: #ff3da0;
+  animation: glitch-2 4s step-end infinite;
+  mix-blend-mode: screen;
+  opacity: 0;
+}
+.glitch:hover::before,
+.glitch:hover::after {
+  opacity: 1;
+}
+.glitch-active::before,
+.glitch-active::after {
+  opacity: 1;
+}
+
+/* ── Speed lines bg ──────────────────────────────────────────────── */
+.speed-lines {
+  background-image: repeating-conic-gradient(
+    rgba(255, 255, 255, 0.018) 0deg 0.5deg,
+    transparent 0.5deg 5deg
+  );
+  background-position: center center;
+}
+
+/* ── Manga panel border ──────────────────────────────────────────── */
+.manga-panel {
+  border: 1.5px solid rgba(255,255,255,0.10);
+  position: relative;
+}
+.manga-panel::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.04) 0%, transparent 60%);
+  pointer-events: none;
+}
+.manga-panel::after {
+  content: "";
+  position: absolute;
+  top: -1px; left: 8px; right: 8px; height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+  pointer-events: none;
+}
+
+/* ── Holographic card shimmer ────────────────────────────────────── */
+@keyframes holo-shift {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+.holo-card {
+  position: relative;
+  overflow: hidden;
+}
+.holo-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    125deg,
+    transparent 30%,
+    rgba(255, 61, 160, 0.08) 40%,
+    rgba(56, 240, 255, 0.08) 50%,
+    rgba(139, 92, 246, 0.08) 60%,
+    transparent 70%
+  );
+  background-size: 300% 300%;
+  animation: holo-shift 4s ease-in-out infinite;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.holo-card:hover::after {
+  opacity: 1;
+}
+
+/* ── Power bar fill ──────────────────────────────────────────────── */
+@keyframes power-fill {
+  from { width: 0%; }
+}
+.power-bar-fill {
+  animation: power-fill 1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
 /* ── Mobile optimizations ────────────────────────────────────────── */
 @media (max-width: 768px) {
   .rocket-rise { display: none; }
