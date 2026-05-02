@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo, useEffect, useState } from "react";
 import { useMotionBudget } from "@/lib/motion";
 
 interface StarFieldProps {
@@ -9,7 +9,7 @@ interface StarFieldProps {
 export const StarField = ({ count = 80, className = "" }: StarFieldProps) => {
   const { shouldReduceEffects } = useMotionBudget();
   const effectiveCount = shouldReduceEffects
-    ? Math.max(24, Math.floor(count * 0.55))
+    ? Math.max(20, Math.floor(count * 0.4))
     : count;
 
   const stars = useMemo(
@@ -18,15 +18,17 @@ export const StarField = ({ count = 80, className = "" }: StarFieldProps) => {
         id: i,
         top: Math.random() * 100,
         left: Math.random() * 100,
-        size: Math.random() * 2.4 + 0.4,
-        delay: Math.random() * 4,
-        duration: 2 + Math.random() * 4,
+        size: Math.random() * 2.6 + 0.3,
+        delay: Math.random() * 5,
+        duration: 2.5 + Math.random() * 4,
         hue:
-          Math.random() > 0.7
+          Math.random() > 0.75
             ? "#ff3da0"
-            : Math.random() > 0.5
+            : Math.random() > 0.55
               ? "#8b5cf6"
-              : "#ffffff",
+              : Math.random() > 0.35
+                ? "#38f0ff"
+                : "#ffffff",
       })),
     [effectiveCount]
   );
@@ -45,9 +47,62 @@ export const StarField = ({ count = 80, className = "" }: StarFieldProps) => {
             background: s.hue,
             boxShadow: shouldReduceEffects
               ? "none"
-              : `0 0 ${s.size * 3}px ${s.hue}`,
+              : `0 0 ${s.size * 4}px ${s.hue}`,
             animationDelay: `${s.delay}s`,
             animationDuration: `${s.duration}s`,
+          }}
+        />
+      ))}
+    </div>
+  );
+};
+
+interface ShootingStarsProps {
+  count?: number;
+}
+
+export const ShootingStars = ({ count = 4 }: ShootingStarsProps) => {
+  const { shouldReduceEffects } = useMotionBudget();
+  const [visible, setVisible] = useState<number[]>([]);
+
+  useEffect(() => {
+    if (shouldReduceEffects) return;
+
+    const shoot = () => {
+      const id = Date.now();
+      setVisible((prev) => [...prev, id]);
+      setTimeout(() => {
+        setVisible((prev) => prev.filter((v) => v !== id));
+      }, 1900);
+    };
+
+    const intervals = Array.from({ length: count }).map((_, i) => {
+      const base = 3000 + i * 2200;
+      const jitter = Math.random() * 4000;
+      return setInterval(shoot, base + jitter);
+    });
+
+    shoot();
+
+    return () => intervals.forEach(clearInterval);
+  }, [count, shouldReduceEffects]);
+
+  if (shouldReduceEffects) return null;
+
+  return (
+    <div className="pointer-events-none absolute inset-0 overflow-hidden">
+      {visible.map((id, i) => (
+        <span
+          key={id}
+          className="shooting-star absolute"
+          style={{
+            top: `${8 + ((i * 19) % 40)}%`,
+            left: `${5 + ((id % 60))}%`,
+            width: "120px",
+            height: "1.5px",
+            background: "linear-gradient(90deg, rgba(255,255,255,0.9), rgba(255,255,255,0))",
+            borderRadius: "9999px",
+            boxShadow: "0 0 6px 1px rgba(255,255,255,0.5)",
           }}
         />
       ))}

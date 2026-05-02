@@ -4,6 +4,7 @@ export interface MotionBudget {
   prefersReducedMotion: boolean;
   isLowPowerDevice: boolean;
   shouldReduceEffects: boolean;
+  shouldReduceVideo: boolean;
 }
 
 const getNavigatorBoolean = (value: unknown): boolean =>
@@ -15,6 +16,7 @@ const getNavigatorNumber = (value: unknown): number | null =>
 export const useMotionBudget = (): MotionBudget => {
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
   const [isLowPowerDevice, setIsLowPowerDevice] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -25,7 +27,6 @@ export const useMotionBudget = (): MotionBudget => {
     const update = () => setPrefersReducedMotion(mql.matches);
     update();
 
-    // Safari fallback
     if (typeof mql.addEventListener === "function") {
       mql.addEventListener("change", update);
       return () => mql.removeEventListener("change", update);
@@ -47,17 +48,19 @@ export const useMotionBudget = (): MotionBudget => {
     const deviceMemory = getNavigatorNumber(navAny?.deviceMemory);
     const hardwareConcurrency = getNavigatorNumber(navAny?.hardwareConcurrency);
 
-    const lowMemory = deviceMemory !== null ? deviceMemory <= 4 : false;
+    const lowMemory = deviceMemory !== null ? deviceMemory <= 2 : false;
     const lowCpu =
-      hardwareConcurrency !== null ? hardwareConcurrency <= 4 : false;
-    const isMobile = /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent);
+      hardwareConcurrency !== null ? hardwareConcurrency <= 2 : false;
+    const mobile = /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent);
 
-    setIsLowPowerDevice(Boolean(saveData || lowMemory || lowCpu || isMobile));
+    setIsMobile(mobile);
+    setIsLowPowerDevice(Boolean(saveData || lowMemory || lowCpu));
   }, []);
 
   return {
     prefersReducedMotion,
     isLowPowerDevice,
     shouldReduceEffects: prefersReducedMotion || isLowPowerDevice,
+    shouldReduceVideo: prefersReducedMotion || isLowPowerDevice || isMobile,
   };
 };
