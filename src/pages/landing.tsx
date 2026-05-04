@@ -1,5 +1,6 @@
 import { Hero } from "@/components/sections/hero";
 import { Stats } from "@/components/sections/stats";
+import { Community } from "@/components/sections/community";
 import { StoryFlow } from "@/components/sections/story-flow";
 import { CharacterShowcase } from "@/components/sections/character-showcase";
 import { CtaBanner } from "@/components/sections/cta-banner";
@@ -25,6 +26,7 @@ export const Landing = () => {
     <>
       <Hero />
       <Stats />
+      <Community />
 
       {/* ── HOW IT WORKS ─────────────────────────────────────────── */}
       <section className="relative overflow-hidden py-24" id="how-it-works">
@@ -408,12 +410,20 @@ export const Landing = () => {
             </p>
             <h2 className="font-display text-3xl leading-[0.95] font-black uppercase sm:text-4xl lg:text-5xl">
               Join the{" "}
-              <span style={{ background: "linear-gradient(90deg,#38f0ff,#8b5cf6)", WebkitBackgroundClip: "text", backgroundClip: "text", color: "transparent" }}>
+              <span
+                style={{
+                  background: "linear-gradient(90deg,#38f0ff,#8b5cf6)",
+                  WebkitBackgroundClip: "text",
+                  backgroundClip: "text",
+                  color: "transparent",
+                }}
+              >
                 movement.
               </span>
             </h2>
             <p className="text-text-dim mx-auto mt-4 max-w-md text-base">
-              Follow us for launch updates, builder spotlights, and Season 1 announcements.
+              Follow us for launch updates, builder spotlights, and Season 1
+              announcements.
             </p>
           </motion.div>
 
@@ -421,7 +431,9 @@ export const Landing = () => {
             {/* Instagram */}
             <motion.a
               {...fadeUp(0)}
-              href={SOCIAL_LINKS.find(s => s.label === "Instagram")?.href ?? "#"}
+              href={
+                SOCIAL_LINKS.find((s) => s.label === "Instagram")?.href ?? "#"
+              }
               target="_blank"
               rel="noopener noreferrer"
               className="neon-border group relative flex flex-col items-center justify-center gap-4 overflow-hidden rounded-2xl p-8 text-center transition-all duration-200 hover:-translate-y-1.5 hover:shadow-[0_8px_40px_-8px_rgba(255,61,160,0.35)]"
@@ -431,7 +443,9 @@ export const Landing = () => {
                 <FaInstagram className="text-2xl text-white" />
               </div>
               <div>
-                <p className="font-display text-base font-black uppercase">Instagram</p>
+                <p className="font-display text-base font-black uppercase">
+                  Instagram
+                </p>
                 <p className="text-text-dim text-sm">@colabnation</p>
               </div>
               <span className="font-display mt-1 inline-flex items-center gap-1.5 rounded-full border border-pink-500/30 bg-pink-500/10 px-3 py-1.5 text-[10px] tracking-[0.3em] text-pink-300 uppercase">
@@ -442,7 +456,9 @@ export const Landing = () => {
             {/* LinkedIn */}
             <motion.a
               {...fadeUp(0.08)}
-              href={SOCIAL_LINKS.find(s => s.label === "LinkedIn")?.href ?? "#"}
+              href={
+                SOCIAL_LINKS.find((s) => s.label === "LinkedIn")?.href ?? "#"
+              }
               target="_blank"
               rel="noopener noreferrer"
               className="neon-border group relative flex flex-col items-center justify-center gap-4 overflow-hidden rounded-2xl p-8 text-center transition-all duration-200 hover:-translate-y-1.5 hover:shadow-[0_8px_40px_-8px_rgba(79,183,255,0.35)]"
@@ -452,7 +468,9 @@ export const Landing = () => {
                 <FaLinkedinIn className="text-2xl text-white" />
               </div>
               <div>
-                <p className="font-display text-base font-black uppercase">LinkedIn</p>
+                <p className="font-display text-base font-black uppercase">
+                  LinkedIn
+                </p>
                 <p className="text-text-dim text-sm">CoLab Nation</p>
               </div>
               <span className="font-display mt-1 inline-flex items-center gap-1.5 rounded-full border border-blue-500/30 bg-blue-500/10 px-3 py-1.5 text-[10px] tracking-[0.3em] text-blue-300 uppercase">
@@ -471,8 +489,12 @@ export const Landing = () => {
                 <FaEnvelope className="text-2xl text-white" />
               </div>
               <div>
-                <p className="font-display text-base font-black uppercase">Email</p>
-                <p className="text-text-dim text-sm">support@colabnation.live</p>
+                <p className="font-display text-base font-black uppercase">
+                  Email
+                </p>
+                <p className="text-text-dim text-sm">
+                  support@colabnation.live
+                </p>
               </div>
               <span className="font-display mt-1 inline-flex items-center gap-1.5 rounded-full border border-violet-500/30 bg-violet-500/10 px-3 py-1.5 text-[10px] tracking-[0.3em] text-violet-300 uppercase">
                 Say hello →
@@ -481,20 +503,44 @@ export const Landing = () => {
           </div>
 
           {/* Quotes strip */}
-          <motion.div {...fadeUp(0.2)} className="mt-10 grid gap-4 sm:grid-cols-3">
+          <motion.div
+            {...fadeUp(0.2)}
+            className="mt-10 grid gap-4 sm:grid-cols-3"
+          >
             {[
-              { quote: "This is what LinkedIn should have been.", handle: "@devbuilder_sam", role: "Frontend Dev" },
-              { quote: "Finally a platform that values what I ship, not where I went to school.", handle: "@ux_orla", role: "UX Designer" },
-              { quote: "Got a job offer 2 weeks after Demo Day. No résumé sent.", handle: "@mlhunter_k", role: "ML Engineer" },
+              {
+                quote: "This is what LinkedIn should have been.",
+                handle: "@devbuilder_sam",
+                role: "Frontend Dev",
+              },
+              {
+                quote:
+                  "Finally a platform that values what I ship, not where I went to school.",
+                handle: "@ux_orla",
+                role: "UX Designer",
+              },
+              {
+                quote:
+                  "Got a job offer 2 weeks after Demo Day. No résumé sent.",
+                handle: "@mlhunter_k",
+                role: "ML Engineer",
+              },
             ].map((q, i) => (
-              <div key={i} className="rounded-2xl border border-white/[0.07] bg-white/[0.025] p-5">
-                <p className="mb-3 text-sm leading-relaxed text-white/70 italic">"{q.quote}"</p>
+              <div
+                key={i}
+                className="rounded-2xl border border-white/[0.07] bg-white/[0.025] p-5"
+              >
+                <p className="mb-3 text-sm leading-relaxed text-white/70 italic">
+                  "{q.quote}"
+                </p>
                 <div className="flex items-center gap-2">
                   <div className="flex size-7 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-pink-500 to-violet-500 text-[10px] font-bold text-white">
                     {q.handle[1].toUpperCase()}
                   </div>
                   <div>
-                    <p className="font-display text-[11px] font-bold text-white/80">{q.handle}</p>
+                    <p className="font-display text-[11px] font-bold text-white/80">
+                      {q.handle}
+                    </p>
                     <p className="text-text-dim text-[10px]">{q.role}</p>
                   </div>
                 </div>

@@ -1,4 +1,4 @@
-import { FaInstagram, FaLinkedinIn } from "react-icons/fa";
+import { FaInstagram, FaLinkedinIn, FaWhatsapp } from "react-icons/fa";
 
 export const NAV_ITEMS = [
   { label: "Home", to: "/" },
@@ -22,6 +22,11 @@ export const SOCIAL_LINKS = [
     href: "https://www.instagram.com/colab__nation?igsh=Z2Z4eDNhbjE1cmhl",
     icon: FaInstagram,
     label: "Instagram",
+  },
+  {
+    href: "https://chat.whatsapp.com/HU089UzJDs4Er5LeRjME2x",
+    icon: FaWhatsapp,
+    label: "WhatsApp",
   },
 ] as const;
 
