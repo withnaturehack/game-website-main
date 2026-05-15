@@ -421,30 +421,11 @@ export const Join = () => {
                       <form
                         id="join-form"
                         ref={formRef}
-                        method="POST"
-                        action="https://formsubmit.co/support@colabnation.live"
                         onSubmit={(e) => {
                           e.preventDefault();
                           submit();
                         }}
                       >
-                        <input
-                          type="hidden"
-                          name="_next"
-                          value={window.location.href}
-                        />
-                        <input type="hidden" name="_captcha" value="false" />
-                        <input
-                          type="hidden"
-                          name="_subject"
-                          value="CoLab Nation Application"
-                        />
-                        <input type="hidden" name="role" value={role} />
-                        <input type="hidden" name="name" value={name} />
-                        <input type="hidden" name="email" value={email} />
-                        <input type="hidden" name="message" value={message} />
-                        <input type="hidden" name="skills" value="[]" />
-                        <input type="hidden" name="source" value="join-form" />
                         <h3 className="font-display mb-1 text-lg font-black uppercase sm:text-xl">
                           Your Details
                         </h3>
