@@ -1,5 +1,14 @@
 [
   {
+    "id": "dd4d55d4-9be8-4c5b-93ff-7dc6822f38ff",
+    "createdAt": "2026-05-15T10:01:49.680Z",
+    "role": "builder",
+    "name": "Test User",
+    "email": "test@example.com",
+    "skills": [],
+    "source": "join-form"
+  },
+  {
     "id": "c7284619-bef6-443c-997b-1548f6974c13",
     "createdAt": "2026-04-27T18:34:58.117Z",
     "role": "builder",

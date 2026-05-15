@@ -150,28 +150,22 @@ export const Join = () => {
     setSubmitting(true);
     setError(null);
     try {
-      const formData = new FormData();
-      formData.append("_subject", "CoLab Nation Application");
-      formData.append("_captcha", "false");
-      formData.append("role", role);
-      formData.append("name", name);
-      formData.append("email", email);
-      formData.append("message", message);
-      formData.append("skills", "[]");
-      formData.append("source", "join-form");
-
-      const res = await fetch(
-        "https://formsubmit.co/ajax/support@colabnation.live",
-        {
-          method: "POST",
-          headers: { Accept: "application/json" },
-          body: formData,
-        }
-      );
+      const res = await fetch("/api/join", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          role,
+          name: name.trim(),
+          email: email.trim(),
+          message,
+          skills: [],
+          source: "join-form",
+        }),
+      });
       if (!res.ok) {
         const json = await res.json().catch(() => ({}));
         throw new Error(
-          (json as { message?: string }).message ?? "Submission failed"
+          (json as { error?: string }).error ?? "Submission failed"
         );
       }
       setDone(true);
