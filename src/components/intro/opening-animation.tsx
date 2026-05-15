@@ -28,8 +28,8 @@ export const OpeningAnimation = ({ onComplete, forceShow = false }: Props) => {
   const [showFlash, setShowFlash] = useState(false);
   const timersRef = useRef<ReturnType<typeof setTimeout>[]>([]);
 
-  const starCount = shouldReduceEffects ? 80 : 120;
-  const speedLineCount = shouldReduceEffects ? 14 : SPEED_LINE_COUNT;
+  const starCount = shouldReduceEffects ? 40 : 70;
+  const speedLineCount = shouldReduceEffects ? 10 : 16;
 
   const stars = useMemo(
     () =>

@@ -94,7 +94,7 @@ export const Hero = () => {
           <video
             key={`front-${frontVideo}`}
             src={HERO_VIDEOS[frontVideo]}
-            autoPlay muted loop playsInline preload="auto"
+            autoPlay muted loop playsInline preload="metadata"
             className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-[1400ms] ${
               isFading ? "opacity-0" : "opacity-40"
             }`}
@@ -103,7 +103,7 @@ export const Hero = () => {
             <video
               key={`back-${backVideo}`}
               src={HERO_VIDEOS[backVideo]}
-              autoPlay muted loop playsInline preload="auto"
+              autoPlay muted loop playsInline preload="none"
               className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-[1400ms] ${
                 isFading ? "opacity-40" : "opacity-0"
               }`}
@@ -121,8 +121,8 @@ export const Hero = () => {
       {/* Aurora glow */}
       <div className="aurora pointer-events-none absolute inset-0 -z-20 opacity-35" />
 
-      <StarField count={70} />
-      <ShootingStars count={5} />
+      <StarField count={40} />
+      <ShootingStars count={3} />
 
       {/* Glow orbs */}
       <div className="pointer-events-none absolute -top-40 left-1/3 -z-10 h-[800px] w-[800px] -translate-x-1/2 rounded-full bg-gradient-to-br from-pink-500/22 via-violet-500/14 to-blue-500/18 blur-[120px]" />

@@ -60,7 +60,7 @@ export const useMotionBudget = (): MotionBudget => {
   return {
     prefersReducedMotion,
     isLowPowerDevice,
-    shouldReduceEffects: prefersReducedMotion || isLowPowerDevice,
+    shouldReduceEffects: prefersReducedMotion || isLowPowerDevice || isMobile,
     shouldReduceVideo: prefersReducedMotion || isLowPowerDevice || isMobile,
   };
 };
