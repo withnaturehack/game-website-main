@@ -10,8 +10,6 @@ const SEEN_KEY = "colab.intro.v3.seen";
 const COLAB_LETTERS = ["C", "O", "L", "A", "B"];
 const NATION_LETTERS = ["N", "A", "T", "I", "O", "N"];
 
-const SPEED_LINE_COUNT = 24;
-
 interface Props {
   onComplete?: () => void;
   forceShow?: boolean;
