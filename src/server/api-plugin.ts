@@ -10,7 +10,9 @@ const SUBMISSIONS_FILE = path.join(DATA_DIR, "submissions.json");
 const OUTBOX_FILE = path.join(DATA_DIR, "outbox.json");
 const SESSIONS_FILE = path.join(DATA_DIR, "sessions.json");
 
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || "Kartik";
+// NOTE: Admin password hardcoded per request. For production, prefer using
+// an environment variable and avoid committing secrets to source control.
+const ADMIN_PASSWORD = "Kartik";
 
 interface Submission {
   id: string;
