@@ -21,6 +21,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { StarField } from "@/components/ui/particles";
 import rocket from "@/assets/characters/rocket.png";
+import { CONTACT_EMAIL } from "@/constants";
 
 const logo = "/img/logo.png";
 
@@ -151,7 +152,6 @@ export const Join = () => {
       return;
     }
 
-    // Better email validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!trimmedEmail || !emailRegex.test(trimmedEmail)) {
       setError("Please enter a valid email address.");
@@ -161,27 +161,26 @@ export const Join = () => {
     setSubmitting(true);
     setError(null);
     try {
-      const res = await fetch("/api/join", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          role,
-          name: trimmedName,
-          email: trimmedEmail,
-          message,
-          skills: [],
-          source: "join-form",
-        }),
-      });
-      if (!res.ok) {
-        const json = await res.json().catch(() => ({}));
-        throw new Error(
-          (json as { error?: string }).error ?? "Submission failed"
-        );
-      }
+      const admin = CONTACT_EMAIL || "support@colabnation.live";
+      const subject = `CoLab Join: ${selectedRole.label} — ${trimmedName}`;
+      const body = [
+        `Role: ${selectedRole.label} (${role})`,
+        `Name: ${trimmedName}`,
+        `Email: ${trimmedEmail}`,
+        `Message:\n${message || "(none)"}`,
+      ].join("\n\n");
+
+      const mailto = `mailto:${encodeURIComponent(admin)}?subject=${encodeURIComponent(
+        subject
+      )}&body=${encodeURIComponent(body)}`;
+
+      // Open user's email client with prefilled message
+      window.location.href = mailto;
+
+      // Mark as done (UI shows success)
       setDone(true);
     } catch (e) {
-      setError(e instanceof Error ? e.message : "Something went wrong");
+      setError("Failed to open email client. Please contact us directly.");
     } finally {
       setSubmitting(false);
     }
