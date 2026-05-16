@@ -248,10 +248,7 @@ export const Admin = () => {
             {loading ? "Authorizing…" : "Enter"}
           </Button>
           <p className="text-text-dim mt-4 text-center text-[11px]">
-            Default password:{" "}
-            <span className="font-mono text-white">colab2026</span> · override
-            with <span className="font-mono text-white">ADMIN_PASSWORD</span>{" "}
-            env var
+            Admin password is configurable via the <span className="font-mono text-white">ADMIN_PASSWORD</span> environment variable.
           </p>
         </motion.form>
       </section>
