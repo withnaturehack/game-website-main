@@ -37,9 +37,16 @@ interface Session {
 }
 
 const ensureDir = () => {
-  if (!fs.existsSync(DATA_DIR)) fs.mkdirSync(DATA_DIR, { recursive: true });
+  try {
+    if (!fs.existsSync(DATA_DIR)) {
+      fs.mkdirSync(DATA_DIR, { recursive: true });
+    }
+  } catch (error) {
+    console.error(`[ensureDir] Failed to create directory ${DATA_DIR}:`, error);
+    throw new Error(`Failed to create data directory: ${DATA_DIR}`);
+  }
 };
-const readJson = <T,>(file: string, fallback: T): T => {
+const readJson = <T>(file: string, fallback: T): T => {
   try {
     if (!fs.existsSync(file)) return fallback;
     return JSON.parse(fs.readFileSync(file, "utf8")) as T;
@@ -48,8 +55,13 @@ const readJson = <T,>(file: string, fallback: T): T => {
   }
 };
 const writeJson = (file: string, data: unknown) => {
-  ensureDir();
-  fs.writeFileSync(file, JSON.stringify(data, null, 2), "utf8");
+  try {
+    ensureDir();
+    fs.writeFileSync(file, JSON.stringify(data, null, 2), "utf8");
+  } catch (error) {
+    console.error(`[writeJson] Failed to write ${file}:`, error);
+    throw new Error(`Failed to write file: ${file}`);
+  }
 };
 
 const getSessions = (): Session[] => {
@@ -57,7 +69,8 @@ const getSessions = (): Session[] => {
   const now = Date.now();
   return all.filter((s) => s.expires > now);
 };
-const saveSessions = (sessions: Session[]) => writeJson(SESSIONS_FILE, sessions);
+const saveSessions = (sessions: Session[]) =>
+  writeJson(SESSIONS_FILE, sessions);
 
 const isAuthed = (req: express.Request) => {
   const header = req.header("authorization") || "";
@@ -72,24 +85,29 @@ const buildApi = () => {
   app.use(express.json({ limit: "1mb" }));
 
   app.post("/api/join", (req, res) => {
-    const body = (req.body || {}) as Partial<Submission>;
-    if (!body.name || !body.email) {
-      return res.status(400).json({ error: "name and email are required" });
+    try {
+      const body = (req.body || {}) as Partial<Submission>;
+      if (!body.name || !body.email) {
+        return res.status(400).json({ error: "name and email are required" });
+      }
+      const submission: Submission = {
+        id: crypto.randomUUID(),
+        createdAt: new Date().toISOString(),
+        role: body.role || "builder",
+        name: body.name,
+        email: body.email,
+        skills: Array.isArray(body.skills) ? body.skills : [],
+        message: body.message,
+        source: body.source || "join-form",
+      };
+      const all = readJson<Submission[]>(SUBMISSIONS_FILE, []);
+      all.unshift(submission);
+      writeJson(SUBMISSIONS_FILE, all);
+      res.json({ ok: true, id: submission.id });
+    } catch (error) {
+      console.error("[/api/join] Error:", error);
+      res.status(500).json({ error: "Failed to submit application" });
     }
-    const submission: Submission = {
-      id: crypto.randomUUID(),
-      createdAt: new Date().toISOString(),
-      role: body.role || "builder",
-      name: body.name,
-      email: body.email,
-      skills: Array.isArray(body.skills) ? body.skills : [],
-      message: body.message,
-      source: body.source || "join-form",
-    };
-    const all = readJson<Submission[]>(SUBMISSIONS_FILE, []);
-    all.unshift(submission);
-    writeJson(SUBMISSIONS_FILE, all);
-    res.json({ ok: true, id: submission.id });
   });
 
   app.post("/api/admin/login", (req, res) => {
@@ -168,12 +186,14 @@ export const apiPlugin = (): Plugin => {
   return {
     name: "colab-api-plugin",
     configureServer(server: ViteDevServer) {
-      server.middlewares.use((req: IncomingMessage, res: ServerResponse, next) => {
-        if (req.url && req.url.startsWith("/api/")) {
-          return app(req as express.Request, res as express.Response, next);
+      server.middlewares.use(
+        (req: IncomingMessage, res: ServerResponse, next) => {
+          if (req.url && req.url.startsWith("/api/")) {
+            return app(req as express.Request, res as express.Response, next);
+          }
+          next();
         }
-        next();
-      });
+      );
     },
     configurePreviewServer(server) {
       server.middlewares.use((req, res, next) => {

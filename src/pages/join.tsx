@@ -143,10 +143,21 @@ export const Join = () => {
   };
 
   const submit = async () => {
-    if (!name.trim() || !email.trim() || !/^\S+@\S+\.\S+$/.test(email)) {
-      setError("Please enter a valid name and email.");
+    const trimmedName = name.trim();
+    const trimmedEmail = email.trim();
+
+    if (!trimmedName) {
+      setError("Please enter your name.");
       return;
     }
+
+    // Better email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!trimmedEmail || !emailRegex.test(trimmedEmail)) {
+      setError("Please enter a valid email address.");
+      return;
+    }
+
     setSubmitting(true);
     setError(null);
     try {
@@ -155,8 +166,8 @@ export const Join = () => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           role,
-          name: name.trim(),
-          email: email.trim(),
+          name: trimmedName,
+          email: trimmedEmail,
           message,
           skills: [],
           source: "join-form",
