@@ -114,6 +114,14 @@ const buildApi = () => {
 
   app.post("/api/admin/login", (req, res) => {
     const { password } = (req.body || {}) as { password?: string };
+    // Log login attempts (masked) to help debug deployment/login issues.
+    try {
+      const p = typeof password === "string" ? password : "";
+      const masked = p ? `${p[0]}${"*".repeat(Math.max(0, p.length - 1))}` : "(empty)";
+      console.log("[/api/admin/login] attempt - password:", masked, "from:", req.ip || req.headers["x-forwarded-for"] || "unknown");
+    } catch (e) {
+      /* ignore logging errors */
+    }
     if (!password || password !== ADMIN_PASSWORD) {
       return res.status(401).json({ error: "Invalid password" });
     }
