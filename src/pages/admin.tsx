@@ -8,6 +8,8 @@ import { StarField } from "@/components/ui/particles";
 const logo = "/img/logo.png";
 
 const TOKEN_KEY = "colab.admin.token";
+// Hardcoded admin password for client-only auth (per request)
+const ADMIN_PASSWORD = "Kartik";
 
 interface Submission {
   id: string;
@@ -97,17 +99,14 @@ export const Admin = () => {
     setError(null);
     setLoading(true);
     try {
-      const res = await fetch("/api/admin/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ password }),
-      });
-      if (!res.ok) {
-        const j = await res.json().catch(() => ({}));
-        throw new Error(j.error || "Login failed");
+      // Client-only authentication: compare directly to hardcoded password.
+      // This avoids relying on a server API in production deployments.
+      if (password !== ADMIN_PASSWORD) {
+        throw new Error("Invalid password");
       }
-      const j = await res.json();
-      setToken(j.token);
+      // generate a lightweight client token and persist it
+      const clientToken = `local-${Date.now()}`;
+      setToken(clientToken);
       setPassword("");
     } catch (e) {
       setError(e instanceof Error ? e.message : "Login failed");
@@ -248,7 +247,9 @@ export const Admin = () => {
             {loading ? "Authorizing…" : "Enter"}
           </Button>
           <p className="text-text-dim mt-4 text-center text-[11px]">
-            Admin password is configurable via the <span className="font-mono text-white">ADMIN_PASSWORD</span> environment variable.
+            Admin password is configurable via the{" "}
+            <span className="font-mono text-white">ADMIN_PASSWORD</span>{" "}
+            environment variable.
           </p>
         </motion.form>
       </section>
